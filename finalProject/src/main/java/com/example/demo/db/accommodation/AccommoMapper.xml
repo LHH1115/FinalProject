@@ -3,7 +3,25 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="accommo">
+  <!-- accommoNo로 검색하기 -->
+  <select id="findById" resultType="accommoVo" parameterType="java.lang.Integer">
+  	SELECT * FROM TBL_ACCOMMODATION WHERE ACCOMMONO = #{accommoNo}
+  </select>
+
+  <!-- 카테고리로 검색하기 -->
   <select id="findByCategory" resultType="accommoVo" parameterType="java.lang.String">
   	SELECT * FROM TBL_ACCOMMODATION WHERE CATEGORY LIKE '%${keyword}%'
   </select>
+  
+  <!-- 사진 순서(Orders)대로 가져오기  -->
+  <select id="findAllPhotoById" resultType="accommoVo" parameterType="java.lang.Integer">
+  	SELECT 
+  	A.ACCOMMONO, A.NAME, A.ADDR, A.PHONE, A.PRICE, A.CATEGORY, 
+  	P.APNO, P.PATH, P.ORDERS
+  	FROM TBL_ACCOMMODATION A, TBL_ACCOMMOPHOTO P
+  	WHERE A.ACCOMMONO = P.ACCOMMONO AND A.ACCOMMONO = #{accommoNo}
+  	ORDER BY P.ORDERS
+  </select>
+  
 </mapper>
+

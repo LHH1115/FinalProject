@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Accommodation</title>
@@ -12,6 +12,16 @@
 			e.preventDefault();
 			$("#form_search").submit();
 		})
+		
+		$("#btn_hotel").click(function(){
+			location.href="/accommo/search?keyword=호텔";
+		})
+		$("#btn_guest").click(function(){
+			location.href="/accommo/search?keyword=게스트";
+		})
+		$("#btn_condo").click(function(){
+			location.href="/accommo/search?keyword=콘도";
+		})
 	})
 </script>
 </head>
@@ -20,6 +30,7 @@
 	<br>
 	
 	<!-- 검색기능 -->
+	<hr>
 	<div>
 		<form action="/accommo/search" id="form_search" method="get">
 			검색어 : <input type="text" name="keyword">
@@ -32,5 +43,31 @@
 			<input type="button" id="btn_search" value="검색">
 		</form>
 	</div>
+	<hr>
+	
+	<!-- Test -->
+	<!-- <th:block th:if="${realPath != null}">
+		<img th:src="|/${realPath}|" width="600">
+	</th:block> -->
+	
+	<!-- 카테고리별 검색 버튼 -->
+	<hr>
+	<div>
+		<h3>숙소 종류</h3>
+		<input type="button" id="btn_hotel" value="호텔">
+		<input type="button" id="btn_guest" value="게하">
+		<input type="button" id="btn_condo" value="콘도">
+	</div>
+	<hr>
+	
+	<!-- 현재 인기 숙소 -->
+	<hr>
+	<div>
+		<h3>인기 숙소</h3>
+		<span th:each="a: ${accommo_list}">
+			<span th:text="${a.name}"></span><br>
+		</span>
+	</div>
+	<hr>
 </body>
 </html>

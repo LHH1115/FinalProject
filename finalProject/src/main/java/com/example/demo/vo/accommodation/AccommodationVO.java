@@ -1,5 +1,7 @@
 package com.example.demo.vo.accommodation;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,4 +17,10 @@ public class AccommodationVO {
 	private String phone;
 	private int price;
 	private String category;
+	
+	private int apNo;
+	private String path;
+	private int orders;
+	
+	private MultipartFile uploadFile;
 }

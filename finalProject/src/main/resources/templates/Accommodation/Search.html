@@ -28,5 +28,10 @@
 			<td th:text="${a.category}"></td>
 		</tr>
 	</table>
+	
+	<!-- Test -->
+	<th:block th:if="${realPath != null}">
+		<img th:src="|/${realPath}|" width="600">
+	</th:block>
 </body>
 </html>

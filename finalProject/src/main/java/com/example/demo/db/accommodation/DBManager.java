@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import com.example.demo.vo.accommodation.AccommoPhotoVO;
 import com.example.demo.vo.accommodation.AccommodationVO;
+import com.example.demo.vo.accommodation.LikeVO;
 
 public class DBManager {
 	public static SqlSessionFactory sqlSessionFactory;
@@ -24,8 +25,14 @@ public class DBManager {
 		}
 	}
 	
+	public static AccommodationVO findById(int accommoNo) {
+		SqlSession session = sqlSessionFactory.openSession();
+		AccommodationVO a = session.selectOne("accommo.findById", accommoNo);
+		session.close();
+		return a;
+	}
+	
 	public static List<AccommodationVO> findByCategory(String keyword) {
-		// TODO Auto-generated method stub
 		SqlSession session = sqlSessionFactory.openSession();
 		List<AccommodationVO> list = session.selectList("accommo.findByCategory", keyword);
 		session.close();
@@ -38,6 +45,20 @@ public class DBManager {
 		int cnt = session.selectOne("accommoPhoto.findPCnt", a);
 		session.close();
 		return cnt;
+	}
+	
+	public static List<AccommodationVO> findAllPhotoById(int accommoNo) {
+		SqlSession session = sqlSessionFactory.openSession();
+		List<AccommodationVO> list = session.selectList("accommo.findAllPhotoById", accommoNo);
+		session.close();
+		return list;
+	}
+	
+	public static List<LikeVO> findMostLike(int count){
+		SqlSession session = sqlSessionFactory.openSession();
+		List<LikeVO> list = session.selectList("like.findMostLike", count);
+		session.close();
+		return list;
 	}
 	
 }
