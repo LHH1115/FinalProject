@@ -43,6 +43,7 @@ public class AccommoController {
 		return "Accommodation/Main";
 	}
 	
+	// 키워드 검색
 	@GetMapping("/search")
 	public ModelAndView search(String keyword, String category) {
 		ModelAndView mav = new ModelAndView("Accommodation/Search");
@@ -64,6 +65,7 @@ public class AccommoController {
 		return "Accommodation/Main";
 	}
 	
+	// 사진 리스트 검색
 	@GetMapping("/findById")
 	public String findById(Model model) {
 		List<AccommodationVO> list = dao.findAllPhotoById(148);
