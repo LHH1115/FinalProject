@@ -3,8 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <title>Accommodation</title>
+<!-- JQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		<!-- 검색 버튼 클릭 -->
+		$("#btn_search").click(function(e){
+			e.preventDefault();
+			$("#form_search").submit();
+		})
+	})
+</script>
 </head>
 <body>
-
+	<h2>숙박 메인</h2>
+	<br>
+	
+	<!-- 검색기능 -->
+	<div>
+		<form action="/accommo/search" id="form_search" method="get">
+			검색어 : <input type="text" name="keyword">
+			<select name="category">
+				<option value="0">카테고리</option>
+				<option value="1">카테고리1</option>
+				<option value="2">카테고리2</option>
+				<option value="3">카테고리3</option>
+			</select>
+			<input type="button" id="btn_search" value="검색">
+		</form>
+	</div>
 </body>
 </html>

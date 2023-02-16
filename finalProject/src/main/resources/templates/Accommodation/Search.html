@@ -1,10 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-
+	<h2>검색 결과</h2>
+	<br>
+	<table>
+		<tr>
+			<th>이름</th>
+			<th>주소</th>
+			<th>번호</th>
+			<th>가격</th>
+			<th>카테고리</th>
+		</tr>
+		<tr th:each="a: ${list}">
+			<td th:text="${a.name}"></td>
+			<td th:text="${a.addr}"></td>
+			<th:block th:if="${a.phone == 'nan'}">
+				<td>관리자 문의</td>
+			</th:block>
+			<th:block th:unless="${a.phone == 'nan'}">
+				<td th:text="${a.phone}"></td>
+			</th:block>
+			<td th:text="${a.price}"></td>
+			<td th:text="${a.category}"></td>
+		</tr>
+	</table>
 </body>
 </html>

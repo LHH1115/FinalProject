@@ -3,21 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="accommo">
-  <select id="findAll" resultType="accommoVo">
-  	select * from dept order by dno
+  <select id="findByCategory" resultType="accommoVo" parameterType="java.lang.String">
+  	SELECT * FROM TBL_ACCOMMODATION WHERE CATEGORY LIKE '%${keyword}%'
   </select>
-  
-  <insert id="insert" parameterType="deptVO">
-  	insert into dept(dno,dname,dloc) values(#{dno},#{dname},#{dloc})
-  </insert>
-  
-  <update id="update" parameterType="deptVO">
-  	update dept set dname=#{dname},dloc=#{dloc} where dno=#{dno}
-  </update>
-  
-  <delete id="delete">
-  	delete dept where dno=#{dno}
-  </delete>
 </mapper>
-
-
