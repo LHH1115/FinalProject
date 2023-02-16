@@ -13,7 +13,7 @@ public class BoardController {
 	@Autowired
 	private BoardDAO dao;	
 	
-	@GetMapping("/")
+	@GetMapping("/test")
 	public String list() {
 		return "test";
 	}

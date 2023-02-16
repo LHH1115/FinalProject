@@ -60,6 +60,13 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- 인코딩 방식 에러문제  -->
+		<dependency>
+			<groupId>com.oracle.ojdbc</groupId>
+			<artifactId>orai18n</artifactId>
+			<version>19.3.0.0</version>
+		</dependency>
+		
 		<!-- dependency for devTool-->
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>

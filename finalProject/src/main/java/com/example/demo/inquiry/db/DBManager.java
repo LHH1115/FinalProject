@@ -1,4 +1,4 @@
-package com.example.demo.test.db;
+package com.example.demo.inquiry.db;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -15,7 +15,7 @@ public class DBManager {
 	public static SqlSessionFactory sqlSessionFactory;
 	static {
 		try {
-			String resource = "com/example/demo/test/db/sqlMapConfig.xml";
+			String resource = "com/example/demo/inquiry/db/sqlMapConfig.xml";
 			InputStream inputStream = Resources.getResourceAsStream(resource);
 			sqlSessionFactory =
 			  new SqlSessionFactoryBuilder().build(inputStream);

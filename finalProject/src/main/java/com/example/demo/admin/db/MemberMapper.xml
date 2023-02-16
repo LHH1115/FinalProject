@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+
+	<!-- 관리자 회원 조회 -->
+	<select id="findAll" resultType="memberVO">
+		select memberNo,name,id,addr,email,phone,point,mbti from
+	(select rownum n,a.* from
+	(select * from tbl_member order by memberNo)a)
+	where n between #{start} and #{end}
+  	</select>
+  	
+  	<!-- 회원 총 레코드 -->
+  	<select id="totalRecord" resultType="java.lang.Integer">
+  		select count(*) from tbl_member
+  	</select>
+
+</mapper>
+
+
+
+
+
