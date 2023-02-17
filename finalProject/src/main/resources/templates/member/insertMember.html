@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src='https://code.jquery.com/jquery-3.6.3.min.js'></script>
+<script type="text/javascript">
+$(function(){
+
+	var id_chk= false;
+	
+	$("#btn_submit").click(function(event){
+		var p1 = $('#pwd').val();
+      	var p2 = $('#pwd_chk').val();
+      	console.log(p1);
+      	console.log(p2);
+      	if( p1 != p2 ) {
+       	 alert("비밀번호가 일치 하지 않습니다");
+        	return false;
+      	} else{
+        	if(id_chk == true){
+        		$("#join").submit();
+        		alert("가입완료");
+        		return true;
+        	}
+        	else{
+        		alert("아이디 중복체크를 해주세요");
+        		return false;
+        	}
+      	}
+			
+
+	});
+	
+	$("#dup").click(function(event){
+		$.ajax({
+		url:"/member/dup_chk",
+		data:{"id":$("#user_id").val()},
+		success:function(data){
+			if(data == 0){
+				alert("사용이 가능한 아이디 입니다.")
+				id_chk = true
+			} else{
+				alert("사용이 불가능한 아이디 입니다.")
+			}	
+				
+		}
+		
+		});
+	
+
+	});
+	
+ 	
+	
+	
+});
+
+
+</script>
+</head>
+<body>
+<h1>회원가입</h1>
+<form action='/member/insertMember' method='post' id='join'>
+아이디:<input type='text' name='id' id='user_id'>
+<button type="button"  id='dup'>중복확인</button><br>
+비밀번호:<input type="password" name='pwd' id='pwd'><br>
+비밀번호확인:<input type='password' id='pwd_chk'><br>
+이름:<input type="text" name='name'><br>
+주민번호:<input type="number" name='jumin_f'> - <input type="number" name='jumin_b'><br>
+주소:<input type="text"> <button id='addr_num'>우편번호</button><br>
+<input type="text" name='addr_f'> 기본주소	<br>
+<input type="text" name='addr_b'> 나머지주소<br>
+핸드폰번호:<input type='number' name='phone'> <br>
+이메일:<input type="text" name='email'><br>
+<input type="button" id = 'btn_submit' value="가입">
+
+
+</form>
+</body>
+</html>

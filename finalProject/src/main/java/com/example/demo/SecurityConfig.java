@@ -12,6 +12,7 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+		httpSecurity.csrf().disable(); //가입할때 submit 403오류 해
 		httpSecurity.authorizeHttpRequests()
 		.antMatchers("/**").permitAll();
 //		.requestMatchers("/admin/**").hasRole("admin")
