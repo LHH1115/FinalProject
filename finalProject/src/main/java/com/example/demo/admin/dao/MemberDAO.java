@@ -17,8 +17,8 @@ public class MemberDAO {
 	}
 	
 	// 회원 총 레코드 수
-	public int getTotalRecord() {
-		return DBManager.getTotalRecord();
+	public int getTotalRecord(HashMap<String, Object> map2) {
+		return DBManager.getTotalRecord(map2);
 	}
 }
 

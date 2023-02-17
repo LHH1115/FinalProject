@@ -35,10 +35,10 @@ public class DBManager {
 	}
 	
 	// 회원조회 페이징 처리
-	public static int getTotalRecord() {
+	public static int getTotalRecord(HashMap<String, Object> map2) {
 		int cnt = 0;
 		SqlSession sqlSession = sessionFactory.openSession();
-		cnt = sqlSession.selectOne("member.totalRecord");
+		cnt = sqlSession.selectOne("member.totalRecord",map2);
 		sqlSession.close();
 		return cnt;
 	}
