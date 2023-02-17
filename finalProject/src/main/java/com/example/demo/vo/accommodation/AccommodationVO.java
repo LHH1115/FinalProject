@@ -22,5 +22,6 @@ public class AccommodationVO {
 	private String path;
 	private int orders;
 	
+	private String realPath;
 	private MultipartFile uploadFile;
 }

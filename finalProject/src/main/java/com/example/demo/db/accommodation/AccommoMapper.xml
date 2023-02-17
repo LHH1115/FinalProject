@@ -7,10 +7,44 @@
   <select id="findById" resultType="accommoVo" parameterType="java.lang.Integer">
   	SELECT * FROM TBL_ACCOMMODATION WHERE ACCOMMONO = #{accommoNo}
   </select>
+  
+  <!-- accommoNo로 카운트 검색 -->
+  <select id="findCountById" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+  	SELECT COUNT(*) FROM TBL_ACCOMMODATION WHERE ACCOMMONO = #{accommoNo}
+  </select>
 
   <!-- 카테고리로 검색하기 -->
   <select id="findByCategory" resultType="accommoVo" parameterType="java.lang.String">
-  	SELECT * FROM TBL_ACCOMMODATION WHERE CATEGORY LIKE '%${keyword}%'
+  	SELECT * FROM (
+  	SELECT T.*, ROWNUM RN
+  	FROM TBL_ACCOMMODATION T
+  	WHERE CATEGORY LIKE '%${keyword}%'
+	)
+	WHERE RN BETWEEN ${start} AND ${end}
+  </select>
+  
+  <!-- 카테고리로 카운트 검색 -->
+  <select id="findCountByCategory" resultType="java.lang.Integer" parameterType="java.lang.String">
+  	SELECT COUNT(*) FROM TBL_ACCOMMODATION WHERE CATEGORY LIKE '%${keyword}%'
+  </select>
+  
+  <!-- 아무검색어로 검색하기 -->
+  <select id="findByAny" resultType="accommoVo">
+  	SELECT *FROM (
+  	SELECT T.*, ROWNUM RN
+  	FROM TBL_ACCOMMODATION T
+  	WHERE CATEGORY LIKE '%${keyword}%'
+    OR ADDR LIKE '%${keyword}%'
+    OR NAME LIKE '%${keyword}%'
+	)
+	WHERE RN BETWEEN ${start} AND ${end}
+  </select>
+  
+  <!-- 아무검색어로 카운트 검색 -->
+  <select id="findCountByAny" resultType="java.lang.Integer" parameterType="java.lang.String">
+  	SELECT COUNT(*) FROM TBL_ACCOMMODATION WHERE CATEGORY LIKE '%${keyword}%' 
+  	OR ADDR LIKE '%${keyword}%'
+  	OR NAME LIKE '%${keyword}%'
   </select>
   
   <!-- 사진 순서(Orders)대로 가져오기  -->

@@ -1,6 +1,7 @@
 package com.example.demo.db.accommodation;
 
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.io.Resources;
@@ -32,11 +33,34 @@ public class DBManager {
 		return a;
 	}
 	
-	public static List<AccommodationVO> findByCategory(String keyword) {
+	public static List<AccommodationVO> findByCategory(HashMap<String, Object> map) {
 		SqlSession session = sqlSessionFactory.openSession();
-		List<AccommodationVO> list = session.selectList("accommo.findByCategory", keyword);
+		List<AccommodationVO> list = session.selectList("accommo.findByCategory", map);
 		session.close();
 		return list;
+	}
+	
+	public static int findCountByCategory(String keyword) {
+		int re = 0;
+		SqlSession session = sqlSessionFactory.openSession();
+		re= session.selectOne("accommo.findCountByCategory", keyword);
+		session.close();
+		return re;
+	}
+	
+	public static List<AccommodationVO> findByAny(HashMap<String, Object> map) {
+		SqlSession session = sqlSessionFactory.openSession();
+		List<AccommodationVO> list = session.selectList("accommo.findByAny", map);
+		session.close();
+		return list;
+	}
+	
+	public static int findCountByAny(String keyword) {
+		int re = 0;
+		SqlSession session = sqlSessionFactory.openSession();
+		re= session.selectOne("accommo.findCountByAny", keyword);
+		session.close();
+		return re;
 	}
 	
 	public static int findPCnt(AccommoPhotoVO a) {

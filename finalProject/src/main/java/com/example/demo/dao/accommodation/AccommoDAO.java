@@ -1,5 +1,6 @@
 package com.example.demo.dao.accommodation;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -16,9 +17,20 @@ public class AccommoDAO {
 		return DBManager.findById(accommoNo);
 	}
 	
-	public List<AccommodationVO> findByCategory(String keyword) {
-		return DBManager.findByCategory(keyword);
-		
+	public List<AccommodationVO> findByCategory(HashMap<String, Object> map) {
+		return DBManager.findByCategory(map);	
+	}
+	
+	public int findCountByCategory(String keyword) {
+		return DBManager.findCountByCategory(keyword);
+	}
+	
+	public List<AccommodationVO> findByAny(HashMap<String, Object> map) {
+		return DBManager.findByAny(map);	
+	}
+	
+	public int findCountByAny(String keyword) {
+		return DBManager.findCountByAny(keyword);
 	}
 	
 	public int findPCnt(AccommoPhotoVO a) {
