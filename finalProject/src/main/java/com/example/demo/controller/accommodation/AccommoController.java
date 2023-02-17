@@ -27,7 +27,7 @@ public class AccommoController {
 	
 	public int totPage = 1;		// 페이징 처리 위한 변수
 	public int totCnt = 0;		// 페이징 처리 위한 변수
-	public int pageSize = 6;	// 페이징 처리 위한 변수(검색 시 한페이지당 보여줄 결과 갯수)
+	public int pageSize = 50;	// 페이징 처리 위한 변수(검색 시 한페이지당 보여줄 결과 갯수)
 	public int pageGroup = 10;	// 페이징 처리 위한 변수(페이징 번호 그룹 갯수)
 	
 	@Autowired
@@ -80,7 +80,8 @@ public class AccommoController {
 	// 키워드 버튼 누를때
 	@GetMapping("/searchC")
 	public ModelAndView searchC(String keyword, int pageNum, HttpSession session) {
-		ModelAndView mav = new ModelAndView("Accommodation/Search");
+//		ModelAndView mav = new ModelAndView("Accommodation/Search");
+		ModelAndView mav = new ModelAndView("Accommodation/SearchTest");
 //		System.out.println("keyword:"+keyword);
 //		System.out.println("category:"+category);
 		
