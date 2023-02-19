@@ -56,6 +56,17 @@
   }
 
 </style>
+<!-- JQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		<!-- 검색 버튼 클릭 -->
+		$("#btn_search").click(function(e){
+			e.preventDefault();
+			$("#f").submit();
+		})
+	})
+</script>
 </head>
 <body>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
@@ -64,6 +75,8 @@
 	<div id="page-wrapper">
 	  <!-- 사이드바 -->
 	  <div id="sidebar-wrapper">
+	  	<form action="#" id="f">
+	  	<input type="hidden" name="pageNum" value="1">
 	    <ul class="sidebar-nav">
 	      <li class="sidebar-brand">
 	        <a href="#">검색하기</a>
@@ -71,8 +84,9 @@
 	      <li>검색어<input type="text"></li>
 	      <li>카테고리1<input type="text"></li>
 	      <li>카테고리2<input type="text"></li>
-	      <li><input type="button" value="검색"></li>
+	      <li><input type="button" value="검색" id="btn_search"></li>
 	    </ul>
+	    </form>
 	  </div>
 	  <!-- /사이드바 -->
 	

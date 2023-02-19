@@ -1,4 +1,4 @@
-package com.example.demo.controller.accommodation;
+package com.example.demo.accommodation.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.demo.dao.accommodation.AccommoDAO;
-import com.example.demo.vo.accommodation.AccommoPhotoVO;
-import com.example.demo.vo.accommodation.AccommodationVO;
-import com.example.demo.vo.accommodation.LikeVO;
+import com.example.demo.accommodation.dao.AccommoDAO;
+import com.example.demo.accommodation.vo.AccommoPhotoVO;
+import com.example.demo.accommodation.vo.AccommodationVO;
+import com.example.demo.accommodation.vo.LikeVO;
 
 import lombok.Setter;
 

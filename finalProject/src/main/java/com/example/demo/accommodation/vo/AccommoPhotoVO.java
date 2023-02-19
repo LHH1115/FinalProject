@@ -1,4 +1,4 @@
-package com.example.demo.vo.accommodation;
+package com.example.demo.accommodation.vo;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,19 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccommodationVO {
+public class AccommoPhotoVO {
 
-	private int accommoNo;
-	private String name;
-	private String addr;
-	private String phone;
-	private int price;
-	private String category;
-	
 	private int apNo;
+	private int accommoNo;
 	private String path;
 	private int orders;
 	
-	private String realPath;
 	private MultipartFile uploadFile;
 }

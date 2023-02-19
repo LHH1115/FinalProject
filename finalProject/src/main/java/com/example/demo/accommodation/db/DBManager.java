@@ -1,4 +1,4 @@
-package com.example.demo.db.accommodation;
+package com.example.demo.accommodation.db;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -9,9 +9,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import com.example.demo.vo.accommodation.AccommoPhotoVO;
-import com.example.demo.vo.accommodation.AccommodationVO;
-import com.example.demo.vo.accommodation.LikeVO;
+import com.example.demo.accommodation.vo.AccommoPhotoVO;
+import com.example.demo.accommodation.vo.AccommodationVO;
+import com.example.demo.accommodation.vo.LikeVO;
 
 public class DBManager {
 	public static SqlSessionFactory sqlSessionFactory;

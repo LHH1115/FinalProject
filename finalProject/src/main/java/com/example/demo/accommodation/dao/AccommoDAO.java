@@ -1,14 +1,14 @@
-package com.example.demo.dao.accommodation;
+package com.example.demo.accommodation.dao;
 
 import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.db.accommodation.DBManager;
-import com.example.demo.vo.accommodation.AccommoPhotoVO;
-import com.example.demo.vo.accommodation.AccommodationVO;
-import com.example.demo.vo.accommodation.LikeVO;
+import com.example.demo.accommodation.db.DBManager;
+import com.example.demo.accommodation.vo.AccommoPhotoVO;
+import com.example.demo.accommodation.vo.AccommodationVO;
+import com.example.demo.accommodation.vo.LikeVO;
 
 @Repository
 public class AccommoDAO {
