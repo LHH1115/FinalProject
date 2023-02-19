@@ -1,6 +1,7 @@
 package com.example.demo.accommodation.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -213,5 +215,56 @@ public class AccommoController {
 			System.out.println(i+": "+refNo);
 		}
 		return "Accommodation/Main";
+	}
+	
+	// 숙소 상세페이지
+	@GetMapping("/detail")
+	public ModelAndView detail(int accommoNo) {
+		ModelAndView mav = new ModelAndView("Accommodation/Detail");
+		AccommodationVO a = dao.findById(accommoNo);
+		
+		List<AccommodationVO> list = dao.findAllPhotoById(accommoNo);
+		List<String> photoList = new ArrayList<>();
+		String realPath = "";
+		String category = "";
+		String name = "";
+		String path = "";
+		if(list.size() > 0) {
+			for(int i=0;i<list.size();i++) {
+				a = list.get(i);
+				category = a.getCategory();
+				name = a.getName();
+				path = a.getPath();
+				realPath = "photo/Accommodation/"+category+"/"+name+"/"+path;
+				photoList.add(realPath);
+			}
+		}else {
+			System.out.println("이미지 없음");
+			realPath = "photo/Accommodation/게스트하우스/슬로시티게스트하우스/";
+			for(int i=0;i<5;i++) {
+				realPath += "acc"+(i+1)+".jpeg";
+				photoList.add(realPath);
+				realPath = "photo/Accommodation/게스트하우스/슬로시티게스트하우스/";
+			}
+		}
+//		System.out.println(photoList);
+		mav.addObject("a", a);
+		mav.addObject("photoList", photoList);
+		return mav;
+	}
+	
+	// 결제 정보
+	@PostMapping("/payok")
+	public ModelAndView payok(String imp_uid, String merchant_uid, 
+			String paid_amount, String apply_num, String date_s, String date_e) {
+		ModelAndView mav = new ModelAndView("redirect:/accommo/main");
+		System.out.println("결제완료");
+		System.out.println("고유 ID: "+imp_uid);
+		System.out.println("상점거래 ID: "+merchant_uid);
+		System.out.println("결제금액: "+paid_amount);
+		System.out.println("카드 승인번호: "+apply_num);
+		System.out.println("date_s: "+date_s);
+		System.out.println("date_e: "+date_e);
+		return mav;
 	}
 }

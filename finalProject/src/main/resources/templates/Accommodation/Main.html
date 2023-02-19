@@ -11,7 +11,7 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 <script type="text/javascript">
 	$(function(){
-		<!-- 검색 버튼 클릭 -->
+		/* 검색 버튼 클릭 */
 		$("#btn_search").click(function(e){
 			e.preventDefault();
 			$("#form_search").submit();
@@ -26,6 +26,12 @@
 		$("#btn_condo").click(function(){
 			location.href="/accommo/searchC?pageNum=1&keyword=콘도";
 		})
+		
+		/* 인기 숙소 상세이동 */
+		$(document).on("click",".text-bg-white",function(){
+			var accommoNo = $(this).attr("accommoNo");
+			location.href="/accommo/detail?accommoNo="+accommoNo;
+		});
 	})
 </script>
 </head>
@@ -74,7 +80,7 @@
 		
 		<div class="card-group">
 			<th:block th:each="a: ${accommo_list}">
-				<div class="card text-bg-white">
+				<div class="card text-bg-white" id="img_mostLike" th:accommoNo="${a.accommoNo}">
 				  <img th:src="|/${a.realPath}|" th:class="card-img" width="30%">
 				  <div class="card-img-overlay">
 				    <h5 class="card-title" th:text="${a.name}"></h5>
