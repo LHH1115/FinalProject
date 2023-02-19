@@ -17,7 +17,7 @@ public class DBManager {
 	public static SqlSessionFactory sqlSessionFactory;
 	static {
 		try {
-			String resource = "com/example/demo/db/accommodation/sqlMapConfig.xml";
+			String resource = "com/example/demo/accommodation/db/sqlMapConfig.xml";
 			InputStream inputStream = Resources.getResourceAsStream(resource);
 			sqlSessionFactory =
 			  new SqlSessionFactoryBuilder().build(inputStream);

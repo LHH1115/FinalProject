@@ -3,11 +3,11 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-  <properties resource="com/example/demo/db/accommodation/db.properties"/>
+  <properties resource="com/example/demo/accommodation/db/db.properties"/>
   <typeAliases>
-  	<typeAlias type="com.example.demo.vo.accommodation.AccommodationVO" alias="accommoVo"/>
-  	<typeAlias type="com.example.demo.vo.accommodation.AccommoPhotoVO" alias="accommoPhotoVo"/>
-  	<typeAlias type="com.example.demo.vo.accommodation.LikeVO" alias="likeVo"/>
+  	<typeAlias type="com.example.demo.accommodation.vo.AccommodationVO" alias="accommoVo"/>
+  	<typeAlias type="com.example.demo.accommodation.vo.AccommoPhotoVO" alias="accommoPhotoVo"/>
+  	<typeAlias type="com.example.demo.accommodation.vo.LikeVO" alias="likeVo"/>
   </typeAliases>
   <environments default="development">
     <environment id="development">
@@ -21,8 +21,8 @@
     </environment>
   </environments>
   <mappers>
-    <mapper resource="com/example/demo/db/accommodation/AccommoMapper.xml"/>
-    <mapper resource="com/example/demo/db/accommodation/AccommoPhotoMapper.xml"/>
-    <mapper resource="com/example/demo/db/accommodation/LikeMapper.xml"/>
+    <mapper resource="com/example/demo/accommodation/mapper/AccommoMapper.xml"/>
+    <mapper resource="com/example/demo/accommodation/mapper/AccommoPhotoMapper.xml"/>
+    <mapper resource="com/example/demo/accommodation/mapper/LikeMapper.xml"/>
   </mappers>
 </configuration>
