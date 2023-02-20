@@ -1,7 +1,6 @@
 package com.example.demo.accommodation.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.accommodation.dao.AccommoDAO;
@@ -93,7 +91,7 @@ public class AccommoController {
 	@GetMapping("/searchC")
 	public ModelAndView searchC(String keyword, int pageNum, HttpSession session) {
 //		ModelAndView mav = new ModelAndView("Accommodation/Search");
-		ModelAndView mav = new ModelAndView("Accommodation/SearchTest");
+		ModelAndView mav = new ModelAndView("Accommodation/SearchTest");	// 사이드바 테스트 버전
 //		System.out.println("keyword:"+keyword);
 //		System.out.println("category:"+category);
 		
@@ -269,28 +267,37 @@ public class AccommoController {
 		return mav;
 	}
 	
-	// 결제 정보
+	// 결제 진행
 	@PostMapping("/reservation")
 	public ModelAndView payok(String imp_uid, String merchant_uid, 
 			String paid_amount, String apply_num, ReservationVO r) {
 		ModelAndView mav = new ModelAndView("redirect:/accommo/main");
 		System.out.println("결제완료");
-		System.out.println("고유 ID: "+imp_uid);
-		System.out.println("상점거래 ID: "+merchant_uid);
-		System.out.println("결제금액: "+paid_amount);
-		System.out.println("카드 승인번호: "+apply_num);
-		System.out.println("date_s: "+r.getDate_s());
-		System.out.println("date_e: "+r.getDate_e());
+//		System.out.println("고유 ID: "+imp_uid);
+//		System.out.println("상점거래 ID: "+merchant_uid);
+//		System.out.println("결제금액: "+paid_amount);
+//		System.out.println("카드 승인번호: "+apply_num);
+//		System.out.println("date_s: "+r.getDate_s());
+//		System.out.println("date_e: "+r.getDate_e());
 		
-		System.out.println(r);
 		// ReservationVO(reserveNo=0, memberNo=0, accommoNo=0, totalPrice=0, 
 		// date_s=2023-02-15, date_e=2023-02-23, headCount=3, imp_uid=imp_620242687294)
 		r.setReserveNo(1);
 		r.setMemberNo(7);
+		r.setTotalPrice(100);
 		
+//		System.out.println(r);
+		
+		int re = dao.makeReservation(r);
+		if(re > 0) {
+			// 결제 성공
+		}else {
+			// 결제 실패
+		}
 		return mav;
 	}
 	
+	// 결제 위한 멤버 정보 불러오기
 	@GetMapping("/getmember")
 	@ResponseBody
 	public String getMember() {

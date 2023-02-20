@@ -12,6 +12,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import com.example.demo.accommodation.vo.AccommoPhotoVO;
 import com.example.demo.accommodation.vo.AccommodationVO;
 import com.example.demo.accommodation.vo.LikeVO;
+import com.example.demo.accommodation.vo.ReservationVO;
 
 public class DBManager {
 	public static SqlSessionFactory sqlSessionFactory;
@@ -83,6 +84,14 @@ public class DBManager {
 		List<LikeVO> list = session.selectList("like.findMostLike", count);
 		session.close();
 		return list;
+	}
+	
+	public static int makeReservation(ReservationVO r) {
+		int re = 0;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.insert("reservation.makeReservation", r);
+		session.close();
+		return re;
 	}
 	
 }

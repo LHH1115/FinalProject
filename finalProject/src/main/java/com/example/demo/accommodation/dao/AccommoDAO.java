@@ -9,6 +9,7 @@ import com.example.demo.accommodation.db.DBManager;
 import com.example.demo.accommodation.vo.AccommoPhotoVO;
 import com.example.demo.accommodation.vo.AccommodationVO;
 import com.example.demo.accommodation.vo.LikeVO;
+import com.example.demo.accommodation.vo.ReservationVO;
 
 @Repository
 public class AccommoDAO {
@@ -43,5 +44,9 @@ public class AccommoDAO {
 	
 	public List<LikeVO> findMostLike(int count){
 		return DBManager.findMostLike(count);
+	}
+	
+	public int makeReservation(ReservationVO r) {
+		return DBManager.makeReservation(r);
 	}
 }
