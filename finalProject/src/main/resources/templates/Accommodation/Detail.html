@@ -18,13 +18,13 @@
 				 url:"/accommo/getmember",
 				 dataType: "json",
 				 success:function(data){
-					 console.log(data);
+					console.log(data);
 					IMP.request_pay({ // param
 				        pg: "kcp",
 				        pay_method: "card",
 				        merchant_uid: "ORD"+new Date().getTime(),
 				        name: $("#name").text(),
-				        //amount: $("#price").text(),
+				        //amount: $("#totalPrice").val(),
 				        amount: 100,
 				        buyer_email: data.email,
 				        buyer_name: data.name,
@@ -51,6 +51,7 @@
 				            // 결제 실패 시 로직,
 				      	  console.log("결제실패");
 				      	  console.log("실패 사유: "+rsp.error_msg);
+				      	  alert("결제가 취소되었습니다.")
 				        }
 				    });
 				}
@@ -61,6 +62,24 @@
 		    // IMP.request_pay(param, callback) 결제창 호출
 		    
 		}
+		
+		$("body").on("change", "#date_e", function(){
+			var date_s = $("#date_s").val()+"";
+			var date_e = $("#date_e").val()+"";
+			var arr1 = date_s.split('-');
+			var arr2 = date_e.split('-');
+			var dat1 = new Date(arr1[0], arr1[1], arr1[2]);
+			var dat2 = new Date(arr2[0], arr2[1], arr2[2]);
+			var diff = dat2 - dat1;
+			var currDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
+			var diffDate = parseInt(diff/currDay);
+			$("#totDate").val(diffDate+"박/"+(diffDate+1)+"일");
+			
+			var price = $("#price").text();
+			var headCount = $("#headCount").val();
+			var totalPrice = price*diffDate*headCount;
+			$("#totalPrice").val(totalPrice);
+		})
 	}) 
   </script>
 </head>
@@ -94,9 +113,11 @@
 		<button id="btnPay">결제하기</button>
 		<hr>
 		<form action="/accommo/reservation" method="post" id="payok">
-			입실일자 <input type="date" name="date_s">
-			퇴실일자 <input type="date" name="date_e">
-			총 인원 <input type="number" name="headCount">
+			입실일자 <input type="date" name="date_s" id="date_s">
+			퇴실일자 <input type="date" name="date_e" id="date_e">
+			총 일자 <input type="text" id="totDate">
+			총 인원 <input type="number" name="headCount" id="headCount">
+			총 가격 <input type="text" name="totalPrice" id="totalPrice">
 			<input type="hidden" name="accommoNo" th:value="${a.accommoNo}">
 			<input type="hidden" name="imp_uid" id="imp_uid">
 			<input type="hidden" name="merchant_uid" id="merchant_uid">

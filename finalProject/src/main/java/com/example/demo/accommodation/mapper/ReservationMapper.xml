@@ -5,9 +5,9 @@
 <mapper namespace="reservation">
   <!-- 결제 정보 insert -->
   <insert id="makeReservation" parameterType="reservationVO">
-  	INSERT INTO TBL_RESERVATION(RESERVENO, MEMBERNO, ACCOMMONO, TOTALPRICE, DATE_S, DATE_E, HEADCOUNT, IMP_UID) 
-  	VALUES (#{reserveNo}, #{memberNo}, #{accommoNo}, #{totalPrice},
-  	TO_DATE(#{date_s}, 'YYYY-MM-DD'), TO_DATE(#{date_e}, 'YYYY-MM-DD'), #{headCount}, #{imp_uid})
+  	INSERT INTO TBL_RESERVATION(IMP_UID, MEMBERNO, ACCOMMONO, TOTALPRICE, DATE_S, DATE_E, HEADCOUNT) 
+  	VALUES (#{imp_uid}, #{memberNo}, #{accommoNo}, #{totalPrice},
+  	TO_DATE(#{date_s}, 'YYYY-MM-DD'), TO_DATE(#{date_e}, 'YYYY-MM-DD'), #{headCount})
   </insert>
   
 </mapper>

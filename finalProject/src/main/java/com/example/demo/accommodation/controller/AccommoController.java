@@ -92,7 +92,7 @@ public class AccommoController {
 	@GetMapping("/searchC")
 	public ModelAndView searchC(String keyword, int pageNum, HttpSession session) {
 //		ModelAndView mav = new ModelAndView("Accommodation/Search");
-		ModelAndView mav = new ModelAndView("Accommodation/SearchTest");	// 사이드바 테스트 버전
+		ModelAndView mav = new ModelAndView("Accommodation/Search");	// 사이드바 테스트 버전
 //		System.out.println("keyword:"+keyword);
 //		System.out.println("category:"+category);
 		
@@ -316,7 +316,6 @@ public class AccommoController {
 		
 		// ReservationVO(reserveNo=0, memberNo=0, accommoNo=0, totalPrice=0, 
 		// date_s=2023-02-15, date_e=2023-02-23, headCount=3, imp_uid=imp_620242687294)
-		r.setReserveNo(1);
 		r.setMemberNo(7);
 		r.setTotalPrice(100);
 		
