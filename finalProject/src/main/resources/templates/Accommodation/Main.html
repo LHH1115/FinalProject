@@ -81,7 +81,7 @@
 		<div class="card-group">
 			<th:block th:each="a: ${accommo_list}">
 				<div class="card text-bg-white" id="img_mostLike" th:accommoNo="${a.accommoNo}">
-				  <img th:src="|/${a.realPath}|" th:class="card-img" width="30%">
+				  <img th:src="|/${a.realPath}|" th:class="card-img" height="350">
 				  <div class="card-img-overlay">
 				    <h5 class="card-title" th:text="${a.name}"></h5>
 				    <p class="card-text" th:text="${a.addr}"></p>

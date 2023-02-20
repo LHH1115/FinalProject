@@ -15,9 +15,10 @@
 		$("#btnPay").click(function(){
 			
 			$.ajax({
-				url:"/accommo/getmember",
+				 url:"/accommo/getmember",
 				 dataType: "json",
 				 success:function(data){
+					 console.log(data);
 					IMP.request_pay({ // param
 				        pg: "kcp",
 				        pay_method: "card",
@@ -72,7 +73,7 @@
 	<!-- 사진 -->
 	<th:block th:each="path: ${photoList}">
 		<span>
-			<img alt="" th:src="|/${path}|" width="600">
+			<img alt="" th:src="|/${path}|" height="350">
 		</span>
 	</th:block>
 	
