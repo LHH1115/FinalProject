@@ -3,11 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-  <properties resource="com/example/demo/accommodation/db/db.properties"/>
+  <properties resource="com/example/demo/member/db/db.properties"/>
   <typeAliases>
-  	<typeAlias type="com.example.demo.accommodation.vo.AccommodationVO" alias="accommoVO"/>
-  	<typeAlias type="com.example.demo.accommodation.vo.AccommoPhotoVO" alias="accommoPhotoVO"/>
-  	<typeAlias type="com.example.demo.accommodation.vo.LikeVO" alias="likeVO"/>
+  	<typeAlias type="com.example.demo.member.vo.MemberVO" alias="memberVO"/>
   </typeAliases>
   <environments default="development">
     <environment id="development">
@@ -21,8 +19,6 @@
     </environment>
   </environments>
   <mappers>
-    <mapper resource="com/example/demo/accommodation/mapper/AccommoMapper.xml"/>
-    <mapper resource="com/example/demo/accommodation/mapper/AccommoPhotoMapper.xml"/>
-    <mapper resource="com/example/demo/accommodation/mapper/LikeMapper.xml"/>
+    <mapper resource="com/example/demo/member/mapper/MemberMapper.xml"/>
   </mappers>
 </configuration>

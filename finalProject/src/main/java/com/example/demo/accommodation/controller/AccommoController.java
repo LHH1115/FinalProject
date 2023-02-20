@@ -13,12 +13,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.accommodation.dao.AccommoDAO;
 import com.example.demo.accommodation.vo.AccommoPhotoVO;
 import com.example.demo.accommodation.vo.AccommodationVO;
 import com.example.demo.accommodation.vo.LikeVO;
+import com.example.demo.accommodation.vo.ReservationVO;
+import com.example.demo.member.dao.MemberDAO;
+import com.example.demo.member.vo.MemberVO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.Setter;
 
@@ -29,11 +36,14 @@ public class AccommoController {
 	
 	public int totPage = 1;		// 페이징 처리 위한 변수
 	public int totCnt = 0;		// 페이징 처리 위한 변수
-	public int pageSize = 50;	// 페이징 처리 위한 변수(검색 시 한페이지당 보여줄 결과 갯수)
+	public int pageSize = 6;	// 페이징 처리 위한 변수(검색 시 한페이지당 보여줄 결과 갯수)
 	public int pageGroup = 10;	// 페이징 처리 위한 변수(페이징 번호 그룹 갯수)
 	
 	@Autowired
 	private AccommoDAO dao;
+	
+	@Autowired
+	private MemberDAO mdao;
 
 	@GetMapping("/main")
 	public String accommoMain(Model model, HttpSession session) {
@@ -221,6 +231,11 @@ public class AccommoController {
 	@GetMapping("/detail")
 	public ModelAndView detail(int accommoNo) {
 		ModelAndView mav = new ModelAndView("Accommodation/Detail");
+		
+		// 로그인한 멤버
+//		MemberVO m = mdao.findByNo(7);
+//		System.out.println(m);
+		
 		AccommodationVO a = dao.findById(accommoNo);
 		
 		List<AccommodationVO> list = dao.findAllPhotoById(accommoNo);
@@ -248,23 +263,46 @@ public class AccommoController {
 			}
 		}
 //		System.out.println(photoList);
+//		mav.addObject("m", m);
 		mav.addObject("a", a);
 		mav.addObject("photoList", photoList);
 		return mav;
 	}
 	
 	// 결제 정보
-	@PostMapping("/payok")
+	@PostMapping("/reservation")
 	public ModelAndView payok(String imp_uid, String merchant_uid, 
-			String paid_amount, String apply_num, String date_s, String date_e) {
+			String paid_amount, String apply_num, ReservationVO r) {
 		ModelAndView mav = new ModelAndView("redirect:/accommo/main");
 		System.out.println("결제완료");
 		System.out.println("고유 ID: "+imp_uid);
 		System.out.println("상점거래 ID: "+merchant_uid);
 		System.out.println("결제금액: "+paid_amount);
 		System.out.println("카드 승인번호: "+apply_num);
-		System.out.println("date_s: "+date_s);
-		System.out.println("date_e: "+date_e);
+		System.out.println("date_s: "+r.getDate_s());
+		System.out.println("date_e: "+r.getDate_e());
+		
+		System.out.println(r);
+		// ReservationVO(reserveNo=0, memberNo=0, accommoNo=0, totalPrice=0, 
+		// date_s=2023-02-15, date_e=2023-02-23, headCount=3, imp_uid=imp_620242687294)
+		r.setReserveNo(1);
+		r.setMemberNo(7);
+		
 		return mav;
+	}
+	
+	@GetMapping("/getmember")
+	@ResponseBody
+	public String getMember() {
+		MemberVO m = mdao.findByNo(7);
+		ObjectMapper mapper = new ObjectMapper(); 
+		String jsonString = "";
+		try {
+			jsonString = mapper.writeValueAsString(m);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return jsonString;
 	}
 }
