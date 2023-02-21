@@ -14,5 +14,17 @@ public class MemberDAO {
 	public int chk_id(String id) {
 		return DBManager.chk_id(id);
 	}
+	
+	public MemberVO findById(String id) {
+		return DBManager.findById(id);
+	}
+	
+	public String findId(String name, String email) {
+		return DBManager.findId(name, email);
+	}
+	
+	public int chagePwd(String id, String pwd) {
+		return DBManager.chagePwd(id, pwd);
+	}
 
 }

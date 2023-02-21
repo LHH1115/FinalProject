@@ -4,31 +4,34 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
-	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.csrf().disable(); //가입할때 submit 403오류 해
-		httpSecurity.authorizeHttpRequests()
-		.antMatchers("/**").permitAll();
-//		.requestMatchers("/admin/**").hasRole("admin")
-//		.anyRequest().authenticated();
+	
+	
+	
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+//		http.csrf().disable();
+		http.authorizeHttpRequests()
+		.mvcMatchers("/","/member/**").permitAll()
+		.anyRequest().authenticated();
 		
-//		httpSecurity.formLogin()
-//		.loginPage("/member/logIn")
-//		.defaultSuccessUrl("/board/list/1/all")
-//		.permitAll();
+		http.formLogin()
+		.loginPage("/member/loginMember").permitAll()
+		.defaultSuccessUrl("/my/loginok");
 		
 //		httpSecurity.logout()
 //		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//		.invalidateHttpSession(true).logoutSuccessUrl("/member/logIn");
+//		.invalidateHttpSession(true).logoutSuccessUrl("/member/loginMember");
 		
-		httpSecurity.httpBasic();
-	
-		return httpSecurity.build();
+		http.httpBasic();
 	}
+
+
 }

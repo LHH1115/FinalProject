@@ -9,11 +9,12 @@ public class MemberVO {
 	private String jumin;
 	private String id;
 	private String pwd;
+	private String postcode;
 	private String addr;
 	private String email;
 	private String phone;
 	private int point;
-	private int role;
+	private String role;
 	private String mbti;
 	private int roulettecount;
 

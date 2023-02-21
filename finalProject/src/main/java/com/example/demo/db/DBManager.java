@@ -1,6 +1,10 @@
 package com.example.demo.db;
 
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.websocket.Session;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -39,4 +43,40 @@ public class DBManager {
 		return re;
 	}
 	
+	public static MemberVO findById(String id) {
+		MemberVO b = null;
+		SqlSession session = sqlSessionFactory.openSession();
+		b = session.selectOne("member.findById",id);
+		System.out.println("로그인한 회원:"+b);
+		session.close();
+		return b;
+	}
+	
+	public static String findId(String name, String email) {
+		MemberVO m = null;
+		String id = "";
+		
+		Map<String, String> map = new HashMap<String,String>();
+		map.put("name", name);
+		map.put("email", email);
+		
+		SqlSession session = sqlSessionFactory.openSession();
+		m = session.selectOne("member.findId", map);
+		id = m.getId();
+		
+		return id;
+		
+	}
+	
+	public static int chagePwd(String id,String pwd) {
+		int re = -1;
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("id", id);
+		map.put("pwd", pwd);
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.update("member.changePwd", map);
+		session.close();
+		return re;
+		
+	}
 }
