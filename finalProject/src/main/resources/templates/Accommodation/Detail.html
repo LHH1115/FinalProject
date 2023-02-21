@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- jQuery -->
+  <!-- jQuery -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
   <!-- iamport.payment.js -->
   <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
@@ -13,55 +13,82 @@
 		IMP.init("imp80436673"); // 예: imp00000000
 		
 		$("#btnPay").click(function(){
+			var date_s = $("#date_s").val()+"";
+			var date_e = $("#date_e").val()+"";
+			var arr1 = date_s.split('-');
+			var arr2 = date_e.split('-');
+			var dat1 = new Date(arr1[0], arr1[1], arr1[2]);
+			var dat2 = new Date(arr2[0], arr2[1], arr2[2]);
+			var diff = dat2 - dat1;
+			var currDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
+			var diffDate = parseInt(diff/currDay);
 			
-			$.ajax({
-				 url:"/accommo/getmember",
-				 dataType: "json",
-				 success:function(data){
-					console.log(data);
-					IMP.request_pay({ // param
-				        pg: "kcp",
-				        pay_method: "card",
-				        merchant_uid: "ORD"+new Date().getTime(),
-				        name: $("#name").text(),
-				        //amount: $("#totalPrice").val(),
-				        amount: 100,
-				        buyer_email: data.email,
-				        buyer_name: data.name,
-				        buyer_tel: data.phone,
-				        buyer_addr: data.addr,
-				        buyer_postcode: data.postcode
-				    }, function (rsp) { // callback
-				        if (rsp.success) {
-				            // 결제 성공 시 로직,
-				            console.log("결제완료");
-				            console.log("고유 ID: "+rsp.imp_uid);
-				            console.log("상점거래 ID: "+rsp.merchant_uid);
-				            console.log("결제금액: "+rsp.paid_amount);
-				            console.log("카드 승인번호: "+rsp.apply_num);
-				            
-				            $("#imp_uid").val(rsp.imp_uid);
-				            $("#merchant_uid").val(rsp.merchant_uid);
-				            $("#paid_amount").val(rsp.paid_amount);
-				            $("#apply_num").val(rsp.apply_num);
-				            
-				            $("#payok").trigger("submit");
-				            
-				        } else {
-				            // 결제 실패 시 로직,
-				      	  console.log("결제실패");
-				      	  console.log("실패 사유: "+rsp.error_msg);
-				      	  alert("결제가 취소되었습니다.")
-				        }
-				    });
+			if($("#date_s").val() == ""){
+				alert("올바른 입실일")
+			}else{
+				if($("#date_e").val() == ""){
+					alert("올바른 퇴실일")
+				}else{
+					if(diffDate < 1){
+						alert("올바르지 않은 날짜")	// 입실일이 퇴실일보다 빠를 경우
+					}else{
+						if($("#headCount").val() == ""){
+							alert("올바른 인원수")
+						}else{
+							$.ajax({
+								 url:"/accommo/getmember",
+								 dataType: "json",
+								 success:function(data){
+									console.log(data);
+									IMP.request_pay({ // param
+								        pg: "kcp",
+								        pay_method: "card",
+								        merchant_uid: "ORD"+new Date().getTime(),
+								        name: $("#name").text(),
+								        //amount: $("#totalPrice").val(),
+								        amount: 100,
+								        buyer_email: data.email,
+								        buyer_name: data.name,
+								        buyer_tel: data.phone,
+								        buyer_addr: data.addr,
+								        buyer_postcode: data.postcode
+								    }, function (rsp) { // callback
+								        if (rsp.success) {
+								            // 결제 성공 시 로직,
+								            console.log("결제완료");
+								            console.log("고유 ID: "+rsp.imp_uid);
+								            console.log("상점거래 ID: "+rsp.merchant_uid);
+								            console.log("결제금액: "+rsp.paid_amount);
+								            console.log("카드 승인번호: "+rsp.apply_num);
+								            
+								            $("#imp_uid").val(rsp.imp_uid);
+								            $("#merchant_uid").val(rsp.merchant_uid);
+								            $("#paid_amount").val(rsp.paid_amount);
+								            $("#apply_num").val(rsp.apply_num);
+								            
+								            $("#payok").trigger("submit");
+								            
+								        } else {
+								            // 결제 실패 시 로직,
+								      	  console.log("결제실패");
+								      	  console.log("실패 사유: "+rsp.error_msg);
+								      	  alert("결제가 취소되었습니다.")
+								        }
+								    });
+								}
+							});
+						}
+					}
 				}
-			});
+			}
 		});
 		
 		function requestPay() {
 		    // IMP.request_pay(param, callback) 결제창 호출
 		    
 		}
+		
+		var diffDate = "";
 		
 		$("body").on("change", "#date_e", function(){
 			var date_s = $("#date_s").val()+"";
@@ -72,8 +99,11 @@
 			var dat2 = new Date(arr2[0], arr2[1], arr2[2]);
 			var diff = dat2 - dat1;
 			var currDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
-			var diffDate = parseInt(diff/currDay);
+			diffDate = parseInt(diff/currDay);
 			$("#totDate").val(diffDate+"박/"+(diffDate+1)+"일");
+		})
+		
+		$("body").on("change", "#headCount", function(){
 			
 			var price = $("#price").text();
 			var headCount = $("#headCount").val();
