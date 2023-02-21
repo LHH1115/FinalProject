@@ -236,25 +236,6 @@ public class AccommoController {
 		MemberVO m = mdao.findByNo(7);
 		session.setAttribute("loginM", m);
 		
-		int memberNo = m.getMemberNo();
-		HashMap<String, Object> map = new HashMap<>();
-		
-		map.put("memberNo", memberNo);
-		map.put("accommoNo", accommoNo);
-		
-		LikeVO l = null;
-		l = dao.findLikeByM(map);
-		if(l != null) {
-			if (accommoNo == l.getRefNo()) {
-				// 찜 한것
-				System.out.println("찜O");
-				mav.addObject("like", "YES");
-			}
-		}else {
-			System.out.println("찜X");
-		}
-		
-		
 		AccommodationVO a = dao.findById(accommoNo);
 		
 		List<AccommodationVO> list = dao.findAllPhotoById(accommoNo);
@@ -321,6 +302,32 @@ public class AccommoController {
 		return mav;
 	}
 	
+	// 찜 여부 결과
+		@GetMapping("/findLike")
+		@ResponseBody
+		public int findLike(HttpServletRequest request, HttpSession session) {
+			int re = 0;	//찜 x
+			MemberVO m = (MemberVO) session.getAttribute("loginM");
+			int accommoNo = Integer.parseInt(request.getParameter("accommoNo"));
+			int memberNo = m.getMemberNo();
+			HashMap<String, Object> map = new HashMap<>();
+			
+			map.put("memberNo", memberNo);
+			map.put("accommoNo", accommoNo);
+			
+			LikeVO l = null;
+			l = dao.findLikeByM(map);
+			if(l != null) {
+				if (accommoNo == l.getRefNo()) {
+					System.out.println("찜O");
+					re = 1;
+				}
+			}else {
+				System.out.println("찜X");
+			}
+			return re;
+		}
+	
 	// 결제 진행
 	@PostMapping("/reservation")
 	public ModelAndView payok(String imp_uid, String merchant_uid, 
@@ -366,6 +373,7 @@ public class AccommoController {
 		return jsonString;
 	}
 	
+	// 찜하기
 	@GetMapping("/dolike")
 	@ResponseBody
 	public String dolike(HttpServletRequest request, HttpSession session) {
@@ -381,6 +389,7 @@ public class AccommoController {
 		return "찜완료";
 	}
 	
+	// 찜해제
 	@GetMapping("/unlike")
 	@ResponseBody
 	public String unlike(HttpServletRequest request, HttpSession session) {

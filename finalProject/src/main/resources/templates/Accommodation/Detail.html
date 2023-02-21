@@ -3,12 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+	.unshow{
+		display: none;
+	}
+	.show{
+		display: inline;
+	}
+
+</style>
   <!-- jQuery -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
   <!-- iamport.payment.js -->
   <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
   <script type="text/javascript">
 	$(function(){
+		
+		var data =  {"accommoNo" : $("#accommoNo").val()};
+		
+		// 찜 여부 검색
+		$.ajax({
+			url:"/accommo/findLike",
+			data:data,
+			success:function(re){
+				if(re == 0){
+					// 찜 안한상태
+					$("#div_dolike").removeClass("unshow");
+					$("#div_dolike").addClass("show");
+					$("#div_unlike").addClass("unshow");
+				}else{
+					// 찜한 상태
+					$("#div_unlike").removeClass("unshow");
+					$("#div_dolike").addClass("unshow");
+					$("#div_unlike").addClass("show");
+				}
+			}
+		})
+		
 		var IMP = window.IMP; // 생략 가능
 		IMP.init("imp80436673"); // 예: imp00000000
 		
@@ -111,8 +142,6 @@
 			$("#totalPrice").val(totalPrice);
 		})
 		
-		var data =  {"accommoNo" : $("#accommoNo").val()};
-		
 		// 찜하기
 		$("#btn_dolike").click(function(){
 			$.ajax({
@@ -120,6 +149,9 @@
 				data:data,
 				success:function(re){
 					alert(re)
+					$("#div_dolike").removeClass("show");
+					$("#div_dolike").addClass("unshow");
+					$("#div_unlike").addClass("show");
 				}
 			})
 		})
@@ -131,6 +163,9 @@
 				data:data,
 				success:function(re){
 					alert(re)
+					$("#div_unlike").removeClass("show");
+					$("#div_unlike").addClass("unshow");
+					$("#div_dolike").addClass("show");
 				}
 			})
 		})
@@ -155,12 +190,12 @@
 	<!-- 찜기능 -->
 	<th:block th:if="${session.loginM != null}">
 		<span th:text="${session.loginM.name}"></span><br>
-		<th:block th:if="${like != 'YES'}">
-			<input type="button" value="찜하기" id="btn_dolike">
-		</th:block>
-		<th:block th:unless="${like != 'YES'}">
-			<input type="button" value="찜해제" id="btn_unlike">
-		</th:block>
+		<div id="div_dolike" class="unshow">
+				<input type="button" value="찜하기" id="btn_dolike">
+		</div>
+		<div id="div_unlike" class="unshow">
+				<input type="button" value="찜해제" id="btn_unlike">
+		</div>
 	</th:block>
 	
 	<!-- 정보 -->
