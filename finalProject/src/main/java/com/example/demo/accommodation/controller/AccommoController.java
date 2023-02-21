@@ -83,9 +83,9 @@ public class AccommoController {
 			accommo_list.add(a);
 		}
 		// 관리자 여부 확인
-		int role = 1;
-		session.setAttribute("role", role);
-		model.addAttribute("accommo_list", accommo_list);
+//		int role = 1;
+//		session.setAttribute("role", role);
+//		model.addAttribute("accommo_list", accommo_list);
 		return "Accommodation/Main";
 	}
 	
@@ -233,7 +233,7 @@ public class AccommoController {
 		ModelAndView mav = new ModelAndView("Accommodation/Detail");
 		
 		// 로그인한 멤버
-		MemberVO m = mdao.findByNo(7);
+		MemberVO m = mdao.findByNo(1);
 		session.setAttribute("loginM", m);
 		
 		AccommodationVO a = dao.findById(accommoNo);

@@ -132,6 +132,29 @@
 			var currDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
 			diffDate = parseInt(diff/currDay);
 			$("#totDate").val(diffDate+"박/"+(diffDate+1)+"일");
+			
+			var price = $("#price").text();
+			var headCount = $("#headCount").val();
+			var totalPrice = price*diffDate*headCount;
+			$("#totalPrice").val(totalPrice);
+		})
+		
+		$("body").on("change", "#date_s", function(){
+			var date_s = $("#date_s").val()+"";
+			var date_e = $("#date_e").val()+"";
+			var arr1 = date_s.split('-');
+			var arr2 = date_e.split('-');
+			var dat1 = new Date(arr1[0], arr1[1], arr1[2]);
+			var dat2 = new Date(arr2[0], arr2[1], arr2[2]);
+			var diff = dat2 - dat1;
+			var currDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
+			diffDate = parseInt(diff/currDay);
+			$("#totDate").val(diffDate+"박/"+(diffDate+1)+"일");
+			
+			var price = $("#price").text();
+			var headCount = $("#headCount").val();
+			var totalPrice = price*diffDate*headCount;
+			$("#totalPrice").val(totalPrice);
 		})
 		
 		$("body").on("change", "#headCount", function(){
@@ -188,7 +211,8 @@
 	<br>
 	
 	<!-- 찜기능 -->
-	<th:block th:if="${session.loginM != null}">
+	<th:block th:if="${session.loginM.role != 'admin'}">
+		<span th:text="${session.loginM.role}"></span><br>
 		<span th:text="${session.loginM.name}"></span><br>
 		<div id="div_dolike" class="unshow">
 				<input type="button" value="찜하기" id="btn_dolike">
@@ -197,6 +221,17 @@
 				<input type="button" value="찜해제" id="btn_unlike">
 		</div>
 	</th:block>
+	
+	<!-- 관리자 기능 -->
+	<div>
+		<th:block th:unless="${session.loginM.role != 'admin'}">
+			<span th:text="${session.loginM.role}"></span><br>
+			<input type="button" id="btn_update" value="숙소 정보 수정"
+			th:onclick="|location.href='@{'/admin/accommo/update/'+${a.accommoNo}}'|">
+			<input type="button" id="btn_delete" value="숙소 삭제"
+			th:onclick="|location.href='@{'/admin/accommo/delete/''+${a.accommoNo}}'|">
+		</th:block>
+	</div>
 	
 	<!-- 정보 -->
 	<div>
@@ -217,9 +252,9 @@
 		<form action="/accommo/reservation" method="post" id="payok">
 			입실일자 <input type="date" name="date_s" id="date_s">
 			퇴실일자 <input type="date" name="date_e" id="date_e">
-			총 일자 <input type="text" id="totDate">
+			총 일자 <input type="text" id="totDate" readonly="readonly">
 			총 인원 <input type="number" name="headCount" id="headCount">
-			총 가격 <input type="text" name="totalPrice" id="totalPrice">
+			총 가격 <input type="text" name="totalPrice" id="totalPrice" readonly="readonly">
 			<input type="hidden" name="accommoNo" th:value="${a.accommoNo}" id="accommoNo">
 			<input type="hidden" name="imp_uid" id="imp_uid">
 			<input type="hidden" name="merchant_uid" id="merchant_uid">
