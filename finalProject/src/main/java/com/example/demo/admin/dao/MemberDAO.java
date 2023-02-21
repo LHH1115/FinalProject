@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.admin.db.DBManager;
 import com.example.demo.admin.vo.MemberVO;
+import com.example.demo.admin.vo.ReservationVO;
 import com.example.demo.admin.vo.ReviewVO;
 
 @Repository
@@ -23,14 +24,15 @@ public class MemberDAO {
 	}
 	
 	// 각 회원마다 리뷰 조회 
-	public List<ReviewVO> memberReviewList(){
-		return DBManager.memberReviewList();
+	public List<ReviewVO> memberReviewList(int memberNo){
+		return DBManager.memberReviewList(memberNo);
 	}
 	
-	// 각 회원마다 리뷰 조회 
-	public ReviewVO findByReviewNo(int memberNo) {
-		return DBManager.findByReviewNo(memberNo);
+	// 각 회원마다 예약 조회 
+	public List<ReservationVO> memberReservationList(int memberNo){
+		return DBManager.memberReservationList(memberNo);
 	}
+	
 }
 
 

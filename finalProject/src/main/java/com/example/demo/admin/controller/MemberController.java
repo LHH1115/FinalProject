@@ -2,6 +2,7 @@ package com.example.demo.admin.controller;
 
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.admin.dao.MemberDAO;
+import com.example.demo.admin.vo.ReservationVO;
 import com.example.demo.admin.vo.ReviewVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -61,6 +63,8 @@ public class MemberController {
 		int startPage = (pageNUM-1)/pageGROUP*pageGROUP+1;
 		int endPage = startPage+pageGROUP-1;
 		
+		// 1 
+		
 		map.put("start", start);
 		map.put("end", end);
 		map.put("keyword", keyword);
@@ -89,8 +93,7 @@ public class MemberController {
 	@ResponseBody
 	public String memberReviewList(HttpServletRequest request) {
 		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
-		ReviewVO reviewVO = memberDAO.findByReviewNo(memberNo);
-		System.out.println(reviewVO);
+		List<ReviewVO> reviewVO = memberDAO.memberReviewList(memberNo);
 		String jsonString = "";
 		try {
 			ObjectMapper mapper = new ObjectMapper();
@@ -98,7 +101,24 @@ public class MemberController {
 		} catch (JsonProcessingException e) {
 			System.out.println("예외발생:"+e.getMessage());
 		}
-		System.out.println(jsonString);
+		System.out.println("각회원 리뷰 리스트 : "+jsonString);
+		return jsonString;
+	}
+	
+	// 각 회원마다 예약 조회 
+	@GetMapping("/admin/memberReservationList")
+	@ResponseBody
+	public String memberResrvationList(HttpServletRequest request) {
+		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+		List<ReservationVO> reservationVO = memberDAO.memberReservationList(memberNo);
+		String jsonString = "";
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			jsonString = mapper.writeValueAsString(reservationVO);
+		} catch (JsonProcessingException e) {
+			System.out.println("예외발생:"+e.getMessage());
+		}
+		System.out.println("각회원 예약 리스트 : "+jsonString);
 		return jsonString;
 	}
 	
