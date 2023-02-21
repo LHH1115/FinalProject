@@ -94,6 +94,29 @@ public class DBManager {
 		return re;
 	}
 	
+	public static LikeVO findLikeByM(HashMap<String, Object> map){
+		SqlSession session = sqlSessionFactory.openSession();
+		LikeVO l = session.selectOne("like.findLikeByM", map);
+		session.close();
+		return l;
+	}
+	
+	public static int doLike(LikeVO l) {
+		int re = 0;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.insert("like.doLike", l);
+		session.close();
+		return re;
+	}
+	
+	public static int unLike(LikeVO l) {
+		int re = 0;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.delete("like.unLike", l);
+		session.close();
+		return re;
+	}
+	
 }
 
 

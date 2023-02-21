@@ -110,6 +110,30 @@
 			var totalPrice = price*diffDate*headCount;
 			$("#totalPrice").val(totalPrice);
 		})
+		
+		var data =  {"accommoNo" : $("#accommoNo").val()};
+		
+		// 찜하기
+		$("#btn_dolike").click(function(){
+			$.ajax({
+				url:"/accommo/dolike",
+				data:data,
+				success:function(re){
+					alert(re)
+				}
+			})
+		})
+		
+		// 찜해제
+		$("#btn_unlike").click(function(){
+			$.ajax({
+				url:"/accommo/unlike",
+				data:data,
+				success:function(re){
+					alert(re)
+				}
+			})
+		})
 	}) 
   </script>
 </head>
@@ -124,6 +148,19 @@
 		<span>
 			<img alt="" th:src="|/${path}|" height="350">
 		</span>
+	</th:block>
+	
+	<br>
+	
+	<!-- 찜기능 -->
+	<th:block th:if="${session.loginM != null}">
+		<span th:text="${session.loginM.name}"></span><br>
+		<th:block th:if="${like != 'YES'}">
+			<input type="button" value="찜하기" id="btn_dolike">
+		</th:block>
+		<th:block th:unless="${like != 'YES'}">
+			<input type="button" value="찜해제" id="btn_unlike">
+		</th:block>
 	</th:block>
 	
 	<!-- 정보 -->
@@ -148,7 +185,7 @@
 			총 일자 <input type="text" id="totDate">
 			총 인원 <input type="number" name="headCount" id="headCount">
 			총 가격 <input type="text" name="totalPrice" id="totalPrice">
-			<input type="hidden" name="accommoNo" th:value="${a.accommoNo}">
+			<input type="hidden" name="accommoNo" th:value="${a.accommoNo}" id="accommoNo">
 			<input type="hidden" name="imp_uid" id="imp_uid">
 			<input type="hidden" name="merchant_uid" id="merchant_uid">
 			<input type="hidden" name="paid_amount" id="paid_amount">

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -228,12 +229,31 @@ public class AccommoController {
 	
 	// 숙소 상세페이지
 	@GetMapping("/detail")
-	public ModelAndView detail(int accommoNo) {
+	public ModelAndView detail(int accommoNo, HttpSession session) {
 		ModelAndView mav = new ModelAndView("Accommodation/Detail");
 		
 		// 로그인한 멤버
-//		MemberVO m = mdao.findByNo(7);
-//		System.out.println(m);
+		MemberVO m = mdao.findByNo(7);
+		session.setAttribute("loginM", m);
+		
+		int memberNo = m.getMemberNo();
+		HashMap<String, Object> map = new HashMap<>();
+		
+		map.put("memberNo", memberNo);
+		map.put("accommoNo", accommoNo);
+		
+		LikeVO l = null;
+		l = dao.findLikeByM(map);
+		if(l != null) {
+			if (accommoNo == l.getRefNo()) {
+				// 찜 한것
+				System.out.println("찜O");
+				mav.addObject("like", "YES");
+			}
+		}else {
+			System.out.println("찜X");
+		}
+		
 		
 		AccommodationVO a = dao.findById(accommoNo);
 		
@@ -344,5 +364,35 @@ public class AccommoController {
 			e.printStackTrace();
 		}
 		return jsonString;
+	}
+	
+	@GetMapping("/dolike")
+	@ResponseBody
+	public String dolike(HttpServletRequest request, HttpSession session) {
+		int accommoNo = Integer.parseInt(request.getParameter("accommoNo"));
+		System.out.println(accommoNo);
+		LikeVO l = new LikeVO();
+		l.setCategory("accommo");
+		MemberVO m = (MemberVO) session.getAttribute("loginM");
+		l.setMemberNo(m.getMemberNo());
+		l.setRefNo(accommoNo);
+		
+		dao.doLike(l);
+		return "찜완료";
+	}
+	
+	@GetMapping("/unlike")
+	@ResponseBody
+	public String unlike(HttpServletRequest request, HttpSession session) {
+		int accommoNo = Integer.parseInt(request.getParameter("accommoNo"));
+		System.out.println(accommoNo);
+		LikeVO l = new LikeVO();
+		l.setCategory("accommo");
+		MemberVO m = (MemberVO) session.getAttribute("loginM");
+		l.setMemberNo(m.getMemberNo());
+		l.setRefNo(accommoNo);
+		
+		dao.unLike(l);
+		return "찜해제";
 	}
 }
