@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>제주다컴</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+
+<script type="text/javascript">   
+	$(function() {
+		$("#headers").load("/header.html");  		//헤더 인클루드
+		
+		// slick slider
+		$(function() {
+			$('.post-wrapper_acco').slick({
+				slidesToShow: 4,
+				slidesToScroll: 1,
+				autoplay: true,
+				autoplaySpeed: 5000,
+				nextArrow:$('.next_acco'),
+				prevArrow:$('.prev_acco'),
+			});
+			
+			$('.post-wrapper_rest').slick({
+				slidesToShow: 4,
+				slidesToScroll: 1,
+				autoplay: true,
+				autoplaySpeed: 5000,
+				nextArrow:$('.next_rest'),
+				prevArrow:$('.prev_rest'),
+			});
+		});
+	});
+	
+</script>
+<style type="text/css">
+	/*post slider*/
+.post-slider_acco{
+  width:70%;
+  margin:0px auto;
+  position:relative;
+}
+.post-slider_acco .silder-title_acco{
+  text-align:center;
+  margin:30px auto;
+}
+.post-slider_acco .next_acco{
+  position:absolute;
+  top:40%;
+  right:20px;
+  font-size:2em;
+  color:gray;
+  cursor: pointer;
+}
+.post-slider_acco .prev_acco{
+  position:absolute;
+  top:40%;
+  left:15px;
+  font-size:2em;
+  color:gray;
+  cursor: pointer;
+}
+.post-slider_acco .post-wrapper_acco{
+
+  width:84%;
+  height:350px;
+  margin:0px auto;
+  overflow: hidden;
+  padding:10px 0px 10px 0px;
+  display:flex; 
+  align-items:center;
+}
+.post-slider_acco .post-wrapper_acco .post_acco{
+  width:300px;
+  height:300px;
+  margin:0px 10px;
+  display:inline-block;
+  background:white;
+  border-radius: 5px;
+}
+.post-slider_acco .post-wrapper_acco .post_acco .post-info_acco{
+  font-size:15px;
+  height:30%;
+  padding-left:10px;
+}
+.post-slider_acco .post-wrapper_acco .post_acco .slider-image_acco{
+  width:100%;
+  height:175px;
+  border-top-left-radius:5px;
+  border-top-right-radius:5px;
+}
+</style>
+</head>
+<body>
+<div id="headers"></div>
+<!-- =============================================================================================================  -->
+	<div class="container">
+		<hr>
+ 		<h2>메인페이지!!!!!!!</h2>
+  		<hr>
+  		<h2>검색기능!!!</h2>
+  		<hr>
+  </div>
+  
+  <!-- 숙소 추천 -->
+  <div class="page-wrapper_acco" style="position:relative; width: 100%;">
+      <!--page slider -->
+      <div class="post-slider_acco" style="border:1px solid;">
+        <h1 class="silder-title_acco">숙소 추천</h1>
+        <i class="fas fa-chevron-left prev_acco"><img src="photo/leftArrow.jpg" style="width: 30px"></i>  	
+        <i class="fas fa-chevron-right next_acco"><img src="photo/rightArrow.jpg" style="width: 30px"></i>   
+        <div class="post-wrapper_acco">
+          <div class="post_acco">
+            <a href="#"><img src="photo/Accommodation/가족호텔업/베스트웨스턴 제주호텔/acc1.jpeg" class="slider-image_acco"></a>
+            <div class="post-info_acco"><br>
+              <i class="far fa-user_acco" style="height:10%;">베스트웨스턴 호텔</i>
+            </div>
+          </div>
+          <div class="post_acco">
+            <a href="#"><img src="photo/Accommodation/가족호텔업/그림리조트/acc1.jpeg" class="slider-image_acco"></a>
+            <div class="post-info_acco"><br>
+              <i class="far fa-user_acco" style="height:10%;">그림리조트</i>
+            </div>
+          </div>
+          <div class="post_acco">
+            <a href="#"><img src="photo/Accommodation/게스트하우스/섬게스트하우스/acc1.jpeg" class="slider-image_acco"></a>
+            <div class="post-info_acco"><br>
+              <i class="far fa-user_acco" style="height:10%;">섬게스트하우스</i>
+            </div>
+          </div>
+          <div class="post_acco">
+            <a href="#"><img src="photo/Accommodation/게스트하우스/제주공항게스트하우스웨이브사운드/acc1.jpeg" class="slider-image_acco"></a>
+            <div class="post-info_acco"><br>
+              <i class="far fa-user_acco" style="height:10%;">하우스웨이브사운드</i>
+            </div>
+          </div>
+          <div class="post_acco">
+            <a href="#"><img src="photo/Accommodation/휴양콘도미니엄업/메가리조트제주/acc1.jpeg" class="slider-image_acco"></a>
+            <div class="post-info_acco"><br>
+              <i class="far fa-user_acco" style="height:10%;">메가리조트</i>
+            </div>
+          </div>
+          <div class="post_acco">
+            <a href="#"><img src="photo/Accommodation/휴양콘도미니엄업/사조그랜드리조트/acc1.jpeg" class="slider-image_acco"></a>
+            <div class="post-info_acco"><br>
+              <i class="far fa-user_acco" style="height:10%;">사조그랜드리조트</i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--post slider-->
+    </div>
+    
+    <!-- 식당 추천 -->
+  <div class="page-wrapper_rest" style="position:relative; width: 100%;">
+      <!--page slider -->
+      <div class="post-slider_rest" style="border:1px solid;">
+        <h1 class="silder-title_rest">숙소 추천</h1>
+        <i class="fas fa-chevron-left prev_rest"><img src="photo/leftArrow.jpg" style="width: 30px"></i>  	
+        <i class="fas fa-chevron-right next_rest"><img src="photo/rightArrow.jpg" style="width: 30px"></i>   
+        <div class="post-wrapper_rest">
+          <div class="post_rest">
+            <a href="#"><img src="photo/Accommodation/가족호텔업/베스트웨스턴 제주호텔/acc1.jpeg" class="slider-image_rest"></a>
+            <div class="post-info_rest"><br>
+              <i class="far fa-user_rest" style="height:10%;">베스트웨스턴 호텔</i>
+            </div>
+          </div>
+          <div class="post_rest">
+            <a href="#"><img src="photo/Accommodation/가족호텔업/그림리조트/acc1.jpeg" class="slider-image_rest"></a>
+            <div class="post-info_rest"><br>
+              <i class="far fa-user_rest" style="height:10%;">그림리조트</i>
+            </div>
+          </div>
+          <div class="post_rest">
+            <a href="#"><img src="photo/Accommodation/게스트하우스/섬게스트하우스/acc1.jpeg" class="slider-image_rest"></a>
+            <div class="post-info_rest"><br>
+              <i class="far fa-user_rest" style="height:10%;">섬게스트하우스</i>
+            </div>
+          </div>
+          <div class="post_rest">
+            <a href="#"><img src="photo/Accommodation/게스트하우스/제주공항게스트하우스웨이브사운드/acc1.jpeg" class="slider-image_rest"></a>
+            <div class="post-info_rest"><br>
+              <i class="far fa-user_rest" style="height:10%;">하우스웨이브사운드</i>
+            </div>
+          </div>
+          <div class="post_rest">
+            <a href="#"><img src="photo/Accommodation/휴양콘도미니엄업/메가리조트제주/acc1.jpeg" class="slider-image_rest"></a>
+            <div class="post-info_rest"><br>
+              <i class="far fa-user_rest" style="height:10%;">메가리조트</i>
+            </div>
+          </div>
+          <div class="post_rest">
+            <a href="#"><img src="photo/Accommodation/휴양콘도미니엄업/사조그랜드리조트/acc1.jpeg" class="slider-image_rest"></a>
+            <div class="post-info_rest"><br>
+              <i class="far fa-user_rest" style="height:10%;">사조그랜드리조트</i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--post slider-->
+    </div>
+
+  
+
+
+
+</body>
+
+</html>
