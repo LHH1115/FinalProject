@@ -28,7 +28,7 @@ $(function(){
 			success:function(data){
 				if (validcode == $("#valid_num").val()){
 					if(data == $("#email").val()){
-						sessionStorage.setItem("findPwdId",$("#id").val()); 
+						sessionStorage.setItem("MyId",$("#id").val());
 						location.href="/member/changePwd";
 					}else{
 						alert("개인정보가 일치하지않습니다.");

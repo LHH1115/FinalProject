@@ -74,7 +74,7 @@ public class MemberController {
 		
 		
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
-		mailMessage.setFrom("");   //자신의 gmail을 써 줍니다.
+		mailMessage.setFrom("shjay0306@gmail.com");   //자신의 gmail을 써 줍니다.
 		mailMessage.setTo(email);
 		mailMessage.setSubject("인증코드 전송");
 		mailMessage.setText(code);
@@ -126,9 +126,8 @@ public class MemberController {
 	
 	}
 	
-	@GetMapping("/my/loginok")
+	@GetMapping("/myPage/loginok")
 	public void getLoginSession(HttpSession session) {
-		System.out.println("세션!");
 		//인증된 회원의 정보를 갖고오기 위해서 먼저 시큐리티의 인증객체가 필요
 		Authentication authentication = 
 							SecurityContextHolder.getContext().getAuthentication();
@@ -150,7 +149,7 @@ public class MemberController {
 	public ModelAndView insertSubmit(MemberVO m,int jumin_f, int jumin_b, String addr_f, String addr_b) {
 		ModelAndView mav = new ModelAndView("redirect:/");
 		m.setJumin(jumin_f+"-"+jumin_b);
-		m.setAddr(addr_f+" "+addr_b);
+		m.setAddr(addr_f+"/"+addr_b);
 		String pwd = passwordEncoder.encode(m.getPwd());
 		m.setPwd(pwd);
 

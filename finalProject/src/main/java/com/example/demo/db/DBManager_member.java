@@ -13,7 +13,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import com.example.demo.vo.MemberVO;
 
-public class DBManager {
+public class DBManager_member {
 	public static SqlSessionFactory sqlSessionFactory;
 	
 	static {
@@ -47,7 +47,6 @@ public class DBManager {
 		MemberVO b = null;
 		SqlSession session = sqlSessionFactory.openSession();
 		b = session.selectOne("member.findById",id);
-		System.out.println("로그인한 회원:"+b);
 		session.close();
 		return b;
 	}

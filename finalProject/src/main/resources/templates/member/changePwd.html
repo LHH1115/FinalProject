@@ -6,7 +6,7 @@
 <script type="text/javascript" src='https://code.jquery.com/jquery-3.6.3.min.js'></script>
 <script type="text/javascript">
 $(function(){
-	$("#id").val(sessionStorage.getItem("findPwdId"));
+	$("#id").val(sessionStorage.getItem("MyId"));
 	$("#btn_submit").click(function(event){
 		var p1 = $('#pwd').val();
       	var p2 = $('#pwd_chk').val();
@@ -31,7 +31,7 @@ $(function(){
 <h1>비밀번호를 변경해주세요</h1>
 <form action="/member/changePwd" method="post" id="form">
 	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-	<input type="hidden" name="id" id="id">
+	<input type="text" name="id" id="id" th:value="${id}">
 	비밀번호:<input type="password" name='pwd' id='pwd'><br>
 	비밀번호확인:<input type='password' id='pwd_chk'><br>
 	<input type="button" id = 'btn_submit' value="변경">

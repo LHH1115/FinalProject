@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		
 		http.formLogin()
 		.loginPage("/member/loginMember").permitAll()
-		.defaultSuccessUrl("/my/loginok");
+		.defaultSuccessUrl("/myPage/loginok");
 		
 //		httpSecurity.logout()
 //		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
