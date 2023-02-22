@@ -117,6 +117,22 @@ public class DBManager {
 		return re;
 	}
 	
+	public static int updateById(AccommodationVO a) {
+		int re = 0;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.update("accommo.updateById", a);
+		session.close();
+		return re;
+	}
+	
+	public static int deleteById(int accommoNo) {
+		int re = 0;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.delete("accommo.deleteById", accommoNo);
+		session.close();
+		return re;
+	}
+	
 }
 
 

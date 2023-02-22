@@ -131,11 +131,17 @@
 			var diff = dat2 - dat1;
 			var currDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
 			diffDate = parseInt(diff/currDay);
+			if (isNaN(diffDate)) {
+				diffDate = 0;
+				}
 			$("#totDate").val(diffDate+"박/"+(diffDate+1)+"일");
 			
 			var price = $("#price").text();
 			var headCount = $("#headCount").val();
 			var totalPrice = price*diffDate*headCount;
+			if (isNaN(totalPrice)) {
+				totalPrice = 0;
+				}
 			$("#totalPrice").val(totalPrice);
 		})
 		
@@ -149,11 +155,17 @@
 			var diff = dat2 - dat1;
 			var currDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
 			diffDate = parseInt(diff/currDay);
+			if (isNaN(diffDate)) {
+				diffDate = 0;
+				}
 			$("#totDate").val(diffDate+"박/"+(diffDate+1)+"일");
 			
 			var price = $("#price").text();
 			var headCount = $("#headCount").val();
 			var totalPrice = price*diffDate*headCount;
+			if (isNaN(totalPrice)) {
+				totalPrice = 0;
+				}
 			$("#totalPrice").val(totalPrice);
 		})
 		
@@ -162,6 +174,9 @@
 			var price = $("#price").text();
 			var headCount = $("#headCount").val();
 			var totalPrice = price*diffDate*headCount;
+			if (isNaN(totalPrice)) {
+				totalPrice = 0;
+				}
 			$("#totalPrice").val(totalPrice);
 		})
 		
@@ -228,8 +243,6 @@
 			<span th:text="${session.loginM.role}"></span><br>
 			<input type="button" id="btn_update" value="숙소 정보 수정"
 			th:onclick="|location.href='@{'/admin/accommo/update/'+${a.accommoNo}}'|">
-			<input type="button" id="btn_delete" value="숙소 삭제"
-			th:onclick="|location.href='@{'/admin/accommo/delete/''+${a.accommoNo}}'|">
 		</th:block>
 	</div>
 	

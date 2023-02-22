@@ -61,4 +61,12 @@ public class AccommoDAO {
 	public int unLike(LikeVO l) {
 		return DBManager.unLike(l);
 	}
+	
+	public int updateById(AccommodationVO a) {
+		return DBManager.updateById(a);
+	}
+	
+	public int deleteById(int accommoNo) {
+		return DBManager.deleteById(accommoNo);
+	}
 }

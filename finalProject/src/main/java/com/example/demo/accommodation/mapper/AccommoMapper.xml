@@ -57,5 +57,15 @@
   	ORDER BY P.ORDERS
   </select>
   
+  <!-- 정보 수정 -->
+  <update id="updateById" parameterType="accommoVO">
+  	UPDATE TBL_ACCOMMODATION SET ADDR = #{addr}, PHONE = #{phone}, PRICE = #{price} WHERE ACCOMMONO = #{accommoNo}
+  </update>
+  
+  <!-- 삭제 -->
+  <delete id="deleteById" parameterType="java.lang.Integer">
+  	DELETE TBL_ACCOMMODATION WHERE ACCOMMONO = #{accommoNo}
+  </delete>
+  
 </mapper>
 
