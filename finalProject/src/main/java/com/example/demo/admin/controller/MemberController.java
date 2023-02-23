@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.admin.dao.MemberDAO;
 
@@ -98,10 +99,14 @@ public class MemberController {
 	
 	// 메인 페이지
 	@GetMapping("/")
-	public String main(HttpSession session) {
-		session.removeAttribute("keyword");
-		session.removeAttribute("searchColumn");
-		return "main/mainPage";
+	public ModelAndView main(HttpSession session) {
+		ModelAndView mav = new ModelAndView("main/mainPage.html");
+		
+		
+		
+		
+		
+		return mav;
 	}
 
 
