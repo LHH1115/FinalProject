@@ -22,7 +22,7 @@ import com.example.demo.accommodation.vo.AccommoPhotoVO;
 import com.example.demo.accommodation.vo.AccommodationVO;
 import com.example.demo.accommodation.vo.LikeVO;
 import com.example.demo.accommodation.vo.ReservationVO;
-import com.example.demo.member.dao.MemberDAO;
+import com.example.demo.member.dao.MemberDAOLHH;
 import com.example.demo.member.vo.MemberVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,7 +43,7 @@ public class AccommoController {
 	private AccommoDAO dao;
 	
 	@Autowired
-	private MemberDAO mdao;
+	private MemberDAOLHH mdao;
 
 	@GetMapping("/main")
 	public String accommoMain(Model model, HttpSession session) {

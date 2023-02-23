@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+
+	<!-- 관리자 회원 조회 -->
+	<select id="findAll" resultType="memberVO">
+		select memberNo,name,id,addr,email,phone,point,mbti from
+		(select rownum n,a.* from
+		(select * from tbl_member
+		
+		<!-- <if test="keyword != null and keyword != ''">
+		 	where name like '%' || #{keyword} || '%'
+		</if> -->	 
+		
+		<choose>
+			<when test="column == 'name' and column != null and keyword != null"> 
+				where name like '%'||#{keyword}||'%' order by memberNo </when>
+			<when test="column == 'memberNo' and column != null and keyword != null"> 
+				where memberNo like '%'||#{keyword}||'%' order by memberNo </when>
+			<when test="column == 'id' and column != null and keyword != null"> 
+				where id like '%'||#{keyword}||'%' order by memberNo </when>
+			<when test="column == 'phone' and column != null and keyword != null"> 
+				where phone like '%'||#{keyword}||'%' order by memberNo </when>
+		</choose>
+		
+		
+		)a)
+		where n between #{start} and #{end}
+  	</select>
+  	
+  	<!-- 회원 총 레코드 -->
+  	<select id="totalRecord" resultType="java.lang.Integer">
+  		
+  		select count(*) from tbl_member
+  		
+  		
+  			<!-- <if test="column == 'name'">
+		 		where name like '%' || #{keyword} || '%'
+			</if> -->
+  		
+  		
+  		<choose>
+			<when test="column == 'name' and column !=null and keyword !=null"> 
+				where name like '%'||#{keyword}||'%' </when>
+			<when test="column == 'memberNo' and column !=null and keyword !=null"> 
+				where memberNo like '%'||#{keyword}||'%' </when>
+			<when test="column == 'id' and column !=null and keyword !=null"> 
+				where id like '%'||#{keyword}||'%' </when>
+			<when test="column == 'phone' and column !=null and keyword !=null"> 
+				where phone like '%'||#{keyword}||'%' </when>
+		</choose>
+
+  	
+  	</select>
+
+</mapper>
+
+
+
+
+

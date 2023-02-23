@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.accommodation.dao.AccommoDAO;
 import com.example.demo.accommodation.vo.AccommodationVO;
-import com.example.demo.member.dao.MemberDAO;
+import com.example.demo.member.dao.MemberDAOLHH;
 import com.example.demo.member.vo.MemberVO;
 
 import lombok.Setter;
@@ -26,7 +26,7 @@ public class AdminAccomoController {
 	private AccommoDAO dao;
 	
 	@Autowired
-	private MemberDAO mdao;
+	private MemberDAOLHH mdao;
 	
 	@GetMapping("/update/{accommoNo}")
 	public ModelAndView updateForm(@PathVariable int accommoNo, HttpSession session) {

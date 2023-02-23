@@ -6,7 +6,7 @@ import com.example.demo.member.db.DBManager;
 import com.example.demo.member.vo.MemberVO;
 
 @Repository
-public class MemberDAO {
+public class MemberDAOLHH {
 	
 	public MemberVO findByNo(int memberNo) {
 		return DBManager.findByNo(memberNo);

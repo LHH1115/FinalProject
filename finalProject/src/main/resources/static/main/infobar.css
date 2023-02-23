@@ -5,7 +5,7 @@
 	  font-family: 'Jua', sans-serif;
 	  font-size:18px; 
 	}
-	nav{
+	nav .header{
 	  height: 100px;
 	  background-color: white;
 	  display: flex;
@@ -44,6 +44,12 @@
     	margin:20px;
         width:50px;
         float:left;
+    }
+    
+    .logo
+    {
+    	width:120px;
+    	height: 120px;
     }
     
    .menuItem{
