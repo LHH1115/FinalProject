@@ -34,12 +34,12 @@
 					"?dataType=JSON&serviceKey="+serviceKey+"&numOfRows=10&pageNo=1"+
 					"&base_date="+tmFc+"&base_time=0500&nx="+x+"&ny="+y;
 
-		console.log(url)
+		// console.log(url)
 		
 		$.ajax({
 			url:url,
 			success:function(data){
-				console.log(data)
+				// console.log(data)
 				var item = data.response.body.items.item[0];
 				$.each(item,function(key,value){
 					if(key.match("fcstTime")){
@@ -66,7 +66,7 @@
                  <li>
                     <a href="">숙박</a>
                     <ul>
-                        <li><a href="#">숙소 메인</a></li>
+                        <li><a href="/accommo/main">숙소 메인</a></li>
                      
                     </ul>
                  </li>
@@ -74,7 +74,7 @@
                  <li>
                     <a href="">관광지</a>
                     <ul>
-                        <li><a href="#">관광지 메인</a></li>
+                        <li><a href="/attract/main">관광지 메인</a></li>
                     </ul>
                  </li>
                 
