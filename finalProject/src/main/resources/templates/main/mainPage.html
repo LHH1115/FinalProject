@@ -16,6 +16,15 @@
 		//$("#footers").load("layout/footer.html");  		//푸터부분 인클루드
 		
 		$(function() {
+			
+			/* $("#attr_show").on("click",function(){
+				$(".page-wrapper_attr").css("display","block");
+				$(".page-wrapper_attr").css("visibility","visible");
+				$(".page-wrapper_rest").css("display","none");
+				$(".page-wrapper_rest").css("visibility","hidden");		
+				
+			});  */
+			
 			$('.post-wrapper').slick({
 				slidesToShow: 3,
 				slidesToScroll: 1,
@@ -33,7 +42,7 @@
 				nextArrow:$('.next_1'),
 				prevArrow:$('.prev_1'),
 			});
-		
+
 	});
 });
 </script>
@@ -45,6 +54,12 @@ img{width:500px;height:500px;}
 .card-img-top{width:100px;height:100px;}
 .container-fluid{text-align: center;}
 
+/* test */
+/* .page-wrapper_attr{
+	display: none;
+	visibility: hidden;
+} */
+
 /*식당 추천 css*/
 .post-slider{width:70%;margin:0px auto;position:relative;}
 .post-slider .silder-title{text-align:center;margin:30px auto;}
@@ -54,7 +69,7 @@ img{width:500px;height:500px;}
 .post-slider .post-wrapper .post{width:300px;height:300px;margin:0px 10px;display:inline-block;background:white;border-radius: 5px;}
 .post-slider .post-wrapper .post .post-info{font-size:15px;height:30%;padding-left:10px;}
 .post-slider .post-wrapper .post .slider-image{width:100%;height:175px;border-top-left-radius:5px;border-top-right-radius:5px;}
-/*관광지ㅌ 추천 css*/
+/*관광지 추천 css*/
 .post-slider{width:70%;margin:0px auto;position:relative;}
 .post-slider .silder-title{text-align:center;margin:30px auto;}
 .post-slider .next_1{position:absolute;top:30%;right:25px;font-size:1em;color:gray;cursor: pointer;}
@@ -154,13 +169,15 @@ img{width:500px;height:500px;}
 			</div>	
 		
 		</div>
-		
-		
+
+<button class="btn btn-dark" id="rest_show">식당</button>
+<button class="btn btn-dark" id="attr_show">관광지</button>
+
 <div class="container">	
 <!-- 식당 추천 -->
-<h2>인기 식당</h2>
 
-  <div class="page-wrapper" style="position:relative; width: 100%;">
+  <div class="page-wrapper_rest" style="position:relative; width: 100%;">
+  <h2>인기 식당</h2>
       <!--page slider -->
       <div class="post-slider">
         <i class="fas fa-chevron-left prev"><img src="photo/arraw_left.png" style="width: 20px; height: 20px"></i>  	
@@ -201,8 +218,9 @@ img{width:500px;height:500px;}
     </div>
      <!--post slider-->
     
-	<h2>인기 관광지</h2>
-  <div class="page-wrapper" style="position:relative; width: 100%;">
+	
+  <div class="page-wrapper_attr" style="position:relative; width: 100%;">
+  <h2>인기 관광지</h2>
       <!--page slider -->
       <div class="post-slider">
         <i class="fas fa-chevron-left prev_1"><img src="photo/arraw_left.png" style="width: 20px; height: 20px"></i>  	
