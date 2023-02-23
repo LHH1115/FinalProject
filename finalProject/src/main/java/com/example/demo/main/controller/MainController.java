@@ -15,4 +15,9 @@ public class MainController {
 	public String main() {
 		return "Main/Header";
 	}
+	
+	@GetMapping("/rouletteTest")
+	public String rouletteTest() {
+		return "Main/rouletteTest";
+	}
 }
