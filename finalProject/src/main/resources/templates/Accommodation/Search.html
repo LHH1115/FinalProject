@@ -112,6 +112,7 @@
 					<th>번호</th>
 					<th>가격</th>
 					<th>카테고리</th>
+					<th>경로</th>
 				</tr>
 				<tr th:each="a: ${list}" id="tr" th:accommoNo="${a.accommoNo}">
 					<td th:text="${a.name}"></td>
@@ -124,6 +125,7 @@
 					</th:block>
 					<td th:text="${a.price}"></td>
 					<td th:text="${a.category}"></td>
+					<td th:text="${a.realPath}"></td>
 				</tr>
 			</table>
 	      	<!-- 페이징 -->

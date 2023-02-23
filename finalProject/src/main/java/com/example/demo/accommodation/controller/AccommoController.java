@@ -50,7 +50,7 @@ public class AccommoController {
 		session.removeAttribute("keyword");		// 페이징 처리 세션 제거
 		session.removeAttribute("category");	// 페이징 처리 세션 제거
 		
-		MemberVO m = mdao.findByNo(1);
+		MemberVO m = mdao.findByNo(7);
 		session.setAttribute("loginM", m);
 		
 		// 인기숙소
@@ -118,6 +118,65 @@ public class AccommoController {
 		map.put("start", start);
 		map.put("end", end);
 		List<AccommodationVO> list = dao.findByAny(map);
+		
+		for(int i =0;i<list.size();i++) {
+			int refNo = list.get(i).getAccommoNo();
+			List<AccommodationVO> photo_list = dao.findAllPhotoById(refNo);
+			String arealPath = "";
+			String acategory = list.get(i).getCategory();
+			String aname = list.get(i).getName();
+			String apath = "";
+			if(photo_list.size() > 0) {
+				for(int j=0;j<photo_list.size();j++) {
+					AccommodationVO forPhoto = new AccommodationVO();
+					forPhoto = photo_list.get(0);
+					apath = forPhoto.getPath();
+					arealPath = "photo/Accommodation/"+acategory+"/"+aname+"/"+apath;
+					list.get(i).setRealPath(arealPath);
+				}
+			}else {
+				Random rand = new Random();
+				String fhotellList[] = {"그림리조트", "꼬뜨도르가족호텔", "다인리조트", "베스트웨스턴 제주호텔", "올레리조트"};
+				String guestList[] = {"민트게스트하우스", "섬게스트하우스", "슬로시티게스트하우스", "제주공항게스트하우스웨이브사운드", "토다게스트"};
+				String thotelList[] = {"(주)호텔하니크라운", "제주썬호텔", "제주팔레스호텔", "글래드호텔앤리조트㈜ 메종글래드제주", "제주로얄호텔"};
+				String hostelList[] = {"길리 리조트(구.협재 사계절 리조트)", "라이트프리(구. 에바다호스텔)", "아마스빌 리조트(구.아마스빌 호스텔)", "용두암캐빈", "해미안"};
+				String condoList[] = {"메가리조트제주", "사조그랜드리조트", "이랜드파크 켄싱턴리조트 제주한림점", "일성제주콘도미니엄", "제주토비스콘도①"};
+					switch (acategory) {
+						case "가족호텔업":{
+							for(int j=0;j<5;j++) {
+								arealPath = "photo/Accommodation/"+acategory+"/"+fhotellList[rand.nextInt(5)]+"/acc"+(j+1)+".jpeg";
+								list.get(i).setRealPath(arealPath);
+							}
+						}break;
+						case "게스트하우스":{
+							for(int j=0;j<5;j++) {
+							arealPath = "photo/Accommodation/"+acategory+"/"+guestList[rand.nextInt(5)]+"/acc"+(j+1)+".jpeg";
+							list.get(i).setRealPath(arealPath);
+							}
+						}break;
+						case "관광호텔업":{
+							for(int j=0;j<5;j++) {
+							arealPath = "photo/Accommodation/"+acategory+"/"+thotelList[rand.nextInt(5)]+"/acc"+(j+1)+".jpeg";
+							list.get(i).setRealPath(arealPath);
+							}
+						}break;
+						case "호스텔업":{
+							for(int j=0;j<5;j++) {
+							arealPath = "photo/Accommodation/"+acategory+"/"+hostelList[rand.nextInt(5)]+"/acc"+(j+1)+".jpeg";
+							list.get(i).setRealPath(arealPath);
+							}
+						}break;
+						case "휴양콘도미니엄업":{
+							for(int j=0;j<5;j++) {
+							arealPath = "photo/Accommodation/"+acategory+"/"+condoList[rand.nextInt(5)]+"/acc"+(j+1)+".jpeg";
+							list.get(i).setRealPath(arealPath);
+							}
+						}break;
+					}
+			}
+			
+		}
+		
 		totCnt = dao.findCountByAny(keyword);
 		totPage = (int) Math.ceil(totCnt/pageSize);
 		int startPage = (pageNum-1)/pageGroup*pageGroup+1;
@@ -161,6 +220,65 @@ public class AccommoController {
 			map.put("start", start);
 			map.put("end", end);
 			List<AccommodationVO> list = dao.findByAny(map);
+			
+			for(int i =0;i<list.size();i++) {
+				int refNo = list.get(i).getAccommoNo();
+				List<AccommodationVO> photo_list = dao.findAllPhotoById(refNo);
+				String arealPath = "";
+				String acategory = list.get(i).getCategory();
+				String aname = list.get(i).getName();
+				String apath = "";
+				if(photo_list.size() > 0) {
+					for(int j=0;j<photo_list.size();j++) {
+						AccommodationVO forPhoto = new AccommodationVO();
+						forPhoto = photo_list.get(0);
+						apath = forPhoto.getPath();
+						arealPath = "photo/Accommodation/"+acategory+"/"+aname+"/"+apath;
+						list.get(i).setRealPath(arealPath);
+					}
+				}else {
+					Random rand = new Random();
+					String fhotellList[] = {"그림리조트", "꼬뜨도르가족호텔", "다인리조트", "베스트웨스턴 제주호텔", "올레리조트"};
+					String guestList[] = {"민트게스트하우스", "섬게스트하우스", "슬로시티게스트하우스", "제주공항게스트하우스웨이브사운드", "토다게스트"};
+					String thotelList[] = {"(주)호텔하니크라운", "제주썬호텔", "제주팔레스호텔", "글래드호텔앤리조트㈜ 메종글래드제주", "제주로얄호텔"};
+					String hostelList[] = {"길리 리조트(구.협재 사계절 리조트)", "라이트프리(구. 에바다호스텔)", "아마스빌 리조트(구.아마스빌 호스텔)", "용두암캐빈", "해미안"};
+					String condoList[] = {"메가리조트제주", "사조그랜드리조트", "이랜드파크 켄싱턴리조트 제주한림점", "일성제주콘도미니엄", "제주토비스콘도①"};
+						switch (acategory) {
+							case "가족호텔업":{
+								for(int j=0;j<5;j++) {
+									arealPath = "photo/Accommodation/"+acategory+"/"+fhotellList[rand.nextInt(5)]+"/acc"+(j+1)+".jpeg";
+									list.get(i).setRealPath(arealPath);
+								}
+							}break;
+							case "게스트하우스":{
+								for(int j=0;j<5;j++) {
+								arealPath = "photo/Accommodation/"+acategory+"/"+guestList[rand.nextInt(5)]+"/acc"+(j+1)+".jpeg";
+								list.get(i).setRealPath(arealPath);
+								}
+							}break;
+							case "관광호텔업":{
+								for(int j=0;j<5;j++) {
+								arealPath = "photo/Accommodation/"+acategory+"/"+thotelList[rand.nextInt(5)]+"/acc"+(j+1)+".jpeg";
+								list.get(i).setRealPath(arealPath);
+								}
+							}break;
+							case "호스텔업":{
+								for(int j=0;j<5;j++) {
+								arealPath = "photo/Accommodation/"+acategory+"/"+hostelList[rand.nextInt(5)]+"/acc"+(j+1)+".jpeg";
+								list.get(i).setRealPath(arealPath);
+								}
+							}break;
+							case "휴양콘도미니엄업":{
+								for(int j=0;j<5;j++) {
+								arealPath = "photo/Accommodation/"+acategory+"/"+condoList[rand.nextInt(5)]+"/acc"+(j+1)+".jpeg";
+								list.get(i).setRealPath(arealPath);
+								}
+							}break;
+						}
+				}
+				
+			}
+			
 			totCnt = dao.findCountByAny(keyword);
 			totPage = (int) Math.ceil(totCnt/pageSize);
 			int startPage = (pageNum-1)/pageGroup*pageGroup+1;
@@ -236,7 +354,7 @@ public class AccommoController {
 		ModelAndView mav = new ModelAndView("Accommodation/Detail");
 		
 		// 로그인한 멤버
-		MemberVO m = mdao.findByNo(1);
+		MemberVO m = mdao.findByNo(7);
 		session.setAttribute("loginM", m);
 		
 		AccommodationVO a = dao.findById(accommoNo);
