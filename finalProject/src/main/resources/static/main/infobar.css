@@ -1,34 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Codespaces
-Marketplace
-Explore
- 
-@LHH1115 
-LHH1115
-/
-TeamProject02
-Public
-Fork your own copy of LHH1115/TeamProject02
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-TeamProject02/TeamProject02/src/main/webapp/infobar.css
-@LHH1115
-LHH1115 최종
-Latest commit 820172f on Nov 24, 2022
- History
- 1 contributor
-276 lines (228 sloc)  4.08 KB
-
 @charset "EUC-KR";
 	body{
 	  margin: 0px;
@@ -64,7 +33,7 @@ Latest commit 820172f on Nov 24, 2022
     .menubar
     {
         width:1024px;
-        margin: 0 auto;
+        margin: 0px;
         border:none;
         background: white;
         overflow: hidden;
@@ -72,19 +41,19 @@ Latest commit 820172f on Nov 24, 2022
 
     .menuLogo
     {	padding-top:35px;
-    	margin:50px;
-        width:100px;
+    	margin:20px;
+        width:50px;
         float:left;
     }
     
    .menuItem{
 	    padding-bottom: 15px;
 	    padding-top: 15px;
-	    font-size: 18px;
+	    font-size: 20px;
 	    font-weight:600;
 	    float:right;
-        padding: 20px 17px;
-        margin-top: 120px;
+        padding: 10px 7px;
+        margin-top: 90px;
 	    
    }
     
@@ -105,6 +74,7 @@ Latest commit 820172f on Nov 24, 2022
     .menubar li
     {
         float:left;
+        margin: 10px;
     }
 
     .menubar a
@@ -206,7 +176,7 @@ main{
  
 
 
- footer{
+footer{
 	  height: 480px;
 	  background-color: white;
 	  display: flex;
@@ -305,18 +275,3 @@ footer a:hover{
 /*.text-center{
 	margin-top:100px;
 }*/
-Footer
-© 2023 GitHub, Inc.
-Footer navigation
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
-TeamProject02/infobar.css at master · LHH1115/TeamProject02
