@@ -50,6 +50,9 @@ public class AccommoController {
 		session.removeAttribute("keyword");		// 페이징 처리 세션 제거
 		session.removeAttribute("category");	// 페이징 처리 세션 제거
 		
+		MemberVO m = mdao.findByNo(1);
+		session.setAttribute("loginM", m);
+		
 		// 인기숙소
 		List<LikeVO> like_list = dao.findMostLike(5);	// Top 5 나열
 		LikeVO l = new LikeVO();
@@ -233,7 +236,7 @@ public class AccommoController {
 		ModelAndView mav = new ModelAndView("Accommodation/Detail");
 		
 		// 로그인한 멤버
-		MemberVO m = mdao.findByNo(7);
+		MemberVO m = mdao.findByNo(1);
 		session.setAttribute("loginM", m);
 		
 		AccommodationVO a = dao.findById(accommoNo);

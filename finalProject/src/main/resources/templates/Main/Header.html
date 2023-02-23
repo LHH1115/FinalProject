@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -94,6 +94,16 @@
                   		<!-- 기준시간 : <span id="fcstTime"></span> -->
                   	</a>
                   </li>
+                  
+                  <th:block th:unless="${session.loginM.role != 'admin'}">
+	                  <li>
+	                    <a href="#">문의</a>
+	                    <ul>
+	                        <li><a href="/admin/inquiryManage">문의</a></li>
+	                    </ul>
+	                  </li>
+                  </th:block>
+                  
             </ul>
         </div>
     </div>
