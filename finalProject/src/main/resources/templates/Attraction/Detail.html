@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- jQuery -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+  <!-- iamport.payment.js -->
+  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+  <script type="text/javascript">
+	
+  </script>
+</head>
+<body>
+	<h2>관광지 상세</h2>
+	
+	<h2 th:text="${a.name}" id="name"></h2>
+	<h3 th:text="${a.category}"></h3>
+	
+	<!-- 사진 -->
+	<th:block th:each="path: ${photoList}">
+		<span>
+			<img alt="" th:src="|/${path}|" height="350">
+		</span>
+	</th:block>
+	
+	<!-- 정보 -->
+	<div>
+		<h3>관광지 소개</h3>
+		<h4>주소</h4>
+		<h5 th:text="${a.addr}"></h5>
+		<h4>전화</h4>
+		<h5 th:text="${a.phone}"></h5>
+		
+		
+	</div>
+	
+	
+</body>
+</html>

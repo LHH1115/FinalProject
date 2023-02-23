@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+  /* 사이드바 래퍼 스타일 */
+  
+  #page-wrapper {
+    padding-left: 250px;
+  }
+  
+  #sidebar-wrapper {
+    position: fixed;
+    width: 250px;
+    height: 100%;
+    margin-left: -250px;
+    background: #000;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  
+  #page-content-wrapper {
+    width: 100%;
+    padding: 20px;
+  }
+  /* 사이드바 스타일 */
+  
+  .sidebar-nav {
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  .sidebar-nav li {
+    text-indent: 1.5em;
+    line-height: 2.8em;
+  }
+  
+  .sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #999;
+  }
+  
+  .sidebar-nav li a:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  .sidebar-nav > .sidebar-brand {
+    font-size: 1.3em;
+    line-height: 3em;
+  }
+
+</style>
+<!-- JQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+	
+		$("#btn_search").click(function(e){
+			e.preventDefault();
+			$("#f").submit();
+		});
+		
+		
+		$(document).on("click", "#tr", function(){
+			var restaurantNo = $(this).attr("restaurantNo");
+			location.href="/restaurant/detail?attractNo="+restaurantNo;
+		});
+	})
+</script>
+</head>
+<body>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
+
+	
+	<div id="page-wrapper">
+	  <!-- 사이드바 -->
+	  <div id="sidebar-wrapper">
+	  	<form action="#" id="f">
+	  	<input type="hidden" name="pageNum" value="1">
+	    <ul class="sidebar-nav">
+	      <li class="sidebar-brand">
+	        <a href="#">검색하기</a>
+	      </li>
+	      <li>검색어<input type="text"></li>
+	      <li>카테고리1<input type="text"></li>
+	      <li>카테고리2<input type="text"></li>
+	      <li><input type="button" value="검색" id="btn_search"></li>
+	    </ul>
+	    </form>
+	  </div>
+	  <!-- /사이드바 -->
+	
+	  <!-- 본문 -->
+	  <div id="page-content-wrapper">
+	    <div class="container-fluid">
+	    <h2>검색 결과</h2>
+	    	<table>
+				<tr>
+					<th>이름</th>
+					<th>주소</th>
+					<th>번호</th>
+					<th>카테고리</th>
+				</tr>
+				<tr th:each="a: ${list}" id="tr" th:attractNo="${a.attractNo}">
+					<td th:text="${a.name}"></td>
+					<td th:text="${a.addr}"></td>
+					<th:block th:if="${a.phone == 'nan'}">
+						<td>관리자 문의</td>
+					</th:block>
+					<th:block th:unless="${a.phone == 'nan'}">
+						<td th:text="${a.phone}"></td>
+					</th:block>
+					<td th:text="${a.category}"></td>
+				</tr>
+			</table>
+	      	<!-- 페이징 -->
+			<hr>
+			<th:block th:if="${1 < startPage}">
+				<span th:text="이전" 
+				th:onclick="|location.href='/attract/main/search?pageNum=${startPage-1}'|"></span>
+			</th:block>
+				<th:block th:if="${totPage <= 1}">
+					<span th:text="1" 
+					th:onclick="|location.href='/attract/main/search?pageNum=1'|"></span>
+				</th:block>
+			<th:block th:each="num : ${#numbers.sequence(startPage,endPage)}">
+				<th:block th:unless="${totPage < 1}">
+					<span th:text="${num}" 
+					th:onclick="|location.href='/attract/main/search?pageNum=${num}'|"></span>
+				</th:block>
+			</th:block>
+			
+			<th:block th:if="${endPage != totPage}">
+				<span th:text="다음" 
+				th:onclick="|location.href='/attract/main/search?pageNum=${endPage+1}'|"></span>
+			</th:block>
+			<hr>
+	    </div>
+	  </div>
+	  <!-- /본문 -->
+	</div>
+</body>
+</html>

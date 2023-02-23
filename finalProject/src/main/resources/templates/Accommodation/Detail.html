@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- jQuery -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+  <!-- iamport.payment.js -->
+  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+  <script type="text/javascript">
+	$(function(){
+		var IMP = window.IMP; // 생략 가능
+		IMP.init("imp80436673"); // 예: imp00000000
+		
+		$("#btnPay").click(function(){
+			
+			$.ajax({
+				 url:"/accommo/getmember",
+				 dataType: "json",
+				 success:function(data){
+					console.log(data);
+					IMP.request_pay({ // param
+				        pg: "kcp",
+				        pay_method: "card",
+				        merchant_uid: "ORD"+new Date().getTime(),
+				        name: $("#name").text(),
+				        //amount: $("#totalPrice").val(),
+				        amount: 100,
+				        buyer_email: data.email,
+				        buyer_name: data.name,
+				        buyer_tel: data.phone,
+				        buyer_addr: data.addr,
+				        buyer_postcode: data.postcode
+				    }, function (rsp) { // callback
+				        if (rsp.success) {
+				            // 결제 성공 시 로직,
+				            console.log("결제완료");
+				            console.log("고유 ID: "+rsp.imp_uid);
+				            console.log("상점거래 ID: "+rsp.merchant_uid);
+				            console.log("결제금액: "+rsp.paid_amount);
+				            console.log("카드 승인번호: "+rsp.apply_num);
+				            
+				            $("#imp_uid").val(rsp.imp_uid);
+				            $("#merchant_uid").val(rsp.merchant_uid);
+				            $("#paid_amount").val(rsp.paid_amount);
+				            $("#apply_num").val(rsp.apply_num);
+				            
+				            $("#payok").trigger("submit");
+				            
+				        } else {
+				            // 결제 실패 시 로직,
+				      	  console.log("결제실패");
+				      	  console.log("실패 사유: "+rsp.error_msg);
+				      	  alert("결제가 취소되었습니다.")
+				        }
+				    });
+				}
+			});
+		});
+		
+		function requestPay() {
+		    // IMP.request_pay(param, callback) 결제창 호출
+		    
+		}
+		
+		$("body").on("change", "#date_e", function(){
+			var date_s = $("#date_s").val()+"";
+			var date_e = $("#date_e").val()+"";
+			var arr1 = date_s.split('-');
+			var arr2 = date_e.split('-');
+			var dat1 = new Date(arr1[0], arr1[1], arr1[2]);
+			var dat2 = new Date(arr2[0], arr2[1], arr2[2]);
+			var diff = dat2 - dat1;
+			var currDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
+			var diffDate = parseInt(diff/currDay);
+			$("#totDate").val(diffDate+"박/"+(diffDate+1)+"일");
+			
+			var price = $("#price").text();
+			var headCount = $("#headCount").val();
+			var totalPrice = price*diffDate*headCount;
+			$("#totalPrice").val(totalPrice);
+		})
+	}) 
+  </script>
+</head>
+<body>
+	<h2>숙소 상세</h2>
+	
+	<h2 th:text="${a.name}" id="name"></h2>
+	<h3 th:text="${a.category}"></h3>
+	
+	<!-- 사진 -->
+	<th:block th:each="path: ${photoList}">
+		<span>
+			<img alt="" th:src="|/${path}|" height="350">
+		</span>
+	</th:block>
+	
+	<!-- 정보 -->
+	<div>
+		<h3>숙소 소개</h3>
+		<h4>주소</h4>
+		<h5 th:text="${a.addr}"></h5>
+		<h4>전화</h4>
+		<h5 th:text="${a.phone}"></h5>
+		<h4>가격</h4>
+		<h5 th:text="${a.price}" id="price"></h5>
+		
+	</div>
+	
+	<!-- 결제 -->
+	<div>
+		<button id="btnPay">결제하기</button>
+		<hr>
+		<form action="/accommo/reservation" method="post" id="payok">
+			입실일자 <input type="date" name="date_s" id="date_s">
+			퇴실일자 <input type="date" name="date_e" id="date_e">
+			총 일자 <input type="text" id="totDate">
+			총 인원 <input type="number" name="headCount" id="headCount">
+			총 가격 <input type="text" name="totalPrice" id="totalPrice">
+			<input type="hidden" name="accommoNo" th:value="${a.accommoNo}">
+			<input type="hidden" name="imp_uid" id="imp_uid">
+			<input type="hidden" name="merchant_uid" id="merchant_uid">
+			<input type="hidden" name="paid_amount" id="paid_amount">
+			<input type="hidden" name="apply_num" id="apply_num">
+		</form>
+	</div>
+</body>
+</html>
