@@ -50,7 +50,7 @@ public class AccommoController {
 		session.removeAttribute("keyword");		// 페이징 처리 세션 제거
 		session.removeAttribute("category");	// 페이징 처리 세션 제거
 		
-		MemberVO m = mdao.findByNo(1);
+		MemberVO m = mdao.findByNo(2);
 		session.setAttribute("loginM", m);
 		
 		// 인기숙소
@@ -126,6 +126,7 @@ public class AccommoController {
 			String acategory = list.get(i).getCategory();
 			String aname = list.get(i).getName();
 			String apath = "";
+			
 			if(photo_list.size() > 0) {
 				for(int j=0;j<photo_list.size();j++) {
 					AccommodationVO forPhoto = new AccommodationVO();
@@ -228,6 +229,7 @@ public class AccommoController {
 				String acategory = list.get(i).getCategory();
 				String aname = list.get(i).getName();
 				String apath = "";
+				
 				if(photo_list.size() > 0) {
 					for(int j=0;j<photo_list.size();j++) {
 						AccommodationVO forPhoto = new AccommodationVO();
