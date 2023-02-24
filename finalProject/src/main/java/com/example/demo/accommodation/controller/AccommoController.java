@@ -233,7 +233,7 @@ public class AccommoController {
 		ModelAndView mav = new ModelAndView("Accommodation/Detail");
 		
 		// 로그인한 멤버
-		MemberVO m = mdao.findByNo(7);
+		MemberVO m = mdao.findByNo(1);
 		session.setAttribute("loginM", m);
 		
 		AccommodationVO a = dao.findById(accommoNo);

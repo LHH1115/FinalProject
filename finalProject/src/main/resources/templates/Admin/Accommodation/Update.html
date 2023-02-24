@@ -19,6 +19,12 @@
 				location.href="/admin/accommo/delete/"+accommoNo;
 			}
 		})
+		
+		$("#input_photo").on("change", function(){
+			var path = $(this).val();
+			$(this).attr
+			console.log(path);
+		})
 	})
 	
 	function update(){
@@ -44,25 +50,8 @@
 	<h2 th:text="${a.name}" id="name"></h2>
 	<h3 th:text="${a.category}"></h3>
 	
-	<!-- 사진 -->
-	<th:block th:each="path: ${photoList}">
-		<span>
-			<img alt="" th:src="|/${path}|" height="350">
-		</span>
-	</th:block>
-	<br>
-	
-	<!-- 관리자 기능 -->
-	<div>
-		<th:block th:unless="${session.loginM.role != 'admin'}">
-			<span th:text="${session.loginM.role}"></span><br>
-			<input type="button" id="btn_save" value="숙소 정보 저장">
-			<input type="button" id="btn_delete" value="숙소 삭제">
-		</th:block>
-	</div>
-	
 	<!-- 정보 -->
-	<div>
+	<div >
 		<h3>숙소 소개</h3>
 		<h4>주소</h4>
 		<h5 th:text="${a.addr}"></h5>
@@ -73,8 +62,22 @@
 		
 	</div>
 	
+	<!-- 사진 -->
+	
+	<form>
+		<th:block th:each="path: ${photoList}">
+			<div style="float: left; margin-left: 10px">
+				<img alt="" th:src="|/${path}|" height="350" id=""><br>
+				<input type="file" accept=".jpeg, .jpg, .png" id="input_photo">
+			</div>
+		</th:block>
+		<input type="button" value="변경사항 저장">
+	</form>
+	
+	<br>
+	
 	<!-- 수정 폼 태그 -->
-	<div>
+	<div style="clear: left">
 		<hr>
 		<form action="/admin/accommo/updateSubmit" method="post" id="updateF">
 			<input type="number" name="accommoNo" th:value="${a.accommoNo}" id="accommoNo" readonly="readonly">
@@ -82,6 +85,15 @@
 			전화: <input type="text" name="phone" th:value="${a.phone}">
 			가격: <input type="number" name="price" th:value="${a.price}">
 		</form>
+	</div>
+	
+	<!-- 관리자 기능 -->
+	<div >
+		<th:block th:unless="${session.loginM.role != 'admin'}">
+			<span th:text="${session.loginM.role}"></span><br>
+			<input type="button" id="btn_save" value="숙소 정보 저장">
+			<input type="button" id="btn_delete" value="숙소 삭제">
+		</th:block>
 	</div>
 </body>
 </html>
