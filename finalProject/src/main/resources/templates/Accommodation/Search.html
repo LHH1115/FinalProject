@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
 <meta charset="UTF-8">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
 <title>Insert title here</title>
 <style>
   /* 사이드바 래퍼 스타일 */
@@ -54,6 +54,16 @@
     font-size: 1.3em;
     line-height: 3em;
   }
+  table {
+  border:1 solid;
+  width: 60%;
+  table-layout: fixed;
+}
+
+.row{margin:10px; }
+.card-img-top{width:526px;height:400px;}
+.col{padding: 10px;}
+
 
 </style>
 <!-- JQuery -->
@@ -66,7 +76,7 @@
 			$("#f").submit();
 		});
 		
-		<!-- 상세페이지 이동 -->
+		
 		$(document).on("click", "#tr", function(){
 			var accommoNo = $(this).attr("accommoNo");
 			location.href="/accommo/detail?accommoNo="+accommoNo;
@@ -105,29 +115,26 @@
 	  <div id="page-content-wrapper">
 	    <div class="container-fluid">
 	    <h2>검색 결과</h2>
-	    	<table>
-				<tr>
-					<th>이름</th>
-					<th>주소</th>
-					<th>번호</th>
-					<th>가격</th>
-					<th>카테고리</th>
-					<th>경로</th>
-				</tr>
-				<tr th:each="a: ${list}" id="tr" th:accommoNo="${a.accommoNo}">
-					<td th:text="${a.name}"></td>
-					<td th:text="${a.addr}"></td>
-					<th:block th:if="${a.phone == 'nan'}">
-						<td>관리자 문의</td>
-					</th:block>
-					<th:block th:unless="${a.phone == 'nan'}">
-						<td th:text="${a.phone}"></td>
-					</th:block>
-					<td th:text="${a.price}"></td>
-					<td th:text="${a.category}"></td>
-					<td th:text="${a.realPath}"></td>
-				</tr>
-			</table>
+	    <hr>
+				<div class="row">
+					<div class="col">
+					  <h2>인기 관광지</h2>
+					  	<div class="row row-cols-1 row-cols-md-3 g-4">
+						  <div class="col" th:each="a: ${list}">
+						    <div class="card" id="accom_info">
+						      <img th:src="@{|/${a.realPath}|}" class="card-img-top" >
+						      <div class="card-body">
+						      <h2 style="font-size: 35px;" class="card-title" th:text="${a.name}"></h2>
+						      <p style="font-size:28px" class="card-text" th:text="${a.price+'원'}"></p>
+						       <p class="card-text" th:text="${a.addr}"></p>
+								<button th:accommoNo="${a.accommoNo}" id="tr" class="btn btn-primary">자세히 보기</button>
+						      </div>
+						    </div>
+						  </div>					
+						</div>
+					</div>
+			 	</div>
+		 
 	      	<!-- 페이징 -->
 			<hr>
 			<th:block th:if="${1 < startPage}">
