@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>Blog</title>
 <meta charset="utf-8">
@@ -22,7 +22,7 @@
 -->
 
 </head>
-<div id="headers"></div>
+<div th:insert="/main/header.html" id="headers"></div>
 <!-- =============================================================================================================  -->
 
 
@@ -73,11 +73,7 @@
         height: 400
       });
       
-  	$(document).ready(function() {
-		$("#headers").load("/header.html");  		//헤더 인클루드
-		//$("#footers").load("layout/footer.html");  		//푸터부분 인클루드
 
-	});
   	
 	$("#btn-save").on("click",function(e){
 		title = $("#title").val();

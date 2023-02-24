@@ -10,6 +10,8 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import com.example.demo.admin.vo.MemberVO;
+import com.example.demo.admin.vo.ReservationVO;
+import com.example.demo.admin.vo.ReviewVO;
 
 public class DBManager {
 	
@@ -43,6 +45,23 @@ public class DBManager {
 		return cnt;
 	}
 		
+	// 각 회원마다 리뷰 조회
+	public static List<ReviewVO> memberReviewList(int memberNo){
+		List<ReviewVO> memberReviewList = null;
+		SqlSession sqlSession = sessionFactory.openSession();
+		memberReviewList = sqlSession.selectList("member.memberReviewList",memberNo);
+		sqlSession.close();
+		return memberReviewList;
+	}
+	
+	// 각 회원마다 예약 조회
+		public static List<ReservationVO> memberReservationList(int memberNo){
+			List<ReservationVO> memberReviewList = null;
+			SqlSession sqlSession = sessionFactory.openSession();
+			memberReviewList = sqlSession.selectList("member.memberReservationList",memberNo);
+			sqlSession.close();
+			return memberReviewList;
+		}
 	
 }
 

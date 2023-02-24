@@ -50,7 +50,7 @@ public class AccommoController {
 		session.removeAttribute("keyword");		// 페이징 처리 세션 제거
 		session.removeAttribute("category");	// 페이징 처리 세션 제거
 		
-		MemberVO m = mdao.findByNo(7);
+		MemberVO m = mdao.findByNo(1);
 		session.setAttribute("loginM", m);
 		
 		// 인기숙소

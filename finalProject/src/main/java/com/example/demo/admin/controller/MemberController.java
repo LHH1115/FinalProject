@@ -2,7 +2,9 @@ package com.example.demo.admin.controller;
 
 
 import java.util.HashMap;
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +12,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.admin.dao.MemberDAO;
+import com.example.demo.admin.vo.ReservationVO;
+import com.example.demo.admin.vo.ReviewVO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class MemberController {
@@ -57,6 +64,8 @@ public class MemberController {
 		int startPage = (pageNUM-1)/pageGROUP*pageGROUP+1;
 		int endPage = startPage+pageGROUP-1;
 		
+		// 1 
+		
 		map.put("start", start);
 		map.put("end", end);
 		map.put("keyword", keyword);
@@ -80,34 +89,47 @@ public class MemberController {
 		return "admin/memberManage";
 	}
 	
-//	// 관리자 문의사항페이지
-//	@GetMapping("/admin/inquiryManage")
-//	public String inquiryList(HttpSession session) {
-//		session.removeAttribute("keyword");
-//		session.removeAttribute("searchColumn");
-//		return "admin/inquiryManage";
-//	}
-	
-	// 관리자 상품관리페이지
-	@GetMapping("/admin/productManage")
-	public String productList(HttpSession session) {
-		session.removeAttribute("keyword");
-		session.removeAttribute("searchColumn");
-		return "admin/productManage";
+	// 각 회원마다 리뷰 조회 
+	@GetMapping("/admin/memberReviewList")
+	@ResponseBody
+	public String memberReviewList(HttpServletRequest request) {
+		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+		List<ReviewVO> reviewVO = memberDAO.memberReviewList(memberNo);
+		String jsonString = "";
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			jsonString = mapper.writeValueAsString(reviewVO);
+		} catch (JsonProcessingException e) {
+			System.out.println("예외발생:"+e.getMessage());
+		}
+		System.out.println("각회원 리뷰 리스트 : "+jsonString);
+		return jsonString;
 	}
 	
+	// 각 회원마다 예약 조회 
+	@GetMapping("/admin/memberReservationList")
+	@ResponseBody
+	public String memberResrvationList(HttpServletRequest request) {
+		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+		List<ReservationVO> reservationVO = memberDAO.memberReservationList(memberNo);
+		String jsonString = "";
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			jsonString = mapper.writeValueAsString(reservationVO);
+		} catch (JsonProcessingException e) {
+			System.out.println("예외발생:"+e.getMessage());
+		}
+		System.out.println("각회원 예약 리스트 : "+jsonString);
+		return jsonString;
+	}
 	
+		
 	// 메인 페이지
-	@GetMapping("/")
-	public ModelAndView main(HttpSession session) {
-		ModelAndView mav = new ModelAndView("main/mainPage.html");
-		
-		
-		
-		
-		
-		return mav;
-	}
+		@GetMapping("/")
+		public ModelAndView main(HttpSession session) {
+			ModelAndView mav = new ModelAndView("main/mainPage.html");	
+			return mav;
+		}
 
 
 }

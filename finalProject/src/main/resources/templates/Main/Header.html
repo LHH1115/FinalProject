@@ -95,15 +95,22 @@
                   	</a>
                   </li>
                   
-                  <th:block th:unless="${session.loginM.role != 'admin'}">
+                   <th:block th:unless="${session.loginM.role != 'user'}">
 	                  <li>
-	                    <a href="#">문의</a>
-	                    <ul>
-	                        <li><a href="/admin/inquiryManage">문의</a></li>
-	                    </ul>
+	                    <a href="/main/inquiry">문의하기</a>
 	                  </li>
                   </th:block>
                   
+                  
+                  <th:block th:unless="${session.loginM.role != 'admin'}">
+	                  <li>
+	                    <a href="#">관리자</a>
+	                    <ul>
+	                        <li><a href="/admin/memberManage">회원관리</a></li>
+	                        <li><a href="/admin/inquiryManage">문의사항관리</a></li>
+	                    </ul>
+	                  </li>
+                  </th:block>
             </ul>
         </div>
     </div>

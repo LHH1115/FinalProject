@@ -6,6 +6,8 @@
   <properties resource="com/example/demo/admin/db/db.properties"/>
   <typeAliases>
   	<typeAlias type="com.example.demo.admin.vo.MemberVO" alias="memberVO" />
+  	<typeAlias type="com.example.demo.admin.vo.ReviewVO" alias="reviewVO" />
+  	<typeAlias type="com.example.demo.admin.vo.ReservationVO" alias="reservationVO" />
   </typeAliases>
   <environments default="development">
     <environment id="development">
