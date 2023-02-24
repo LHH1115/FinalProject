@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#f").submit(function(e){
+			if(!confirm("제출하시겠습니까?")){
+				e.preventDefault();
+			}else{
+				flag=true;
+				for(let i=1;i<13;i++){
+					var input_no = "input[name='no"+i+"']"
+					console.log(input_no);
+					flag=$(input_no).is(":checked");
+				}
+				if(!flag){
+					alert("모든 문항을 선택하세요");
+					e.preventDefault();
+				}
+			}
+		});
+	})
+
+</script>
+
+</head>
+<body>
+<h2>MBTI 설문지</h2>
+<hr>
+
+<form action="/member/mbtiTest" method="post" id="f">
+	<h3>1. 남들에 비해 밖에 나갔다 돌아왔을 때 몸이 매우 피곤해진다. </h3>
+	<input type="radio" value=1 name="no1"><b>O</b>&nbsp;
+	<input type="radio" value=0 name="no1"><b>X</b>
+	
+	<h3>2. 혼자 무언가에 대한 아이디어를 곰곰이 생각해내는 것보다 누군가와 그것에 대해 이야기 하는 것을 선호한다.</h3>
+	<input type="radio" value=0 name="no2"><b>O</b>&nbsp;
+	<input type="radio" value=1 name="no2"><b>X</b>
+	
+	<h3>3. 심리적으로 힘들 때, 혼자만의 시간을 갖기보다는 몸을 이끌고 어디론가 가야만 한다.</h3>
+	<input type="radio" value=0 name="no3"><b>O</b>&nbsp;
+	<input type="radio" value=1 name="no3"><b>X</b>
+	
+	<h3>4. 무언가를 상세하게 설명하는 것보다는 핵심만 집어서 말하는 것을 선호한다.</h3>
+	<input type="radio" value=1 name="no4"><b>O</b>&nbsp;
+	<input type="radio" value=0 name="no4"><b>X</b>
+	
+	<h3>5. 일을 마감까지 미루기보단 당장 끝내는 것을 선호한다.</h3>
+	<input type="radio" value=1 name="no5"><b>O</b>&nbsp;
+	<input type="radio" value=0 name="no5"><b>X</b>
+	
+	<h3>6. 맹목적으로 규칙을 따르기보다는 “이런 방식으로 하면 더 괜찮지 않을까” 라는 생각을 하며 유연한 사고를 자주 한다. </h3>
+	<input type="radio" value=0 name="no6"><b>O</b>&nbsp;
+	<input type="radio" value=1 name="no6"><b>X</b>
+	
+	<h3>7. 자신이 속해있는 어떠한 기관의 원칙이 주는 영향에 대해 생각하기보다는 이성적으로 원리를 따르는 것을 선호한다.</h3>
+	<input type="radio" value=1 name="no7"><b>O</b>&nbsp;
+	<input type="radio" value=0 name="no7"><b>X</b>
+	
+	<h3>8. 수단과 방법을 가리지 않고 결과만 잘 나오면 된다라는 마인드를 가지고 있다.</h3>
+	<input type="radio" value=1 name="no8"><b>O</b>&nbsp;
+	<input type="radio" value=0 name="no8"><b>X</b>
+	
+	<h3>9. 무언가 발생한 문제에 대해 논리적으로 접근하기보다는 그 상황을 이해하려 한다.</h3>
+	<input type="radio" value=1 name="no9"><b>O</b>&nbsp;
+	<input type="radio" value=0 name="no9"><b>X</b>
+	
+	<h3>10. 무언가를 하기 앞서 계획하는 것보다는 물 흘러가듯이 계획없이 행동하는 것을 선호한다.</h3>
+	<input type="radio" value=0 name="no10"><b>O</b>&nbsp;
+	<input type="radio" value=1 name="no10"><b>X</b>
+	
+	<h3>11. 예상하지 못했던 상황이 발생했을 시에 임기응변이 빠른 편이다.</h3>
+	<input type="radio" value=0 name="no11"><b>O</b>&nbsp;
+	<input type="radio" value=1 name="no11"><b>X</b>
+	
+	<h3>12. 시간을 지키지 않는 사람이 정말 싫다.</h3>
+	<input type="radio" value=0 name="no12"><b>O</b>&nbsp;
+	<input type="radio" value=1 name="no12"><b>X</b>
+	<br>
+	<input type="submit" value="제출">
+</form>
+
+</body>
+</html>

@@ -34,6 +34,14 @@ public class InquiryDAO {
 		return DBManager.insertInquiry(vo);
 	}
 	
+	public int updateReplyOk(int no) {
+		return DBManager.updateReplyOk(no);
+	}
+	
+	public int updateReplyNo(int no) {
+		return DBManager.updateReplyNo(no);
+	}
+	
 }
 
 

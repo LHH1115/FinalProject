@@ -1,0 +1,30 @@
+@charset "EUC-KR";
+
+.container{
+
+border:1px solid black;
+}
+
+.row{
+
+border:1px solid blue;
+margin:10px;
+}
+
+.col-md-4{
+border:1px solid red;
+}
+
+img{
+width:500px;
+height:500px;
+}
+
+.card-img-top{
+width:100px;
+height:100px;
+}
+
+.container-fluid{
+text-align: center;
+}

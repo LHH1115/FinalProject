@@ -1,0 +1,284 @@
+@charset "EUC-KR";
+
+
+	body{
+	  margin: 0px;
+	  color: black;
+	  font-family: 'Jua', sans-serif;
+	  font-size:18px; 
+	}
+	nav .header{
+	  height: 100px;
+	  background-color: white;
+	  display: flex;
+	  justify-content: space-around;
+	  align-items: center;
+	}
+
+	a{
+	  color: black;
+	  text-decoration: none;
+	}
+	
+	a:hover{
+	      color: #9400d3;
+	}
+	
+  .wrap
+    {
+        width:100%;
+        font-weight:700px;
+        margin-bottom: 16px;
+   
+    }
+
+    .menubar
+    {
+        width:1024px;
+        margin: 0px;
+        border:none;
+        background: white;
+        overflow: hidden;
+    }
+
+    .menuLogo
+    {	padding-top:35px;
+    	margin:20px;
+        width:50px;
+        float:left;
+    }
+    
+    .logo{
+    	width: 120px;
+    	height:120px;
+    }
+    
+   .menuItem{
+	    padding-bottom: 15px;
+	    padding-top: 15px;
+	    font-size: 20px;
+	    font-weight:600;
+	    float:right;
+        padding: 10px 7px;
+        margin-top: 90px;
+	    
+   }
+    
+  /* .menuItem
+    {
+        float:right;
+        padding: 20px 17px;
+    }*/
+
+    .menubar ul
+    {
+        background: white;
+        height:50px;
+        list-style:none;
+       
+    }
+
+    .menubar li
+    {
+        float:left;
+        margin: 10px;
+    }
+
+    .menubar a
+    {
+        color:black;
+        display:block;
+        font-weight: 700;
+        line-height:49px;
+        padding:1px 30px;
+        text-align:center;
+        text-decoration: none;
+    }
+
+    .menubar li:hover ul
+    {
+        display:block;
+    }
+	
+    .menubar li:hover li a
+    {
+        background:none;
+        text-decoration: none;
+        color:black;
+        text-align: left;
+    }
+
+    .menubar li ul
+    {
+        background-color: white;
+		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        display:none;
+        height:auto;
+        position:absolute;
+        z-index:999;
+    }
+
+    .menubar li li a ,
+    .menubar li li
+    {
+        background: white;
+        display:block;
+        float:none;
+        min-width:100px;
+        text-decoration: none;
+    }
+
+    .menubar li ul a
+    {
+        display:block;
+        height:50px;
+        font-weight: 400px;
+        font-size:15px;
+        padding:0px 15px 0px 15px;
+        text-align:center;
+        text-decoration: none;
+     
+    }
+
+	.menubar li a:hover {
+        background: white;
+        color:#9400d3;
+    }
+
+   .menubar li ul a:hover,
+   .menubar li ul li:hover a{
+        background: white;
+        border:0px;
+        color:#9400d3;
+    }
+    
+
+
+
+
+
+
+main{
+    height: 1000px;
+    background-color: white;
+    margin-top: 130px;
+   /* display: flex;*/
+    align-items: center;
+    justify-content: center;
+ }
+
+.button-style-recruit{
+ 	padding: 10px 20px;
+    background-color: #F3F3F3;
+  	border: none;
+  	font-size: 15px;
+    color: black;
+    font-weight: 400;
+  	border-radius: 500px;
+}
+
+.button-style-recruit:hover{
+	transform: scale(1.1);
+  }
+ 
+
+
+footer{
+	  height: 480px;
+	  background-color: white;
+	  display: flex;
+	  justify-content: center;
+	}
+footer a{
+	text-decoration: none;
+	color: black;
+}
+
+footer a:hover{
+	color: #9400d3;
+}
+
+ .footer-first-space{
+    max-width: 1170px;
+    width: 100%;
+    padding-top: 80px;
+    padding-bottom: 30px;
+ }
+ 
+ .footer-seceond-space{
+    display: flex;
+    justify-content: space-between;
+    height: 250px;
+ }
+
+.first-bigbox{
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+}
+
+ .footer-subtitle{
+    color: #919496;
+    font-weight: 900;
+    margin: 20px 0px;
+}
+
+.footer-menu-item{
+    padding-bottom: 15px;
+    padding-top: 3px;
+    font-size: 16px;
+    font-weight:600;
+}
+
+.footer-standard{
+  display: flex;
+    flex-direction: column;
+    padding: 0 15px;
+}
+
+.character{
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.icon-box{
+    width: 80px;
+    height: 54px;
+    background-color: white;
+    border-radius: 50%;
+    margin-right: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon {
+  font-size: 24px;
+}
+
+.icon:hover {
+  color: #9400d3;
+}
+
+.last-line{
+   color: black;
+   margin-top: 12px;
+}
+
+.last-space{
+    margin-right: 24px;
+    color: black;
+ }
+ 
+.country{
+    color: black;
+    display: flex;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/*.text-center{
+	margin-top:100px;
+}*/

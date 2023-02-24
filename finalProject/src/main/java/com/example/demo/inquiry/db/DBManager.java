@@ -57,6 +57,21 @@ public class DBManager {
 //		session.commit();
 		return re;
 	}
+	
+	public static int updateReplyOk(int no) {
+		SqlSession session = sqlSessionFactory.openSession(true);
+		int re=session.update("inquiry.updateReplyOk",no);
+		return re;
+	}
+	
+	public static int updateReplyNo(int no) {
+		SqlSession session = sqlSessionFactory.openSession(true);
+		int re=session.update("inquiry.updateReplyNo",no);
+		return re;
+	}
+	
+	
+	
 
 }
 
