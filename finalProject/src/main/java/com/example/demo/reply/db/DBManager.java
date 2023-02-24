@@ -1,4 +1,4 @@
-package com.example.demo.inquiry.db;
+package com.example.demo.reply.db;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -9,14 +9,14 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import com.example.demo.inquiry.vo.InquiryVO;
-import com.example.demo.test.vo.BoardVO;
+import com.example.demo.reply.vo.ReplyVO;
+
 
 public class DBManager {
 	public static SqlSessionFactory sqlSessionFactory;
 	static {
 		try {
-			String resource = "com/example/demo/inquiry/db/sqlMapConfig.xml";
+			String resource = "com/example/demo/reply/db/sqlMapConfig.xml";
 			InputStream inputStream = Resources.getResourceAsStream(resource);
 			sqlSessionFactory =
 			  new SqlSessionFactoryBuilder().build(inputStream);
@@ -27,36 +27,41 @@ public class DBManager {
 	
 	public static int getNextNo() {
 		SqlSession session=sqlSessionFactory.openSession();
-		int no=session.selectOne("inquiry.getNextNo");
+		int no=session.selectOne("reply.getNextNo");
 		session.close();
 		return no;
 	}
-	
-	public static List<InquiryVO> findAll(HashMap<String, Object> map){
-		List<InquiryVO> list=null;
-		SqlSession session = sqlSessionFactory.openSession();
-		list=session.selectList("inquiry.findAll",map);
-		return list;
+		
+	public static int insertReply(ReplyVO vo) {
+		SqlSession session = sqlSessionFactory.openSession(true);
+		int re = session.insert("reply.insertReply",vo);
+		return re;
 	}
 	
-	public static InquiryVO findByInquiryNo(int no) {
+	public static int deleteReply(int no) {
+		SqlSession session = sqlSessionFactory.openSession(true);
+		int re = session.delete("reply.deleteReply",no);
+		return re;
+	}
+	
+	public static int updateReply(ReplyVO vo) {
+		SqlSession session = sqlSessionFactory.openSession(true);
+		int re = session.update("reply.updateReply",vo);
+		return re;
+	}
+	
+	public static ReplyVO findByInquiryNo(int no) {
 		SqlSession session = sqlSessionFactory.openSession();
-		InquiryVO vo = session.selectOne("inquiry.findByInquiryNo",no);
+		ReplyVO vo=session.selectOne("reply.findByInquiryNo",no);
 		return vo;
 	}
 	
-	public static int getTotalRecord(HashMap<String, Object> map) {
+	public static int countAll(int no) {
 		SqlSession session = sqlSessionFactory.openSession();
-		int re=session.selectOne("inquiry.countAll",map);
+		int re=session.selectOne("reply.countAll",no);
 		return re;
 	}
 	
-	public static int insertInquiry(InquiryVO vo) {
-		SqlSession session = sqlSessionFactory.openSession(true);
-		int re = session.insert("inquiry.insertInquiry",vo);
-//		session.commit();
-		return re;
-	}
 
 }
 

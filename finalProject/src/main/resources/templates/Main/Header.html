@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<link href="/Main/infobar.css" rel="stylesheet" type="text/css">
+ 
+<script src="https://kit.fontawesome.com/bb9544ccb9.js" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script type="text/javascript" src="/main/sist.js"></script>
+<script type="text/javascript">
+	$(function(){
+		
+		
+	})
+	
+	function onload(){
+		var tmFc=getTmFc();
+		var serviceKey = "szaeRqSf%2BlsnKbMt%2FJVJKtRp9J1CmDEOMnufX0PGd57XB33V3Zu173HmKe5HHNMJEYFElxw3AC%2BN2%2BA1XGrlIA%3D%3D"
+		
+		// 제주도 52/ 38
+		// 제주도 제주시 53/ 38
+		// 제주도 서귀포시 52 / 33
+		var x = 52;
+		var y = 33;
+		
+		var url = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst"+
+					"?dataType=JSON&serviceKey="+serviceKey+"&numOfRows=10&pageNo=1"+
+					"&base_date="+tmFc+"&base_time=0500&nx="+x+"&ny="+y;
+
+		// console.log(url)
+		
+		$.ajax({
+			url:url,
+			success:function(data){
+				// console.log(data)
+				var item = data.response.body.items.item[0];
+				$.each(item,function(key,value){
+					if(key.match("fcstTime")){
+						$("#fcstTime").text(value);
+					}else if(key.match("fcstValue")){
+						$("#fcstValue").text(value);
+					}
+				});
+			}
+		})
+	}
+</script>
+</head>
+<body onload="onload()">
+<!-- 메뉴바 -->
+	<nav class="header">
+    <div class="wrap">
+        <div class="menubar">
+            <div class="menuLogo">
+                <a href="/"><img src="/Main/logo.png" class="logo"></a>
+            </div>
+            <ul class="menuItem">
+                 <li>
+                    <a href="">숙박</a>
+                    <ul>
+                        <li><a href="/accommo/main">숙소 메인</a></li>
+                     
+                    </ul>
+                 </li>
+                
+                 <li>
+                    <a href="">관광지</a>
+                    <ul>
+                        <li><a href="/attract/main">관광지 메인</a></li>
+                    </ul>
+                 </li>
+                
+                  <li>
+                    <a href="">식당</a>
+                    <ul>
+                        <li><a href="#">식당 메인</a></li>
+                    </ul>
+                  </li>
+                
+                   <li>
+                    <a href="">렌트카</a>
+                    <ul>
+                        <li><a href="#">렌트카 메인</a></li>
+                    </ul>
+                  </li>
+                  
+                  <li>
+                  	<a href="#">
+                  		현재날씨 : <span id="fcstValue"></span>℃<br>
+                  		<!-- 기준시간 : <span id="fcstTime"></span> -->
+                  	</a>
+                  </li>
+                  
+                   <th:block th:unless="${session.loginM.role != 'user'}">
+	                  <li>
+	                    <a href="/main/inquiry">문의하기</a>
+	                  </li>
+                  </th:block>
+                  
+                  
+                  <th:block th:unless="${session.loginM.role != 'admin'}">
+	                  <li>
+	                    <a href="#">관리자</a>
+	                    <ul>
+	                        <li><a href="/admin/memberManage">회원관리</a></li>
+	                        <li><a href="/admin/inquiryManage">문의사항관리</a></li>
+	                    </ul>
+	                  </li>
+                  </th:block>
+            </ul>
+        </div>
+    </div>
+    </nav>
+<!-- 메뉴바 -->	
+	
+</body>
+</html>

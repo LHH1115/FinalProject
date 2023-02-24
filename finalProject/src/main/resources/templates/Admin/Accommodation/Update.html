@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<!-- iamport.payment.js -->
+<script type="text/javascript">
+	$(function(){
+		var accommoNo = $("#accommoNo").val();
+		
+		$("#btn_save").click(function(){
+			$("#updateF").trigger("submit");
+		})
+		
+		$("#btn_delete").click(function(){
+			if(confirm("정말로 삭제하시겠습니까?")){
+				location.href="/admin/accommo/delete/"+accommoNo;
+			}
+		})
+	})
+	
+	function update(){
+		  var queryString = document.location.search.replace('?','');
+          var parameters = queryString.split('&');
+          for (i=0; i<parameters.length; i++)
+          {
+              if (parameters[i].substring(0,7) == 'update=')
+              {
+                  if(parameters[i].replace('update=','') == 'yes')
+                  {
+                      alert('변경 완료');
+                      return;
+                  }
+              }
+          }
+	}
+</script>
+</head>
+<body onload="update()">
+	<h2>숙소 상세</h2>
+	
+	<h2 th:text="${a.name}" id="name"></h2>
+	<h3 th:text="${a.category}"></h3>
+	
+	<!-- 사진 -->
+	<th:block th:each="path: ${photoList}">
+		<span>
+			<img alt="" th:src="|/${path}|" height="350">
+		</span>
+	</th:block>
+	<br>
+	
+	<!-- 관리자 기능 -->
+	<div>
+		<th:block th:unless="${session.loginM.role != 'admin'}">
+			<span th:text="${session.loginM.role}"></span><br>
+			<input type="button" id="btn_save" value="숙소 정보 저장">
+			<input type="button" id="btn_delete" value="숙소 삭제">
+		</th:block>
+	</div>
+	
+	<!-- 정보 -->
+	<div>
+		<h3>숙소 소개</h3>
+		<h4>주소</h4>
+		<h5 th:text="${a.addr}"></h5>
+		<h4>전화</h4>
+		<h5 th:text="${a.phone}"></h5>
+		<h4>가격</h4>
+		<h5 th:text="${a.price}" id="price"></h5>
+		
+	</div>
+	
+	<!-- 수정 폼 태그 -->
+	<div>
+		<hr>
+		<form action="/admin/accommo/updateSubmit" method="post" id="updateF">
+			<input type="number" name="accommoNo" th:value="${a.accommoNo}" id="accommoNo" readonly="readonly">
+			주소: <input type="text" name="addr" th:value="${a.addr}">
+			전화: <input type="text" name="phone" th:value="${a.phone}">
+			가격: <input type="number" name="price" th:value="${a.price}">
+		</form>
+	</div>
+</body>
+</html>

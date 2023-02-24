@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.admin.dao.MemberDAO;
 import com.example.demo.admin.vo.ReservationVO;
@@ -122,29 +123,13 @@ public class MemberController {
 		return jsonString;
 	}
 	
-	// 관리자 문의사항페이지
-	@GetMapping("/admin/inquiryManage")
-	public String inquiryList(HttpSession session) {
-		session.removeAttribute("keyword");
-		session.removeAttribute("searchColumn");
-		return "admin/inquiryManage";
-	}
-	
-	// 관리자 상품관리페이지
-	@GetMapping("/admin/productManage")
-	public String productList(HttpSession session) {
-		session.removeAttribute("keyword");
-		session.removeAttribute("searchColumn");
-		return "admin/productManage";
-	}
 		
 	// 메인 페이지
-	@GetMapping("/")
-	public String main(HttpSession session) {
-		session.removeAttribute("keyword");
-		session.removeAttribute("searchColumn");
-		return "main/mainPage";
-	}
+		@GetMapping("/")
+		public ModelAndView main(HttpSession session) {
+			ModelAndView mav = new ModelAndView("main/mainPage.html");	
+			return mav;
+		}
 
 
 }

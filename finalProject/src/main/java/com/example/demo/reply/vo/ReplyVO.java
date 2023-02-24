@@ -1,4 +1,4 @@
-package com.example.demo.inquiry.vo;
+package com.example.demo.reply.vo;
 
 import java.util.Date;
 
@@ -9,16 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InquiryVO {
-
+public class ReplyVO {
+	private int replyNo;
 	private int inquiryNo;
-	private int memberNo;
-	private String title;
 	private String content;
-	private String category;
-	private Date inqdate;
-	
-	private int replyOk;
-	private String id;
+	private Date regdate;
 	
 }
