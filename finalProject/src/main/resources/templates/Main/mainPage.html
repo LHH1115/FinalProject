@@ -14,54 +14,313 @@
 $(function(){
 	
 	$.noConflict();	// 충돌방지 코드
-	
-	$('.post-wrapper').slick({
-		slidesToShow: 3,
-		slidesToScroll: 1,
-		autoplay: true,
-		autoplaySpeed: 5000,
-		nextArrow:$('.next'),
-		prevArrow:$('.prev'),
-	});
-	
-	$('.post-wrapper_1').slick({
-		slidesToShow: 3,
-		slidesToScroll: 1,
-		autoplay: true,
-		autoplaySpeed: 5000,
-		nextArrow:$('.next_1'),
-		prevArrow:$('.prev_1'),
+		
+	$(function(){	
+		initSlider();
 	});
 
+	function initSlider() {
+			
+		var slider = $(".slider");
+			
+		slider.on("init", function(slick) {
+			checkSlides(this, 0);
+		});
+		
+		slider.on("beforeChange", function(event, slick, currentSlide, nextSlide) {
+			$(this).addClass("changing");
+		});
+		
+		slider.on("afterChange", function(event, slick, currentSlide) {
+			$(this).removeClass("changing");
+			checkSlides(this, currentSlide);
+		});		
+		slider.slick({
+			prevArrow: "<button type='button' class='slick-prev' aria-label='Previous picture'></button>",
+			nextArrow: "<button type='button' class='slick-next' aria-label='Next Picture'></button>",
+			centerMode: true,
+			variableWidth: true,
+			dots: true,
+	    autoplay: true,
+	    slidesToShow: 1,
+		});
+	}
+
+	function checkSlides(slider, currentSlide) {
+		var slides = $(".slide", $(slider));
+		slides.removeClass("prev");
+		slides.filter(function(index) {
+			return $(this).attr("data-slick-index") < currentSlide;
+		}).addClass("prev");;
+	}
 });
 
 </script>
 <style type="text/css">
+
 .container{border:1px solid black;}
 .row{border:1px solid blue;margin:10px;}
 .col-md-4{border:1px solid red;}
-img{width:500px;height:500px;}
 .card-img-top{width:100px;height:100px;}
 .container-fluid{text-align: center;}
 
-/*식당 추천 css*/
-.post-slider{width:70%;margin:0px auto;position:relative;}
-.post-slider .silder-title{text-align:center;margin:30px auto;}
-.post-slider .next{position:absolute;top:30%;right:25px;font-size:1em;color:gray;cursor: pointer;}
-.post-slider .prev{position:absolute;top:28%;left:30px;font-size:2em;color:gray;cursor: pointer;}
-.post-slider .post-wrapper{width:84%;height:350px;margin:0px auto;overflow: hidden;padding:10px 0px 10px 0px;display:flex; align-items:center;}
-.post-slider .post-wrapper .post{width:300px;height:300px;margin:0px 10px;display:inline-block;background:white;border-radius: 5px;}
-.post-slider .post-wrapper .post .post-info{font-size:15px;height:30%;padding-left:10px;}
-.post-slider .post-wrapper .post .slider-image{width:100%;height:175px;border-top-left-radius:5px;border-top-right-radius:5px;}
-/*관광지 추천 css*/
-.post-slider{width:70%;margin:0px auto;position:relative;}
-.post-slider .silder-title{text-align:center;margin:30px auto;}
-.post-slider .next_1{position:absolute;top:30%;right:25px;font-size:1em;color:gray;cursor: pointer;}
-.post-slider .prev_1{position:absolute;top:28%;left:30px;font-size:2em;color:gray;cursor: pointer;}
-.post-slider .post-wrapper_1{width:84%;height:350px;margin:0px auto;overflow: hidden;padding:10px 0px 10px 0px;display:flex; align-items:center;}
-.post-slider .post-wrapper_1 .post{width:300px;height:300px;margin:0px 10px;display:inline-block;background:white;border-radius: 5px;}
-.post-slider .post-wrapper_1 .post .post-info{font-size:15px;height:30%;padding-left:10px;}
-.post-slider .post-wrapper_1 .post .slider-image{width:100%;height:175px;border-top-left-radius:5px;border-top-right-radius:5px;}
+/* Best 인기상품 Radio버튼 끝 */
+:root{
+    --white:#fff;
+    --smoke-white:#f1f3f5;
+    --orange: #ffa500;
+}
+
+.selector{
+    position:relative;
+    width:400px;
+    background-color:var(--smoke-white);
+    height:50px;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    margin:auto;
+    border-radius:9999px;
+    box-shadow:0 0 16px rgba(0,0,0,.2);
+}
+.selecotr-item{
+    position:relative;
+    flex-basis:calc(70% / 3);
+    height:90%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.selector-item_radio{
+    appearance:none;
+    display:none;
+}
+.selector-item_label{
+    position:relative;
+    height:80%;
+    width:100%;
+    text-align:center;
+    align-items:center;
+    border-radius:9999px;
+    line-height:250%;
+    font-weight:800;
+    transition-duration:.5s;
+    transition-property:transform, color, box-shadow;
+    transform:none;
+}
+.selector-item_radio:checked + .selector-item_label{
+    background-color:var(--orange);
+    color:var(--smoke-white); 
+    box-shadow:0 0 4px rgba(0,0,0,.5),0 2px 4px rgba(0,0,0,.5);
+    transform:translateY(-2px);
+}
+
+/* Best 인기상품 Radio버튼 끝 */
+
+/* Best 숙소 시작 */
+.slide {
+  width: 896px;
+  height: 500px;
+  position: relative;
+  overflow: hidden;
+  margin: 0 15px
+}
+
+.slide img {
+  max-width: 100%;
+  max-height: 100%;
+  width: 896px;
+  height: 500px; 
+  position: relative;
+  transition: all 1s ease-out;
+}
+
+.slide.slick-center img {
+  transition: all 1s ease-out;
+  opacity: 1;
+}
+
+.slick-prev,
+.slick-next {
+  width: 60px;
+  height: 60px;
+  border: none;
+  border-radius: 50%;
+  margin: auto;
+  position: absolute;
+  z-index: 3000;
+  top: 0;
+  bottom: 0;
+  cursor: pointer;
+  outline: none;
+}
+
+.slick-next {
+  right: calc(50% - 545px);
+  text-indent: 1px
+}
+
+.slick-prev {
+  left: calc(50% - 545px);
+  text-indent: -2px
+}
+
+.slick-arrow {
+  background: none;
+  border: none;
+  position: absolute;
+  bottom: 33px;
+  color: #fff;
+  font-size: 1.5rem;
+  padding: 0;
+  width: 40px;
+  height: 33px;
+  line-height: 34px;
+  text-align: center;
+  cursor: pointer;
+  z-index: 20;
+  -webkit-transition: background-color .2s ease 0s;
+  transition: background-color .2s ease 0s
+}
+
+.slick-arrow:hover {
+  background-color: rgba(255, 255, 255, .2)
+}
+
+.slick-dots {
+  position: absolute;
+  bottom: 0;
+  right: calc(50% - 432px);
+  padding: 0;
+  margin: 0;
+  list-style: none
+}
+
+.slick-dots li {
+  float: left;
+  display: block;
+  margin: 1rem .2rem;
+  font-size: 0
+}
+
+.slick-dots button {
+  border: 0;
+  overflow: hidden;
+  background: rgba(255, 255, 255, .4);
+  width: .8rem;
+  height: .8rem;
+  border-radius: 50%;
+  text-indent: 9999px;
+  padding: 0
+}
+
+.slider .slick-dots .slick-active button {
+  background: rgba(255, 255, 255, .8)
+}
+
+.text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 0 33px 99px;
+  color: #fff;
+  z-index: 5;
+  -webkit-transition: all .2s ease 0s;
+  transition: all .2s ease 0s;
+  -webkit-transform: translateY(0);
+  transform: translateY(0)
+}
+
+.prev .text {
+    text-align: right;
+    float: right;
+    
+}
+
+.slick-active .text {
+  padding: 0 55px 99px
+}
+
+.category {
+  text-transform: uppercase;
+  color: #DE751F;
+}
+
+.title {
+  font-size: 1.1rem;
+  line-height: 1.15em;
+  margin: .4rem 0 0;
+  -webkit-transition: all .6s ease 0s;
+  transition: all .6s ease 0s;
+  color: #fff;
+}
+
+.slider.changing .text {
+  -webkit-transform: translateY(100%);
+  transform: translateY(100%)
+}
+
+.slick-active .title {
+  margin-top: .8rem;
+  font-size: 3.1rem;
+  -webkit-transition: all .4s ease .2s;
+  transition: all .4s ease .2s
+}
+
+.summary {
+  position: relative;
+  height: 1px;
+  top: 100px;
+  font-weight: 400;
+  margin: 0;
+  -webkit-transform: translateY(100%);
+  transform: translateY(100%);
+  -webkit-transition: all .4s ease 0s;
+  transition: all .4s ease 0s
+}
+
+.slick-active .summary {
+  top: 5px;
+  -webkit-transition: all .4s ease .2s;
+  transition: all .4s ease .2s
+}
+
+.slide:before {
+  content: "";
+  display: block;
+}
+
+.slide figure:before,
+.slide figure:after {
+  content: "";
+  position: absolute;
+  top: 10%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, .25);
+  background: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .7) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0)), color-stop(100%, rgba(0, 0, 0, .7)));
+  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .7) 100%);
+  background: -o-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .7) 100%);
+  background: -ms-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .7) 100%);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .7) 100%)
+}
+
+.slide figure:before {
+  top: 0;
+  background: transparent;
+  z-index: 1;
+  -webkit-transition: background-color .4s ease 0s;
+  transition: background-color .4s ease 0s
+}
+
+.slide:hover figure:before,
+.slide:focus figure:before {
+  background: rgba(39, 37, 30, .6)
+  /* Best 숙소 css 끝*/
+}
+
 
 </style>
 </head>
@@ -77,33 +336,83 @@ img{width:500px;height:500px;}
 		    </form>
 		  </div>
 		</nav>
-	
-	
 		
-		<div class="container">
-			<h2>Best 숙소</h2>
-			
-			<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-			  <div class="carousel-inner">
-			    <div class="carousel-item active">
-			      <img src="photo/Accommodation/가족호텔업/그림리조트/acc1.jpeg" class="d-block w-100">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="photo/Accommodation/가족호텔업/그림리조트/acc2.jpeg" class="d-block w-100">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="photo/Accommodation/가족호텔업/그림리조트/acc3.jpeg" class="d-block w-100">
-			    </div>
-			  </div>
-			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Previous</span>
-			  </button>
-			  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Next</span>
-			  </button>
+	<div class="container">
+	<br>
+	
+	<!-- best 숙소 시작 -->
+	<div style="text-align: center"><h2>Best 숙소</h2></div>
+	<div class="slider">
+        <div class="slide">
+            <figure>
+                <img src="photo/Accommodation/가족호텔업/그림리조트/acc1.jpeg"/>
+			</figure>
+            <div class="text">
+            	<div class="category">호텔</div>
+                <h1 class="title">그림리조트</h1>
+                <p class="summary">내용~~</p>
 			</div>
+        </div>
+        <div class="slide">
+            <figure>
+                <img src="photo/Accommodation/가족호텔업/그림리조트/acc2.jpeg"/>
+			</figure>
+            <div class="text">
+            	<div class="category">호텔</div>
+                <h1 class="title">그림리조트</h1>
+                <p class="summary">내용~~</p>
+			</div>
+        </div>
+        <div class="slide">
+            <figure>
+                <img src="photo/Accommodation/가족호텔업/그림리조트/acc3.jpeg"/>
+			</figure>
+            <div class="text">
+            	<div class="category">호텔</div>
+                <h1 class="title">그림리조트</h1>
+                <p class="summary">내용~~</p>
+			</div>
+        </div>
+        <div class="slide">
+            <figure>
+                <img src="photo/Accommodation/가족호텔업/그림리조트/acc4.jpeg"/>
+			</figure>
+            <div class="text">
+            	<div class="category">호텔</div>
+                <h1 class="title">그림리조트</h1>
+                <p class="summary">내용~~</p>
+			</div>
+        </div>   
+    </div>
+    <!-- best 숙소 끝 -->
+    <!-- best 인기상품 시작 -->
+    
+    <div style="text-align: center"><h2>Best 인기상품</h2></div>
+    <div class="selector">
+        <div class="selecotr-item">
+            <input type="radio" id="radio1" name="best_goods" class="selector-item_radio" checked>
+            <label for="radio1" class="selector-item_label">식당</label>
+        </div>
+        <div class="selecotr-item">
+            <input type="radio" id="radio2" name="best_goods" class="selector-item_radio">
+            <label for="radio2" class="selector-item_label">관광지</label>
+        </div>
+        <div class="selecotr-item">
+            <input type="radio" id="radio3" name="best_goods" class="selector-item_radio">
+            <label for="radio3" class="selector-item_label">렌트카</label>
+        </div>
+    </div>
+    
+    <br><br><br><br>
+
+    <!-- best 인기상품 끝 --> 
+
+    
+
+       
+       
+    
+			
 		
 			<div class="container">
 				<h2>인기 렌터카</h2>
@@ -227,107 +536,14 @@ img{width:500px;height:500px;}
 					</div>
 				</div>
 			</div>
+			
+		<!-- test -->
 		
-		<div class="container">	
-<!-- 식당 추천 -->
-<hr>
-<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-  <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked="">
-  <label class="btn btn-outline-primary" for="btnradio1">식당</label>
-  <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" checked="">
-  <label class="btn btn-outline-primary" for="btnradio2">관광지</label>
-  <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" checked="">
-  <label class="btn btn-outline-primary" for="btnradio3">렌트카</label>
-</div>
-
-  <div class="page-wrapper_rest" style="position:relative; width: 100%;">
-  <h2>인기 식당</h2>
-      <!--page slider -->
-      <div class="post-slider">
-        <i class="fas fa-chevron-left prev"></i>  	
-        <i class="fas fa-chevron-right next"></i>   
-        <div class="post-wrapper">
-          <div class="post">
-            <a href="#"><img src="photo/Restaurant/서양식/라라코스트서귀포점/라라코스트_1.jpg" class="slider-image"></a>
-            <div class="post-info"><br>
-              <i class="far fa-user" style="height:10%;">라라코스트</i>
-            </div>
-          </div>
-          <div class="post">
-            <a href="#"><img src="photo/Restaurant/서양식/라라코스트서귀포점/라라코스트_2.jpg" class="slider-image"></a>
-            <div class="post-info"><br>
-              <i class="far fa-user" style="height:10%;">라라코스트</i>
-            </div>
-          </div>
-          <div class="post">
-            <a href="#"><img src="photo/Restaurant/서양식/라라코스트서귀포점/라라코스트_3.jpg" class="slider-image"></a>
-            <div class="post-info"><br>
-              <i class="far fa-user" style="height:10%;">라라코스트</i>
-            </div>
-          </div>
-          <div class="post">
-            <a href="#"><img src="photo/Restaurant/서양식/라라코스트서귀포점/라라코스트_4.jpg" class="slider-image"></a>
-            <div class="post-info"><br>
-              <i class="far fa-user" style="height:10%;">라라코스트</i>
-            </div>
-          </div>
-          <div class="post">
-            <a href="#"><img src="photo/Restaurant/서양식/라라코스트서귀포점/라라코스트_5.jpg" class="slider-image"></a>
-            <div class="post-info"><br>
-              <i class="far fa-user" style="height:10%;">라라코스트</i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-     <!--post slider-->
-    
-	
-  <div class="page-wrapper_attr" style="position:relative; width: 100%;">
-  <h2>인기 관광지</h2>
-      <!--page slider -->
-      <div class="post-slider">
-        <i class="fas fa-chevron-left prev_1"></i>  	
-        <i class="fas fa-chevron-right next_1"></i>   
-        <div class="post-wrapper_1">
-          <div class="post">
-            <a href="#"><img src="photo/Attraction/동백포레스트/동백포레스트_1.jpg" class="slider-image"></a>
-            <div class="post-info"><br>
-              <i class="far fa-user" style="height:10%;">동백포레스트</i>
-            </div>
-          </div>
-          <div class="post">
-            <a href="#"><img src="photo/Attraction/동백포레스트/동백포레스트_2.jpg" class="slider-image"></a>
-            <div class="post-info"><br>
-              <i class="far fa-user" style="height:10%;">동백포레스트</i>
-            </div>
-          </div>
-          <div class="post">
-            <a href="#"><img src="photo/Attraction/동백포레스트/동백포레스트_3.jpg" class="slider-image"></a>
-            <div class="post-info"><br>
-              <i class="far fa-user" style="height:10%;">동백포레스트</i>
-            </div>
-          </div>
-          <div class="post">
-            <a href="#"><img src="photo/Attraction/동백포레스트/동백포레스트_4.jpg" class="slider-image"></a>
-            <div class="post-info"><br>
-              <i class="far fa-user" style="height:10%;">동백포레스트</i>
-            </div>
-          </div>
-          <div class="post">
-            <a href="#"><img src="photo/Attraction/동백포레스트/동백포레스트_5.jpg" class="slider-image"></a>
-            <div class="post-info"><br>
-              <i class="far fa-user" style="height:10%;">동백포레스트</i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-     <!--post slider-->
-     
-    </div>
+		 
 		
-		</div>
+		<!-- test -->
+		
+	</div>
 	</div>
 
 <!-- =============================================================================================================  -->

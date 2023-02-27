@@ -13,14 +13,141 @@
 		display: inline;
 	}
 
+/* 사진 슬라이더 css 시작 */
+.items-slider-container .slider-for {background-color: #fff;margin-bottom: 0;}
+.items-slider-container .slider-for img {
+	  max-width: 100%;
+  height: 700px;
+  width: 1550px;
+  max-height: 100%;
+  margin: 10px;
+}
+.items-slider-container .slider-for .item-informations-container {padding: 30px;position: absolute;}
+.items-slider-container .slider-for .item-informations-container.left-top {left: 0;top: 0;}
+.items-slider-container .slider-for .item-informations-container.center-top {
+ position: absolute;left: 50%;
+ -moz-transform: translate(-50%, 0);
+ -ms-transform: translate(-50%, 0);
+ -webkit-transform: translate(-50%, 0);
+ transform: translate(-50%, 0);
+ top: 0;
+}
+.items-slider-container .slider-for .item-informations-container.right-top {top: 0;right: 0;}
+.items-slider-container .slider-for .item-informations-container.left-center {
+  position: absolute;
+  top: 50%;
+  -moz-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  -webkit-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  left: 0;
+}
+.items-slider-container .slider-for .item-informations-container.center-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.items-slider-container .slider-for .item-informations-container.right-center {
+  position: absolute;
+  top: 50%;
+  -moz-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  -webkit-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  right: 0;
+}
+.items-slider-container .slider-for .item-informations-container.left-bottom {
+  bottom: 0;
+  left: 0;
+}
+.items-slider-container .slider-for .item-informations-container.center-bottom {
+  position: absolute;
+  left: 50%;
+  -moz-transform: translate(-50%, 0);
+  -ms-transform: translate(-50%, 0);
+  -webkit-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
+  bottom: 0;
+}
+.items-slider-container .slider-for .item-informations-container.right-bottom {
+  bottom: 0;
+  right: 0;
+}
+.items-slider-container .slider-nav {
+  background-color: #282828;
+  margin-bottom: 10px;
+}
+.items-slider-container .slider-nav .slick-slide {
+  position: relative;
+  padding: 7px;
+}
+.items-slider-container .slider-nav .slick-slide img {
+  
+  opacity: 0.5;
+  max-width: 100%;
+  width: 300px;
+  height: 200px;
+  max-height: 100%;
+  margin: auto;
+}
+.items-slider-container .slider-nav .slick-slide:hover {
+  cursor: pointer;
+}
+/* 사진 슬라이더 css 끝 */
+
 </style>
   <!-- jQuery -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
   <!-- iamport.payment.js -->
   <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+  
+
+<script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+
   <script type="text/javascript">
 	$(function(){
-		$('.carousel-item').filter(':first').addClass('active');
+		/* $('.carousel-item').filter(':first').addClass('active'); */
+		
+		$.noConflict();	// 충돌방지 코드
+		
+		// 숙소 이미지 사진 slide
+		$(document).ready( function () {
+			   // Sliders
+			  $('.js-items-slider-container .slider-for').slick({
+			      slidesToShow: 1,
+			      slidesToScroll: 1,
+			      autoplay: true,
+				  autoplaySpeed: 5000,
+			      arrows: false,
+			      fade: true,
+			      asNavFor: '.js-items-slider-container .slider-nav'
+			  });
+			  $('.js-items-slider-container .slider-nav').slick({
+			      slidesToShow: 4,
+			      slidesToScroll: 1,
+			      asNavFor: '.js-items-slider-container .slider-for',
+			      dots: true,
+			      centerMode: false,
+			      focusOnSelect: true,
+			      arrows: false,
+			      accessibility: true,
+			      onAfterChange: function (slide, index) {
+			        console.log("slider-nav change");
+			        console.log(this.$slides.get(index));
+			        $('.current-slide').removeClass('current-slide');
+			        $(this.$slides.get(index)).addClass('current-slide');
+			      },
+			      onInit: function (slick) {
+			        $(slick.$slides.get(0)).addClass('current-slide');
+			      }
+			  });
+			});
 	
 		
 		var data =  {"accommoNo" : $("#accommoNo").val()};
@@ -220,35 +347,33 @@
 <!-- ====================================================================================== -->
 
 	<div class="container">
-
-	<h2 th:text="${a.name}" id="name"></h2>
-	<h3 th:text="${a.category}"></h3>
-	<hr>
-		<div class="container">
-			<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-			  <div class="carousel-inner">
-			    <div class="carousel-item" th:each="path: ${photoList}">		     
-			      <img style="height: 600px;width:700px;" th:src="|/${path}|" class="d-block w-100">
-			    </div>
-			  </div>
-			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Previous</span>
-			  </button>
-			  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Next</span>
-			  </button>
-			</div>
-	<hr>
-	<!-- 사진 -->
-	<!-- <th:block th:each="path: ${photoList}">
-		<span>
-			<img alt="" th:src="|/${path}|" height="350">
-		</span>
-	</th:block> -->
-	
+<!-- 정보 -->
+	<h1 th:text="${a.name}" id="name"></h1>
 	<br>
+	<div>
+		<span style="font-size: 1.3em; font-weight: normal;">[숙박유형] &nbsp;</span>
+		<span style="font-size: 1.2em; font-weight: lighter;" th:text="${a.category}"></span>
+		<span style="font-size: 1.3em; font-weight: normal;">&nbsp;&nbsp;[주소] &nbsp;</span>
+		<span style="font-size: 1.2em; font-weight: lighter;" th:text="${a.addr}"></span>
+		<span style="font-size: 1.3em; font-weight: normal;">&nbsp;&nbsp;[전화번호] &nbsp;</span>
+		<span style="font-size: 1.2em; font-weight: lighter;" th:text="${a.phone}"></span>
+		<span style="font-size: 1.3em; font-weight: normal;">&nbsp;&nbsp;[가격] &nbsp;</span>
+		<span style="font-size: 1.2em; font-weight: lighter;" th:text="|${a.price}원|"></span>
+	</div>
+	
+	<div class="items-slider-container js-items-slider-container">
+	       <div class="slider slider-for">
+            <div th:each="path: ${photoList}">
+                <img th:src="|/${path}|">
+            </div>
+        </div>        
+        <div class="slider slider-nav">           
+            <div th:each="path: ${photoList}">
+                <img th:src="|/${path}|">
+            </div>
+        </div>     
+    </div>
+	<hr>
 	
 	<!-- 찜기능 -->
 	<th:block th:if="${session.loginM.role != 'admin'}">
@@ -271,18 +396,6 @@
 		</th:block>
 	</div>
 	
-	<!-- 정보 -->
-	<div>
-		<h3>숙소 소개</h3>
-		<h4>주소</h4>
-		<h5 th:text="${a.addr}"></h5>
-		<h4>전화</h4>
-		<h5 th:text="${a.phone}"></h5>
-		<h4>가격</h4>
-		<h5 th:text="${a.price}" id="price"></h5>
-		
-	</div>
-	
 	<!-- 결제 -->
 	<div>
 		<button id="btnPay">결제하기</button>
@@ -299,7 +412,6 @@
 			<input type="hidden" name="paid_amount" id="paid_amount">
 			<input type="hidden" name="apply_num" id="apply_num">
 		</form>
-	</div>
 	</div>
 	</div>
 </body>
