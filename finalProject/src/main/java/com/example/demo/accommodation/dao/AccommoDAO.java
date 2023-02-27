@@ -69,4 +69,12 @@ public class AccommoDAO {
 	public int deleteById(int accommoNo) {
 		return DBManager.deleteById(accommoNo);
 	}
+	
+	public int updatePhoto(AccommoPhotoVO a) {
+		return DBManager.updatePhoto(a);
+	}
+	
+	public int insertPhoto(AccommoPhotoVO a) {
+		return DBManager.insertPhoto(a);
+	}
 }

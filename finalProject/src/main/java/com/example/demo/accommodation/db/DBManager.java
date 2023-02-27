@@ -133,6 +133,22 @@ public class DBManager {
 		return re;
 	}
 	
+	public static int updatePhoto(AccommoPhotoVO a) {
+		int re = 0;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.update("accommoPhoto.updatePhoto", a);
+		session.close();
+		return re;
+	}
+	
+	public static int insertPhoto(AccommoPhotoVO a) {
+		int re = 0;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.insert("accommoPhoto.insertPhoto", a);
+		session.close();
+		return re;
+	}
+	
 }
 
 
