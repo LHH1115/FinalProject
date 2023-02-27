@@ -256,7 +256,7 @@ public class AttractController {
 			Random rand = new Random();
 			String forestList[] = {"노리매", "동백포레스트", "마흐니 숲길", "큰엉해안경승지", "휴애리"};
 			String riseList[] = {"물영아리 오름", "사라오름", "노리매"};
-			String themeList[] = {"양금석 가옥", "의귀리 김만일묘역", "코코몽 에코파크"};
+			String themeList[] = {"의귀리 김만일묘역", "코코몽 에코파크", "마흐니 숲길", "양금석 가옥"};
 //			String hostelList[] = {"길리 리조트(구.협재 사계절 리조트)", "라이트프리(구. 에바다호스텔)", "아마스빌 리조트(구.아마스빌 호스텔)", "용두암캐빈", "해미안"};
 //			String condoList[] = {"메가리조트제주", "사조그랜드리조트", "이랜드파크 켄싱턴리조트 제주한림점", "일성제주콘도미니엄", "제주토비스콘도①"};
 				switch (category) {
@@ -276,7 +276,7 @@ public class AttractController {
 						}
 					}break;
 					case "테마파크":{
-						String k = themeList[rand.nextInt(3)];
+						String k = themeList[rand.nextInt(4)];
 						for(int i=0;i<5;i++) {
 						realPath = "photo/Attraction/"+k+"/"+k+"_"+(i+1)+".jpg";
 						photoList.add(realPath);
