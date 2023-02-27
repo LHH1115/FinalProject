@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RestaurantVO {
 
-	private int attractNo;
+	private int restauNo;
 	private String name;
 	private String addr;
 	private String phone;

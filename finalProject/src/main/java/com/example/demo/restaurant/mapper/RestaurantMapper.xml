@@ -51,7 +51,7 @@
   <select id="findAllPhotoById" resultType="restaurantVO" parameterType="java.lang.Integer">
   	SELECT 
   	A.RESTAUNO, A.NAME, A.ADDR, A.PHONE, A.CATEGORY, 
-  	P.APNO, P.PATH, P.ORDERS
+  	P.RPNO, P.PATH, P.ORDERS
   	FROM TBL_RESTAURANT A, TBL_RESTAURANTPHOTO P
   	WHERE A.RESTAUNO = P.RESTAUNO AND A.RESTAUNO = #{restauNo}
   	ORDER BY P.ORDERS

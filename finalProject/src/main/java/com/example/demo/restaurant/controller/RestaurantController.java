@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
+import javax.swing.Spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -115,6 +116,7 @@ public class RestaurantController {
 		map.put("start", start);
 		map.put("end", end);
 		List<RestaurantVO> list = dao.findByAny(map);
+		System.out.println(list);
 		totCnt = dao.findCountByAny(keyword);
 		totPage = (int) Math.ceil(totCnt/pageSize);
 		int startPage = (pageNum-1)/pageGroup*pageGroup+1;
@@ -255,42 +257,45 @@ public class RestaurantController {
 		}else {
 			// 이미지 없을때 랜덤이미지
 			Random rand = new Random();
-			String fhotellList[] = {"그림리조트", "꼬뜨도르가족호텔", "다인리조트", "베스트웨스턴 제주호텔", "올레리조트"};
-			String guestList[] = {"민트게스트하우스", "섬게스트하우스", "슬로시티게스트하우스", "제주공항게스트하우스웨이브사운드", "토다게스트"};
-			String thotelList[] = {"(주)호텔하니크라운", "제주썬호텔", "제주팔레스호텔", "글래드호텔앤리조트㈜ 메종글래드제주", "제주로얄호텔"};
-			String hostelList[] = {"길리 리조트(구.협재 사계절 리조트)", "라이트프리(구. 에바다호스텔)", "아마스빌 리조트(구.아마스빌 호스텔)", "용두암캐빈", "해미안"};
-			String condoList[] = {"메가리조트제주", "사조그랜드리조트", "이랜드파크 켄싱턴리조트 제주한림점", "일성제주콘도미니엄", "제주토비스콘도①"};
+			String koreanList[] = {"명가천지연무태장어", "제주광해애월점", "제주반딧불한담", "큰맘할매순대국", "푸른밤의해안속초식당"};
+			String westernList[] = {"라라코스트서귀포점", "루마카", "반양", "카우보이스테이크하우스"};
+			String japaneseList[] = {"스시앤", "아일랜드본섬", "해모둠", "해원앙", "혼참치"};
+//			String hostelList[] = {"길리 리조트(구.협재 사계절 리조트)", "라이트프리(구. 에바다호스텔)", "아마스빌 리조트(구.아마스빌 호스텔)", "용두암캐빈", "해미안"};
+//			String condoList[] = {"메가리조트제주", "사조그랜드리조트", "이랜드파크 켄싱턴리조트 제주한림점", "일성제주콘도미니엄", "제주토비스콘도①"};
 				switch (category) {
-					case "가족호텔업":{
+					case "한식":{
+						String k = koreanList[rand.nextInt(5)];
 						for(int i=0;i<5;i++) {
-							realPath = "photo/Restaurant/"+category+"/"+fhotellList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
+							realPath = "photo/Restaurant/"+category+"/"+k+"/"+k+"_"+(i+1)+".jpg";
 							photoList.add(realPath);
 						}
 					}break;
-					case "게스트하우스":{
+					case "서양식":{
+						String k = westernList[rand.nextInt(4)];
 						for(int i=0;i<5;i++) {
-						realPath = "photo/Restaurant/"+category+"/"+guestList[rand.nextInt(5)]+"/name"+(i+1)+".jpeg";
+						realPath = "photo/Restaurant/"+category+"/"+k+"/"+k+"_"+(i+1)+".jpg";
 						photoList.add(realPath);
 						}
 					}break;
-					case "관광호텔업":{
+					case "일식":{
+						String k = japaneseList[rand.nextInt(4)];
 						for(int i=0;i<5;i++) {
-						realPath = "photo/Restaurant/"+category+"/"+thotelList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
+						realPath = "photo/Restaurant/"+category+"/"+k+"/"+k+"_"+(i+1)+".jpg";
 						photoList.add(realPath);
 						}
 					}break;
-					case "호스텔업":{
-						for(int i=0;i<5;i++) {
-						realPath = "photo/Restaurant/"+category+"/"+hostelList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
-						photoList.add(realPath);
-						}
-					}break;
-					case "휴양콘도미니엄업":{
-						for(int i=0;i<5;i++) {
-						realPath = "photo/Restaurant/"+category+"/"+condoList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
-						photoList.add(realPath);
-						}
-					}break;
+//					case "호스텔업":{
+//						for(int i=0;i<5;i++) {
+//						realPath = "photo/Restaurant/"+category+"/"+hostelList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
+//						photoList.add(realPath);
+//						}
+//					}break;
+//					case "휴양콘도미니엄업":{
+//						for(int i=0;i<5;i++) {
+//						realPath = "photo/Restaurant/"+category+"/"+condoList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
+//						photoList.add(realPath);
+//						}
+//					}break;
 				}
 			
 //			System.out.println("대체 이미지: "+photoList);

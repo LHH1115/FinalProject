@@ -49,7 +49,7 @@ public class AttractController {
 		session.removeAttribute("keyword");		// 페이징 처리 세션 제거
 		session.removeAttribute("category");	// 페이징 처리 세션 제거
 		
-		// 인기숙소
+		// 인기관광지
 		List<LikeVO> like_list = dao.findMostLike(5);	// Top 5 나열
 		LikeVO l = new LikeVO();
 		List<AttractionVO> attract_list = new ArrayList<>();
@@ -254,42 +254,46 @@ public class AttractController {
 		}else {
 			// 이미지 없을때 랜덤이미지
 			Random rand = new Random();
-			String fhotellList[] = {"그림리조트", "꼬뜨도르가족호텔", "다인리조트", "베스트웨스턴 제주호텔", "올레리조트"};
-			String guestList[] = {"민트게스트하우스", "섬게스트하우스", "슬로시티게스트하우스", "제주공항게스트하우스웨이브사운드", "토다게스트"};
-			String thotelList[] = {"(주)호텔하니크라운", "제주썬호텔", "제주팔레스호텔", "글래드호텔앤리조트㈜ 메종글래드제주", "제주로얄호텔"};
-			String hostelList[] = {"길리 리조트(구.협재 사계절 리조트)", "라이트프리(구. 에바다호스텔)", "아마스빌 리조트(구.아마스빌 호스텔)", "용두암캐빈", "해미안"};
-			String condoList[] = {"메가리조트제주", "사조그랜드리조트", "이랜드파크 켄싱턴리조트 제주한림점", "일성제주콘도미니엄", "제주토비스콘도①"};
+			String forestList[] = {"노리매", "동백포레스트", "마흐니 숲길", "큰엉해안경승지", "휴애리"};
+			String riseList[] = {"물영아리 오름", "사라오름", "노리매"};
+			String themeList[] = {"양금석 가옥", "의귀리 김만일묘역", "코코몽 에코파크"};
+//			String hostelList[] = {"길리 리조트(구.협재 사계절 리조트)", "라이트프리(구. 에바다호스텔)", "아마스빌 리조트(구.아마스빌 호스텔)", "용두암캐빈", "해미안"};
+//			String condoList[] = {"메가리조트제주", "사조그랜드리조트", "이랜드파크 켄싱턴리조트 제주한림점", "일성제주콘도미니엄", "제주토비스콘도①"};
 				switch (category) {
-					case "가족호텔업":{
+					case "숲길":{
+						
+						String k = forestList[rand.nextInt(5)];
 						for(int i=0;i<5;i++) {
-							realPath = "photo/Attraction/"+category+"/"+fhotellList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
+							realPath = "photo/Attraction/"+k+"/"+k+"_"+(i+1)+".jpg";
 							photoList.add(realPath);
 						}
 					}break;
-					case "게스트하우스":{
+					case "오름":{
+						String k = riseList[rand.nextInt(3)];
 						for(int i=0;i<5;i++) {
-						realPath = "photo/Attraction/"+category+"/"+guestList[rand.nextInt(5)]+"/name"+(i+1)+".jpeg";
+						realPath = "photo/Attraction/"+k+"/"+k+"_"+(i+1)+".jpg";
 						photoList.add(realPath);
 						}
 					}break;
-					case "관광호텔업":{
+					case "테마파크":{
+						String k = themeList[rand.nextInt(3)];
 						for(int i=0;i<5;i++) {
-						realPath = "photo/Attraction/"+category+"/"+thotelList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
+						realPath = "photo/Attraction/"+k+"/"+k+"_"+(i+1)+".jpg";
 						photoList.add(realPath);
 						}
 					}break;
-					case "호스텔업":{
-						for(int i=0;i<5;i++) {
-						realPath = "photo/Attraction/"+category+"/"+hostelList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
-						photoList.add(realPath);
-						}
-					}break;
-					case "휴양콘도미니엄업":{
-						for(int i=0;i<5;i++) {
-						realPath = "photo/Attraction/"+category+"/"+condoList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
-						photoList.add(realPath);
-						}
-					}break;
+//					case "호스텔업":{
+//						for(int i=0;i<5;i++) {
+//						realPath = "photo/Attraction/"+category+"/"+hostelList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
+//						photoList.add(realPath);
+//						}
+//					}break;
+//					case "휴양콘도미니엄업":{
+//						for(int i=0;i<5;i++) {
+//						realPath = "photo/Attraction/"+category+"/"+condoList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
+//						photoList.add(realPath);
+//						}
+//					}break;
 				}
 			
 //			System.out.println("대체 이미지: "+photoList);
