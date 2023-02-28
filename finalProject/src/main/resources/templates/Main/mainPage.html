@@ -58,10 +58,7 @@ $(function(){
 </script>
 <style type="text/css">
 
-.container{border:1px solid black;}
-.row{border:1px solid blue;margin:10px;}
-.col-md-4{border:1px solid red;}
-.card-img-top{width:100px;height:100px;}
+.container{border:0px solid black;}
 .container-fluid{text-align: center;}
 
 /* Best 인기상품 Radio버튼 끝 */
@@ -116,6 +113,87 @@ $(function(){
 }
 
 /* Best 인기상품 Radio버튼 끝 */
+
+/* Best 인기상품 시작 */
+
+
+#ranking-slide {
+  position: relative;
+  width: 1200px;
+  height: 338px;
+  margin: 30px auto;
+}
+
+#ranking-slide li {
+  display: inline-block;
+  margin: 0 16px 0 0;
+}
+
+#ranking-slide li,
+#ranking-slide li > a {
+  width: 300px;
+  height: 200px;
+}
+
+#ranking-slide li > a {
+	cursor: pointer;
+	position: relative;
+	display: block;
+	background: #efefef;
+	border-radius: 5px;
+	transition: all 0.2s 0s ease;
+}
+
+#ranking-slide li > a:hover {
+	background: #ffa500;
+}
+
+#ranking-slide li:nth-child(n+2):nth-child(-n+3) {
+	top: -115px;
+}
+#ranking-slide li:nth-child(n+4) {
+	left: 472px;
+	top: -201px;
+}
+#ranking-slide li:nth-child(n+5) {
+	left: 472px;
+	top: -201px;
+}
+
+#ranking-slide li:first-child,
+#ranking-slide li:first-child > a
+ {
+  width: 450px;
+  height: 430px;
+  margin: 0 16px 0 0;
+}
+
+#ranking-slide  {
+  counter-reset: number;
+}
+
+#ranking-slide li {
+  position: relative;
+}
+
+#ranking-slide li:before {
+  content: counter(number);
+  counter-increment: number;
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  color: red;
+  font-size: 2rem;
+  text-align: center;
+  z-index: 1;
+}
+
+
+
+/* Best 인기상품 끝 */
 
 /* Best 숙소 시작 */
 .slide {
@@ -344,8 +422,8 @@ $(function(){
 	<div style="text-align: center"><h2>Best 숙소</h2></div>
 	<div class="slider">
         <div class="slide">
-            <figure>
-                <img src="photo/Accommodation/가족호텔업/그림리조트/acc1.jpeg"/>
+        	<figure>
+              <img src="photo/Accommodation/가족호텔업/그림리조트/acc1.jpeg"/>
 			</figure>
             <div class="text">
             	<div class="category">호텔</div>
@@ -401,19 +479,28 @@ $(function(){
             <input type="radio" id="radio3" name="best_goods" class="selector-item_radio">
             <label for="radio3" class="selector-item_label">렌트카</label>
         </div>
-    </div>
-    
-    <br><br><br><br>
+    </div><br>
+
+
+	<div id="ranking-slide">
+ 		<ol>
+    		<li><a href="#"><img src="photo/Restaurant/한식/명가천지연무태장어/명가천지연무태장어_1.jpg" style="width:450px ;height:430px ;"/></a></li>
+    		<li><a href="#"><img src="photo/Restaurant/한식/명가천지연무태장어/명가천지연무태장어_2.jpg" style="width:300px ;height:200px ;"/></a></li>
+    		<li><a href="#"><img src="photo/Restaurant/한식/명가천지연무태장어/명가천지연무태장어_3.jpg" style="width:300px ;height:200px ;"/></a></li>
+    		<li><a href="#"><img src="photo/Restaurant/한식/명가천지연무태장어/명가천지연무태장어_4.jpg" style="width:300px ;height:200px ;"/></a></li>
+    		<li><a href="#"><img src="photo/Restaurant/한식/명가천지연무태장어/명가천지연무태장어_5.jpg" style="width:300px ;height:200px ;"/></a></li>
+  		</ol>
+	</div>
+	
+
+	
+	
 
     <!-- best 인기상품 끝 --> 
+	
 
-    
 
-       
-       
-    
-			
-		
+		<br><br><br>
 			<div class="container">
 				<h2>인기 렌터카</h2>
 				
