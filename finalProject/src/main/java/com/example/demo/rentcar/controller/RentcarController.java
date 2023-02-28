@@ -165,12 +165,13 @@ public class RentcarController {
 	public void detail(int carNo, Model model) {
 		RentcarVO vo = setRealPath(carNo);
 		
-		List<String> list=rentcarDAO.findRentByCarno(carNo);
-		ArrayList<RentcarVO> list2 = new ArrayList<>();
-		for(String l:list) {
-			RentcarVO rvo=rentcarDAO.findRentInfoByStorename(l);
-			list2.add(rvo);
-		}
+//		List<String> list=rentcarDAO.findRentByCarno(carNo);
+//		ArrayList<RentcarVO> list2 = new ArrayList<>();
+//		for(String l:list) {
+//			RentcarVO rvo=rentcarDAO.findRentInfoByStorename(l);
+//			list2.add(rvo);
+//		}
+		List<RentcarVO> list2 = rentcarDAO.findStoreInfo(carNo);		
 		
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("category","RentCar");

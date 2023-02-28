@@ -45,6 +45,12 @@ public class DBManager {
 		return vo;
 	}
 	
+	public static List<RentcarVO> findStoreInfo(int no) {
+		SqlSession session = sqlSessionFactory.openSession();
+		List<RentcarVO> list=session.selectList("rentcar.findStoreInfo",no);
+		return list;
+	}
+	
 	public static List<Integer> findPopularCar() {
 		SqlSession session = sqlSessionFactory.openSession();
 		List<Integer> list=session.selectList("rentcar.findPopularCar");

@@ -28,6 +28,10 @@ public class RentcarDAO {
 		return DBManager.findRentInfoByStorename(name);
 	}
 	
+	public List<RentcarVO> findStoreInfo(int carno){
+		return DBManager.findStoreInfo(carno);
+	}
+	
 	public List<Integer> findPopularCar(){
 		return DBManager.findPopularCar();
 	}
