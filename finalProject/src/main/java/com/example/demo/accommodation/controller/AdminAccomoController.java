@@ -50,7 +50,15 @@ public class AdminAccomoController {
 		
 		String realPath = "";
 		String category = a.getCategory();
-		if(list.size() > 0) {
+		
+		Random rand = new Random();
+		String fhotellList[] = {"그림리조트", "꼬뜨도르가족호텔", "다인리조트", "베스트웨스턴 제주호텔", "올레리조트"};
+		String guestList[] = {"민트게스트하우스", "섬게스트하우스", "슬로시티게스트하우스", "제주공항게스트하우스웨이브사운드", "토다게스트"};
+		String thotelList[] = {"(주)호텔하니크라운", "제주썬호텔", "제주팔레스호텔", "글래드호텔앤리조트㈜ 메종글래드제주", "제주로얄호텔"};
+		String hostelList[] = {"길리 리조트(구.협재 사계절 리조트)", "라이트프리(구. 에바다호스텔)", "아마스빌 리조트(구.아마스빌 호스텔)", "용두암캐빈", "해미안"};
+		String condoList[] = {"메가리조트제주", "사조그랜드리조트", "이랜드파크 켄싱턴리조트 제주한림점", "일성제주콘도미니엄", "제주토비스콘도①"};
+		
+		if(list.size() > 4) {
 			for(int i=0;i<list.size();i++) {
 				PhotoListVO p = new PhotoListVO();
 				a = list.get(i);
@@ -64,71 +72,167 @@ public class AdminAccomoController {
 			}
 		}else {
 			// 이미지 없을때 랜덤이미지
-			Random rand = new Random();
-			String fhotellList[] = {"그림리조트", "꼬뜨도르가족호텔", "다인리조트", "베스트웨스턴 제주호텔", "올레리조트"};
-			String guestList[] = {"민트게스트하우스", "섬게스트하우스", "슬로시티게스트하우스", "제주공항게스트하우스웨이브사운드", "토다게스트"};
-			String thotelList[] = {"(주)호텔하니크라운", "제주썬호텔", "제주팔레스호텔", "글래드호텔앤리조트㈜ 메종글래드제주", "제주로얄호텔"};
-			String hostelList[] = {"길리 리조트(구.협재 사계절 리조트)", "라이트프리(구. 에바다호스텔)", "아마스빌 리조트(구.아마스빌 호스텔)", "용두암캐빈", "해미안"};
-			String condoList[] = {"메가리조트제주", "사조그랜드리조트", "이랜드파크 켄싱턴리조트 제주한림점", "일성제주콘도미니엄", "제주토비스콘도①"};
+			System.out.println("동작");
 				switch (category) {
 					case "가족호텔업":{
 						for(int i=0;i<5;i++) {
 							PhotoListVO p = new PhotoListVO();
-							realPath = "photo/Accommodation/"+category+"/"+fhotellList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
-							p.setName(a.getName());
-							p.setPath("acc"+(i+1)+".jpeg");
-							p.setCategory(category);
-							p.setRealPath(realPath);
-							p.setOrders(i);
-							photoList.add(p);
+							try {
+								if (list.get(i) != null && list.get(i).getOrders() == i+1) {
+									
+									p.setName(list.get(i).getName());
+									p.setPath(list.get(i).getPath());
+									p.setCategory(list.get(i).getCategory());
+									p.setRealPath("photo/Accommodation/"+p.getCategory()+"/"+p.getName()+"/"+p.getPath());
+									p.setOrders(list.get(i).getOrders());
+									photoList.add(p);
+								}else {
+									realPath = "photo/Accommodation/"+category+"/"+fhotellList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
+									p.setName(a.getName());
+									p.setPath("acc"+(i+1)+".jpeg");
+									p.setCategory(category);
+									p.setRealPath(realPath);
+									p.setOrders(i);
+									photoList.add(p);
+								}
+							}catch(IndexOutOfBoundsException e) {
+								realPath = "photo/Accommodation/"+category+"/"+fhotellList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
+								p.setName(a.getName());
+								p.setPath("acc"+(i+1)+".jpeg");
+								p.setCategory(category);
+								p.setRealPath(realPath);
+								p.setOrders(i);
+								photoList.add(p);
+							}
+							
 						}
 					}break;
 					case "게스트하우스":{
 						for(int i=0;i<5;i++) {
-						PhotoListVO p = new PhotoListVO();
-						realPath = "photo/Accommodation/"+category+"/"+guestList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
-						p.setName(a.getName());
-						p.setPath("acc"+(i+1)+".jpeg");
-						p.setCategory(category);
-						p.setRealPath(realPath);
-						p.setOrders(i);
-						photoList.add(p);
+							PhotoListVO p = new PhotoListVO();
+							try {
+								if (list.get(i) != null && list.get(i).getOrders() == i+1) {
+									
+									p.setName(list.get(i).getName());
+									p.setPath(list.get(i).getPath());
+									p.setCategory(list.get(i).getCategory());
+									p.setRealPath("photo/Accommodation/"+p.getCategory()+"/"+p.getName()+"/"+p.getPath());
+									p.setOrders(list.get(i).getOrders());
+									photoList.add(p);
+								}else {
+									realPath = "photo/Accommodation/"+category+"/"+guestList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
+									p.setName(a.getName());
+									p.setPath("acc"+(i+1)+".jpeg");
+									p.setCategory(category);
+									p.setRealPath(realPath);
+									p.setOrders(i);
+									photoList.add(p);
+								}
+							}catch(IndexOutOfBoundsException e) {
+								realPath = "photo/Accommodation/"+category+"/"+guestList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
+								p.setName(a.getName());
+								p.setPath("acc"+(i+1)+".jpeg");
+								p.setCategory(category);
+								p.setRealPath(realPath);
+								p.setOrders(i);
+								photoList.add(p);
+							}
 						}
 					}break;
 					case "관광호텔업":{
 						for(int i=0;i<5;i++) {
-						PhotoListVO p = new PhotoListVO();
-						realPath = "photo/Accommodation/"+category+"/"+thotelList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
-						p.setName(a.getName());
-						p.setPath("acc"+(i+1)+".jpeg");
-						p.setCategory(category);
-						p.setRealPath(realPath);
-						p.setOrders(i);
-						photoList.add(p);
+							PhotoListVO p = new PhotoListVO();
+							try {
+								if (list.get(i) != null && list.get(i).getOrders() == i+1) {
+									
+									p.setName(list.get(i).getName());
+									p.setPath(list.get(i).getPath());
+									p.setCategory(list.get(i).getCategory());
+									p.setRealPath("photo/Accommodation/"+p.getCategory()+"/"+p.getName()+"/"+p.getPath());
+									p.setOrders(list.get(i).getOrders());
+									photoList.add(p);
+								}else {
+									realPath = "photo/Accommodation/"+category+"/"+thotelList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
+									p.setName(a.getName());
+									p.setPath("acc"+(i+1)+".jpeg");
+									p.setCategory(category);
+									p.setRealPath(realPath);
+									p.setOrders(i);
+									photoList.add(p);
+								}
+							}catch(IndexOutOfBoundsException e) {
+								realPath = "photo/Accommodation/"+category+"/"+thotelList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
+								p.setName(a.getName());
+								p.setPath("acc"+(i+1)+".jpeg");
+								p.setCategory(category);
+								p.setRealPath(realPath);
+								p.setOrders(i);
+								photoList.add(p);
+							}
 						}
 					}break;
 					case "호스텔업":{
 						for(int i=0;i<5;i++) {
-						PhotoListVO p = new PhotoListVO();
-						realPath = "photo/Accommodation/"+category+"/"+hostelList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
-						p.setName(a.getName());
-						p.setPath("acc"+(i+1)+".jpeg");
-						p.setCategory(category);
-						p.setRealPath(realPath);
-						p.setOrders(i);
-						photoList.add(p);
+							PhotoListVO p = new PhotoListVO();
+							try {
+								if (list.get(i) != null && list.get(i).getOrders() == i+1) {
+									
+									p.setName(list.get(i).getName());
+									p.setPath(list.get(i).getPath());
+									p.setCategory(list.get(i).getCategory());
+									p.setRealPath("photo/Accommodation/"+p.getCategory()+"/"+p.getName()+"/"+p.getPath());
+									p.setOrders(list.get(i).getOrders());
+									photoList.add(p);
+								}else {
+									realPath = "photo/Accommodation/"+category+"/"+hostelList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
+									p.setName(a.getName());
+									p.setPath("acc"+(i+1)+".jpeg");
+									p.setCategory(category);
+									p.setRealPath(realPath);
+									p.setOrders(i);
+									photoList.add(p);
+								}
+							}catch(IndexOutOfBoundsException e) {
+								realPath = "photo/Accommodation/"+category+"/"+hostelList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
+								p.setName(a.getName());
+								p.setPath("acc"+(i+1)+".jpeg");
+								p.setCategory(category);
+								p.setRealPath(realPath);
+								p.setOrders(i);
+								photoList.add(p);
+							}
 						}
 					}break;
 					case "휴양콘도미니엄업":{
 						for(int i=0;i<5;i++) {
-						PhotoListVO p = new PhotoListVO();
-						realPath = "photo/Accommodation/"+category+"/"+condoList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
-						p.setName(a.getName());
-						p.setPath("acc"+(i+1)+".jpeg");
-						p.setCategory(category);
-						p.setRealPath(realPath);
-						p.setOrders(i);
-						photoList.add(p);
+							PhotoListVO p = new PhotoListVO();
+							try {
+								if (list.get(i) != null && list.get(i).getOrders() == i+1) {
+									
+									p.setName(list.get(i).getName());
+									p.setPath(list.get(i).getPath());
+									p.setCategory(list.get(i).getCategory());
+									p.setRealPath("photo/Accommodation/"+p.getCategory()+"/"+p.getName()+"/"+p.getPath());
+									p.setOrders(list.get(i).getOrders());
+									photoList.add(p);
+								}else {
+									realPath = "photo/Accommodation/"+category+"/"+condoList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
+									p.setName(a.getName());
+									p.setPath("acc"+(i+1)+".jpeg");
+									p.setCategory(category);
+									p.setRealPath(realPath);
+									p.setOrders(i);
+									photoList.add(p);
+								}
+							}catch(IndexOutOfBoundsException e) {
+								realPath = "photo/Accommodation/"+category+"/"+condoList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
+								p.setName(a.getName());
+								p.setPath("acc"+(i+1)+".jpeg");
+								p.setCategory(category);
+								p.setRealPath(realPath);
+								p.setOrders(i);
+								photoList.add(p);
+							}
 						}
 					}break;
 				}
@@ -192,7 +296,6 @@ public class AdminAccomoController {
 				ap.setAccommoNo(accommoNo);
 				ap.setPath("acc"+(i+1)+".jpeg");
 				ap.setOrders((i+1));
-				dao.insertPhoto(ap);
 				
 				List<AccommodationVO> list = dao.findAllPhotoById(accommoNo);
 				if(list.size() > 4) {
@@ -203,6 +306,7 @@ public class AdminAccomoController {
 					file.delete();
 				}else {
 					System.out.println("기존 사진 없음");
+					dao.insertPhoto(ap);
 					File folder = new File(savePath);
 					if(!folder.exists()) {
 						try {

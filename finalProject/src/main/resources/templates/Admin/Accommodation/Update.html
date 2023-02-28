@@ -31,7 +31,8 @@
 		})
 		
 		$("#save_img").click(function(){
-			if($("[name=uploadFile]").eq(0).val() == ""){
+			$("#form_img").trigger("submit");
+			/* if($("[name=uploadFile]").eq(0).val() == ""){
 				alert("새로운 파일 지정 안됨")
 			}else{
 				if($("[name=uploadFile]").eq(1).val() == ""){
@@ -51,7 +52,7 @@
 						}
 					}
 				}
-			}
+			} */
 		})
 		
 	})
