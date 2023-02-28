@@ -1,4 +1,4 @@
-package com.example.demo.attraction.db;
+package com.example.demo.restaurant.db;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -9,18 +9,15 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-
-
-
-import com.example.demo.attraction.vo.AttractionPhotoVO;
-import com.example.demo.attraction.vo.AttractionVO;
-import com.example.demo.attraction.vo.LikeVO;
+import com.example.demo.restaurant.vo.LikeVO;
+import com.example.demo.restaurant.vo.RestaurantPhotoVO;
+import com.example.demo.restaurant.vo.RestaurantVO;
 
 public class DBManager {
 	public static SqlSessionFactory sqlSessionFactory;
 	static {
 		try {
-			String resource = "com/example/demo/attraction/db/sqlMapConfig.xml";
+			String resource = "com/example/demo/restaurant/db/sqlMapConfig.xml";
 			InputStream inputStream = Resources.getResourceAsStream(resource);
 			sqlSessionFactory =
 			  new SqlSessionFactoryBuilder().build(inputStream);
@@ -29,16 +26,16 @@ public class DBManager {
 		}
 	}
 	
-	public static AttractionVO findById(int attractNo) {
+	public static RestaurantVO findById(int restauNo) {
 		SqlSession session = sqlSessionFactory.openSession();
-		AttractionVO a = session.selectOne("attract.findById", attractNo);
+		RestaurantVO a = session.selectOne("restau.findById", restauNo);
 		session.close();
 		return a;
 	}
 	
-	public static List<AttractionVO> findByCategory(HashMap<String, Object> map) {
+	public static List<RestaurantVO> findByCategory(HashMap<String, Object> map) {
 		SqlSession session = sqlSessionFactory.openSession();
-		List<AttractionVO> list = session.selectList("attract.findByCategory", map);
+		List<RestaurantVO> list = session.selectList("restau.findByCategory", map);
 		session.close();
 		return list;
 	}
@@ -46,15 +43,14 @@ public class DBManager {
 	public static int findCountByCategory(String keyword) {
 		int re = 0;
 		SqlSession session = sqlSessionFactory.openSession();
-		re= session.selectOne("attract.findCountByCategory", keyword);
+		re= session.selectOne("restau.findCountByCategory", keyword);
 		session.close();
 		return re;
 	}
 	
-	public static List<AttractionVO> findByAny(HashMap<String, Object> map) {
+	public static List<RestaurantVO> findByAny(HashMap<String, Object> map) {
 		SqlSession session = sqlSessionFactory.openSession();
-		List<AttractionVO> list = session.selectList("attract.findByAny", map);
-		System.out.println("DBManger:"+list.size());
+		List<RestaurantVO> list = session.selectList("restau.findByAny", map);
 		session.close();
 		return list;
 	}
@@ -62,23 +58,22 @@ public class DBManager {
 	public static int findCountByAny(String keyword) {
 		int re = 0;
 		SqlSession session = sqlSessionFactory.openSession();
-		re= session.selectOne("attract.findCountByAny", keyword);
+		re= session.selectOne("restau.findCountByAny", keyword);
 		session.close();
 		return re;
 	}
 	
-	public static int findPCnt(AttractionPhotoVO a) {
+	public static int findPCnt(RestaurantPhotoVO a) {
 		// TODO Auto-generated method stub
 		SqlSession session = sqlSessionFactory.openSession();
-		int cnt = session.selectOne("attractPhoto.findPCnt", a);
+		int cnt = session.selectOne("restauPhoto.findPCnt", a);
 		session.close();
 		return cnt;
 	}
 	
-	public static List<AttractionVO> findAllPhotoById(int attractNo) {
+	public static List<RestaurantVO> findAllPhotoById(int restauNo) {
 		SqlSession session = sqlSessionFactory.openSession();
-		List<AttractionVO> list = session.selectList("attract.findAllPhotoById", attractNo);
-		System.out.println("DBManger_photobyid:"+list.size());
+		List<RestaurantVO> list = session.selectList("restau.findAllPhotoById", restauNo);
 		session.close();
 		return list;
 	}

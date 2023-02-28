@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!-- BootStrap -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Attraction</title>
+<title>Restaurant</title>
 <!-- BootStrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 <!-- JQuery -->
@@ -17,25 +17,26 @@
 			$("#form_search").submit();
 		})
 		
-		$("#btn_rise").click(function(){
-			location.href="/attract/searchC?pageNum=1&keyword=오름";
+		$("#btn_korean").click(function(){
+			location.href="/restau/searchC?pageNum=1&keyword=한식";
 		})
-		$("#btn_theme").click(function(){
-			location.href="/attract/searchC?pageNum=1&keyword=테마파크";
+		$("#btn_western").click(function(){
+			location.href="/restau/searchC?pageNum=1&keyword=서양식";
 		})
-		$("#btn_museum").click(function(){
-			location.href="/attract/searchC?pageNum=1&keyword=박물관";
+		$("#btn_japanese").click(function(){
+			location.href="/restau/searchC?pageNum=1&keyword=일식";
 		})
 		
 		/* 인기 관광지 상세이동 */
 		$(document).on("click",".text-bg-white",function(){
-			var attractNo = $(this).attr("attractNo");
-			location.href="/attract/detail?attractNo="+attractNo;
+			var restauNo = $(this).attr("restauNo");
+			location.href="/restau/detail?restauNo="+restauNo;
 		});
 	})
 </script>
 </head>
 <body>
+
 	<!-- 헤더 -->
     <div th:insert="/main/Header.html"></div>
     
@@ -46,7 +47,7 @@
 	<!-- 검색기능 -->
 	<hr>
 	<div>
-		<form action="/attract/main/search" id="form_search" method="get">
+		<form action="/restau/main/search" id="form_search" method="get">
 			<input type="hidden" name="pageNum" value="1">
 			검색어 : <input type="text" name="keyword">
 			<select name="category">
@@ -68,21 +69,21 @@
 	<!-- 카테고리별 검색 버튼 -->
 	<hr>
 	<div>
-		<h3>관광지 종류</h3>
-		<button type="button" class="btn_image" id="btn_rise" style="width: 530px;height: 55px;"><img  src="/photo/Attraction/Main/rise.jpg" width="90px"></button>
-		<button type="button" class="btn_image" id="btn_theme" style="width: 530px;height: 55px;"><img  src="/photo/Attraction/Main/theme.jpg" width="100px"></button>
-		<button type="button" class="btn_image" id="btn_museum" style="width: 530px;height: 55px;"><img  src="/photo/Attraction/Main/museum.png" width="70px"></button>
+		<h3>식당 종류</h3>
+		<button type="button" class="btn_image" id="btn_korean" style="width: 530px;height: 55px;"><img  src="/photo/Restaurant/Main/korean.jpg" width="60px" height="50px"></button>
+		<button type="button" class="btn_image" id="btn_western" style="width: 530px;height: 55px;"><img  src="/photo/Restaurant/Main/western.jpg" width="90px"></button>
+		<button type="button" class="btn_image" id="btn_japanese" style="width: 530px;height: 55px;"><img  src="/photo/Restaurant/Main/japanese.jpg" width="90px"height="50px"></button>
 	</div>
 	<hr>
 	
 	<!-- 현재 인기 숙소 -->
 	<hr>
 	
-		<h3>인기 관광지</h3>
+		<h3>인기 식당</h3>
 		
 		<div class="card-group">
-			<th:block th:each="a: ${attract_list}">
-				<div class="card text-bg-white" id="img_mostLike" th:attractNo="${a.attractNo}">
+			<th:block th:each="a: ${restau_list}">
+				<div class="card text-bg-white" id="img_mostLike" th:restauNo="${a.restauNo}">
 				  <img th:src="|/${a.realPath}|" th:class="card-img" height="350">
 				  <div class="card-img-overlay">
 				    <h5 class="card-title" th:text="${a.name}"></h5>

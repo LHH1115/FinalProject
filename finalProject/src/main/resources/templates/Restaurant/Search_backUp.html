@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript">
+	$(function(){
+		
+		$(document).on("click", "#tr", function(){
+			var restaurantNo = $(this).attr("restaurantNo");
+			location.href="/restaurant/detail?restaurantNo="+restaurantNo;
+		});
+	})
+</script>
+</head>
+<body>
+	<h2>검색 결과</h2>
+	<br>
+	<!-- 추가 검색 기능 -->
+	<hr>
+	
+	<input type="button" value="메인" onclick="location.href='/restaurant/main'">
+	
+	<!-- 페이징 -->
+	<hr>
+	<th:block th:if="${1 < startPage}">
+		<span th:text="이전" 
+		th:onclick="|location.href='/restaurant/main/search?pageNum=${startPage-1}'|"></span>
+	</th:block>
+		<th:block th:if="${totPage <= 1}">
+			<span th:text="1" 
+			th:onclick="|location.href='/restaurant/main/search?pageNum=1'|"></span>
+		</th:block>
+	<th:block th:each="num : ${#numbers.sequence(startPage,endPage)}">
+		<th:block th:unless="${totPage < 1}">
+			<span th:text="${num}" 
+			th:onclick="|location.href='/restaurant/main/search?pageNum=${num}'|"></span>
+		</th:block>
+	</th:block>
+	
+	<th:block th:if="${endPage != totPage}">
+		<span th:text="다음" 
+		th:onclick="|location.href='/restaurant/main/search?pageNum=${endPage+1}'|"></span>
+	</th:block>
+	<hr>
+	
+	<hr>
+	<table>
+		<tr>
+			<th>이름</th>
+			<th>주소</th>
+			<th>번호</th>
+			<th>카테고리</th>
+		</tr>
+		<tr th:each="a: ${list}" id="tr" th:restaurantNo="${a.restaurantNo}">
+			<td th:text="${a.name}"></td>
+			<td th:text="${a.addr}"></td>
+			<th:block th:if="${a.phone == 'nan'}">
+				<td>관리자 문의</td>
+			</th:block>
+			<th:block th:unless="${a.phone == 'nan'}">
+				<td th:text="${a.phone}"></td>
+			</th:block>
+			<td th:text="${a.category}"></td>
+		</tr>
+	</table>
+	<hr>
+</body>
+</html>

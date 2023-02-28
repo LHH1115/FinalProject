@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
   /* 사이드바 래퍼 스타일 */
@@ -54,23 +54,17 @@
     font-size: 1.3em;
     line-height: 3em;
   }
-  table {
-  border:1 solid;
-  width: 60%;
-  table-layout: fixed;
-}
 
 .row{margin:10px; }
 .card-img-top{width:526px;height:400px;}
 .col{padding: 10px;}
-
 
 </style>
 <!-- JQuery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 <script type="text/javascript">
 	$(function(){
-		<!-- 검색 버튼 클릭 -->
+		
 		$("#btn_search").click(function(e){
 			e.preventDefault();
 			$("#f").submit();
@@ -78,14 +72,13 @@
 		
 		
 		$(document).on("click", "#tr", function(){
-			var accommoNo = $(this).attr("accommoNo");
-			location.href="/accommo/detail?accommoNo="+accommoNo;
+			var restauNo = $(this).attr("restauNo");
+			location.href="/restau/detail?restauNo="+restauNo;
 		});
 	})
 </script>
 </head>
 <body>
-
 	<!-- 헤더 -->
     <div th:insert="/main/Header.html"></div>
 
@@ -111,8 +104,8 @@
 	  </div>
 	  <!-- /사이드바 -->
 	
-	  <!-- 본문 -->
-	  <div id="page-content-wrapper">
+	  <!-- 본문 -->		
+	<div id="page-content-wrapper">
 	    <div class="container-fluid">
 	    <h2>검색 결과</h2>
 	    <hr>
@@ -124,36 +117,42 @@
 						      <img th:src="@{|/${a.realPath}|}" class="card-img-top" >
 						      <div class="card-body">
 						      <h2 style="font-size: 35px;" class="card-title" th:text="${a.name}"></h2>
-						      <p style="font-size:28px" class="card-text" th:text="${a.price+'원'}"></p>
+						      <p style="font-size: 20px;" class="card-text" th:text="${a.category}"></p>
+						      <th:block th:if="${a.phone == 'nan'}">
+								<td>관리자 문의</td>
+							  </th:block>
+							  <th:block th:unless="${a.phone == 'nan'}">
+								<td th:text="${a.phone}"></td>
+							  </th:block>
 						       <p class="card-text" th:text="${a.addr}"></p>
-								<button th:accommoNo="${a.accommoNo}" id="tr" class="btn btn-primary">자세히 보기</button>
+								<button th:restauNo="${a.restauNo}" id="tr" class="btn btn-primary">자세히 보기</button>
 						      </div>
 						    </div>
 						  </div>					
 						</div>
 					</div>
 			 	</div>
-		 
+			
 	      	<!-- 페이징 -->
 			<hr>
 			<th:block th:if="${1 < startPage}">
 				<span th:text="이전" 
-				th:onclick="|location.href='/accommo/main/search?pageNum=${startPage-1}'|"></span>
+				th:onclick="|location.href='/restau/main/search?pageNum=${startPage-1}'|"></span>
 			</th:block>
 				<th:block th:if="${totPage <= 1}">
 					<span th:text="1" 
-					th:onclick="|location.href='/accommo/main/search?pageNum=1'|"></span>
+					th:onclick="|location.href='/restau/main/search?pageNum=1'|"></span>
 				</th:block>
 			<th:block th:each="num : ${#numbers.sequence(startPage,endPage)}">
 				<th:block th:unless="${totPage < 1}">
 					<span th:text="${num}" 
-					th:onclick="|location.href='/accommo/main/search?pageNum=${num}'|"></span>
+					th:onclick="|location.href='/restau/main/search?pageNum=${num}'|"></span>
 				</th:block>
 			</th:block>
 			
 			<th:block th:if="${endPage != totPage}">
 				<span th:text="다음" 
-				th:onclick="|location.href='/accommo/main/search?pageNum=${endPage+1}'|"></span>
+				th:onclick="|location.href='/restau/main/search?pageNum=${endPage+1}'|"></span>
 			</th:block>
 			<hr>
 	    </div>

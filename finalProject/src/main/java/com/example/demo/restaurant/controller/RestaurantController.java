@@ -1,4 +1,4 @@
-package com.example.demo.attraction.controller;
+package com.example.demo.restaurant.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,25 +6,33 @@ import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
+import javax.swing.Spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.demo.attraction.dao.AttractionDAO;
-import com.example.demo.attraction.vo.AttractionPhotoVO;
-import com.example.demo.attraction.vo.AttractionVO;
-import com.example.demo.attraction.vo.LikeVO;
+import com.example.demo.accommodation.vo.AccommodationVO;
+import com.example.demo.member.dao.MemberDAOLHH;
+import com.example.demo.member.vo.MemberVO;
+import com.example.demo.restaurant.dao.RestaurantDAO;
+import com.example.demo.restaurant.vo.LikeVO;
+import com.example.demo.restaurant.vo.RestaurantPhotoVO;
+import com.example.demo.restaurant.vo.RestaurantVO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.Setter;
 
 @Controller
-@RequestMapping("/attract")
+@RequestMapping("/restau")
 @Setter
-public class AttractController {
+public class RestaurantController {
 	
 	public int totPage = 1;		// 페이징 처리 위한 변수
 	public int totCnt = 0;		// 페이징 처리 위한 변수
@@ -32,24 +40,27 @@ public class AttractController {
 	public int pageGroup = 10;	// 페이징 처리 위한 변수(페이징 번호 그룹 갯수)
 	
 	@Autowired
-	private AttractionDAO dao;
+	private RestaurantDAO dao;
+	
+	@Autowired
+	private MemberDAOLHH mdao;
 
 	@GetMapping("/main")
-	public String attractMain(Model model, HttpSession session) {
+	public String restauMain(Model model, HttpSession session) {
 		session.removeAttribute("keyword");		// 페이징 처리 세션 제거
 		session.removeAttribute("category");	// 페이징 처리 세션 제거
 		
 		// 인기숙소
 		List<LikeVO> like_list = dao.findMostLike(5);	// Top 5 나열
 		LikeVO l = new LikeVO();
-		List<AttractionVO> attract_list = new ArrayList<>();
-		AttractionVO a = new AttractionVO();
+		List<RestaurantVO> restau_list = new ArrayList<>();
+		RestaurantVO a = new RestaurantVO();
 		for(int i=0;i<like_list.size();i++){
 			l = like_list.get(i);
 			int refNo = l.getRefNo();
 			a = dao.findById(refNo);
 			
-			List<AttractionVO> photo_list = dao.findAllPhotoById(refNo);
+			List<RestaurantVO> photo_list = dao.findAllPhotoById(refNo);
 			String realPath = "";
 			String category = "";
 			String name = "";
@@ -57,32 +68,32 @@ public class AttractController {
 			if(photo_list.size() > 0) {
 				for(int j=0;j<photo_list.size();j++) {
 					// 대표 이미지
-					AttractionVO forPhoto = new AttractionVO();
+					RestaurantVO forPhoto = new RestaurantVO();
 					forPhoto = photo_list.get(0);
 					category = a.getCategory();
 					name = forPhoto.getName();
 					path = forPhoto.getPath();
-					realPath = "photo/Attraction/"+name+"/"+path;
+					realPath = "photo/Restaurant/"+name+"/"+path;
 					a.setRealPath(realPath);
 				}
 			}else {
-				realPath = "photo/Attraction/노리매/att1.jpeg";
+				realPath = "photo/Restaurant/노리매/att1.jpeg";
 				a.setRealPath(realPath);
 			}
-			attract_list.add(a);
+			restau_list.add(a);
 		}
 		// 관리자 여부 확인
 //		int role = 1;
 //		session.setAttribute("role", role);
-		model.addAttribute("Attract_list", attract_list);
-		return "Attraction/Main";
+		model.addAttribute("Restau_list", restau_list);
+		return "Restaurant/Main";
 	}
 	
 	// 키워드 버튼 누를때
 	@GetMapping("/searchC")
 	public ModelAndView searchC(String keyword, int pageNum, HttpSession session) {
-//		ModelAndView mav = new ModelAndView("Attraction/Search");
-		ModelAndView mav = new ModelAndView("Attraction/Search");	// 사이드바 테스트 버전
+//		ModelAndView mav = new ModelAndView("Restaurant/Search");
+		ModelAndView mav = new ModelAndView("Restaurant/Search");	// 사이드바 테스트 버전
 //		System.out.println("keyword:"+keyword);
 //		System.out.println("category:"+category);
 		
@@ -103,70 +114,59 @@ public class AttractController {
 		map.put("keyword", keyword);
 		map.put("start", start);
 		map.put("end", end);
-		List<AttractionVO> list = dao.findByAny(map);
+		List<RestaurantVO> list = dao.findByAny(map);
 		
 		for(int i =0;i<list.size();i++) {
-			int refNo = list.get(i).getAttractNo();
-			List<AttractionVO> photo_list = dao.findAllPhotoById(refNo);
+			int refNo = list.get(i).getRestauNo();
+			List<RestaurantVO> photo_list = dao.findAllPhotoById(refNo);
 			String arealPath = "";
 			String acategory = list.get(i).getCategory();
 			String aname = list.get(i).getName();
 			String apath = "";
-			System.out.println(photo_list.size());
-			System.out.println("===================");
 			
 			if(photo_list.size() > 0) {
 				for(int j=0;j<photo_list.size();j++) {
-					AttractionVO forPhoto = new AttractionVO();
+					RestaurantVO forPhoto = new RestaurantVO();
 					forPhoto = photo_list.get(0);
 					apath = forPhoto.getPath();
-					arealPath = "photo/Attraction/"+acategory+"/"+aname+"/"+apath;
+					arealPath = "photo/Restaurant/"+acategory+"/"+aname+"/"+apath;
 					list.get(i).setRealPath(arealPath);
 				}
 			}else {
-				System.out.println("=====else===");
 				Random rand = new Random();
-				String parklList[] = {"노리매","동백포레스트","휴애리"};
-				String museumList[] = {"양금석 가옥","의귀리 김만일묘역"};
-				String forestList[] = {"마흐니 숲길","큰엉해안경승지"};
-				String riseList[] = {"물영아리 오름","사라오름"};
-				String themeParkList[] = {"코코몽 에코파크"};
+				String westernlList[] = {"라라코스트서귀포점", "루마카", "반양", "카우보이스테이크하우스"};
+				String japaneseList[] = {"스시앤", "아일랜드본섬", "해모둠", "해원앙", "혼참치"};
+				String chinaList[] = {"갈림성", "대우반점", "만사성", "북경반점", "일빈관"};
+				String koreanList[] = {"명가천지연무태장어", "제주광해애월점", "제주반딧불한담", "큰맘할매순대국제주곽지점", "푸른밤의해안속초식당"};
 					switch (acategory) {
-						case "공원":{
+						case "서양식":{
 							for(int j=0;j<5;j++) {
-								arealPath = "photo/Attraction/"+acategory+"/"+parklList[rand.nextInt(3)]+"/att"+(j+1)+".jpg";
+								arealPath = "photo/Restaurant/"+acategory+"/"+westernlList[rand.nextInt(4)]+"/rest"+(j+1)+".jpg";
 								list.get(i).setRealPath(arealPath);
-								System.out.println("사진Test");
 							}
 						}break;
-						case "박물관":{
+						case "일식":{
 							for(int j=0;j<5;j++) {
-							arealPath = "photo/Attraction/"+acategory+"/"+museumList[rand.nextInt(2)]+"/att"+(j+1)+".jpg";
+							arealPath = "photo/Restaurant/"+acategory+"/"+japaneseList[rand.nextInt(5)]+"/rest"+(j+1)+".jpg";
 							list.get(i).setRealPath(arealPath);
 							}
 						}break;
-						case "숲":{
+						case "중식":{
 							for(int j=0;j<5;j++) {
-							arealPath = "photo/Attraction/"+acategory+"/"+forestList[rand.nextInt(2)]+"/att"+(j+1)+".jpg";
+							arealPath = "photo/Restaurant/"+acategory+"/"+chinaList[rand.nextInt(5)]+"/rest"+(j+1)+".jpg";
 							list.get(i).setRealPath(arealPath);
 							}
 						}break;
-						case "오름":{
+						case "한식":{
 							for(int j=0;j<5;j++) {
-							arealPath = "photo/Attraction/"+acategory+"/"+riseList[rand.nextInt(2)]+"/att"+(j+1)+".jpg";
-							list.get(i).setRealPath(arealPath);
-							}
-						}break;
-						case "테마파크":{
-							for(int j=0;j<5;j++) {
-							arealPath = "photo/Attraction/"+acategory+"/"+themeParkList[rand.nextInt(1)]+"/att"+(j+1)+".jpg";
+							arealPath = "photo/Restaurant/"+acategory+"/"+koreanList[rand.nextInt(5)]+"/rest"+(j+1)+".jpg";
 							list.get(i).setRealPath(arealPath);
 							}
 						}break;
 					}
+				}
 			}
-			
-	}
+		
 		
 		totCnt = dao.findCountByAny(keyword);
 		totPage = (int) Math.ceil(totCnt/pageSize);
@@ -186,7 +186,7 @@ public class AttractController {
 	// 키워드 검색
 		@GetMapping("/main/search")
 		public ModelAndView search(String keyword, String category, int pageNum, HttpSession session) {
-			ModelAndView mav = new ModelAndView("Attraction/Search");
+			ModelAndView mav = new ModelAndView("Restaurant/Search");
 //			System.out.println("keyword:"+keyword);
 //			System.out.println("category:"+category);
 			
@@ -210,11 +210,11 @@ public class AttractController {
 			map.put("keyword", keyword);
 			map.put("start", start);
 			map.put("end", end);
-			List<AttractionVO> list = dao.findByAny(map);
+			List<RestaurantVO> list = dao.findByAny(map);
 			
 			for(int i =0;i<list.size();i++) {
-				int refNo = list.get(i).getAttractNo();
-				List<AttractionVO> photo_list = dao.findAllPhotoById(refNo);
+				int refNo = list.get(i).getRestauNo();
+				List<RestaurantVO> photo_list = dao.findAllPhotoById(refNo);
 				String arealPath = "";
 				String acategory = list.get(i).getCategory();
 				String aname = list.get(i).getName();
@@ -222,56 +222,46 @@ public class AttractController {
 				
 				if(photo_list.size() > 0) {
 					for(int j=0;j<photo_list.size();j++) {
-						AttractionVO forPhoto = new AttractionVO();
+						RestaurantVO forPhoto = new RestaurantVO();
 						forPhoto = photo_list.get(0);
 						apath = forPhoto.getPath();
-						arealPath = "photo/Attraction/"+acategory+"/"+aname+"/"+apath;
+						arealPath = "photo/Restaurant/"+acategory+"/"+aname+"/"+apath;
 						list.get(i).setRealPath(arealPath);
 					}
 				}else {
 					Random rand = new Random();
-					String parklList[] = {"노리매","동백포레스트","휴애리"};
-					String museumList[] = {"양금석 가옥","의귀리 김만일묘역"};
-					String forestList[] = {"마흐니 숲길","큰엉해안경승지"};
-					String riseList[] = {"물영아리 오름","사라오름"};
-					String themeParkList[] = {"코코몽 에코파크"};
+					String westernlList[] = {"라라코스트서귀포점", "루마카", "반양", "카우보이스테이크하우스"};
+					String japaneseList[] = {"스시앤", "아일랜드본섬", "해모둠", "해원앙", "혼참치"};
+					String chinaList[] = {"갈림성", "대우반점", "만사성", "북경반점", "일빈관"};
+					String koreanList[] = {"명가천지연무태장어", "제주광해애월점", "제주반딧불한담", "큰맘할매순대국제주곽지점", "푸른밤의해안속초식당"};
 						switch (acategory) {
-							case "공원":{
+							case "서양식":{
 								for(int j=0;j<5;j++) {
-									arealPath = "photo/Attraction/"+acategory+"/"+parklList[rand.nextInt(3)]+"/att"+(j+1)+".jpg";
+									arealPath = "photo/Restaurant/"+acategory+"/"+westernlList[rand.nextInt(4)]+"/rest"+(j+1)+".jpg";
 									list.get(i).setRealPath(arealPath);
 								}
 							}break;
-							case "박물관":{
+							case "일식":{
 								for(int j=0;j<5;j++) {
-								arealPath = "photo/Attraction/"+acategory+"/"+museumList[rand.nextInt(2)]+"/att"+(j+1)+".jpg";
+								arealPath = "photo/Restaurant/"+acategory+"/"+japaneseList[rand.nextInt(5)]+"/rest"+(j+1)+".jpg";
 								list.get(i).setRealPath(arealPath);
 								}
 							}break;
-							case "숲":{
+							case "중식":{
 								for(int j=0;j<5;j++) {
-								arealPath = "photo/Attraction/"+acategory+"/"+forestList[rand.nextInt(2)]+"/att"+(j+1)+".jpg";
+								arealPath = "photo/Restaurant/"+acategory+"/"+chinaList[rand.nextInt(5)]+"/rest"+(j+1)+".jpg";
 								list.get(i).setRealPath(arealPath);
 								}
 							}break;
-							case "오름":{
+							case "한식":{
 								for(int j=0;j<5;j++) {
-								arealPath = "photo/Attraction/"+acategory+"/"+riseList[rand.nextInt(2)]+"/att"+(j+1)+".jpg";
-								list.get(i).setRealPath(arealPath);
-								System.out.println(arealPath);
-								}
-							}break;
-							case "테마파크":{
-								for(int j=0;j<5;j++) {
-								arealPath = "photo/Attraction/"+acategory+"/"+themeParkList[rand.nextInt(1)]+"/att"+(j+1)+".jpg";
+								arealPath = "photo/Restaurant/"+acategory+"/"+koreanList[rand.nextInt(5)]+"/rest"+(j+1)+".jpg";
 								list.get(i).setRealPath(arealPath);
 								}
 							}break;
 						}
+					}
 				}
-				
-			}
-			
 			
 			totCnt = dao.findCountByAny(keyword);
 			totPage = (int) Math.ceil(totCnt/pageSize);
@@ -293,18 +283,18 @@ public class AttractController {
 	// 없으면 랜덤이미지 사용
 	@GetMapping("/cnt")
 	public String cntP() {
-		AttractionPhotoVO a = new AttractionPhotoVO();
-		a.setAttractNo(999);
+		RestaurantPhotoVO a = new RestaurantPhotoVO();
+		a.setRestauNo(999);
 		int re = dao.findPCnt(a);
 		System.out.println(re);
-		return "Attraction/Main";
+		return "Restaurant/Main";
 	}
 	
 	// 사진 리스트 검색
 	@GetMapping("/findById")
 	public String findById(Model model) {
-		List<AttractionVO> list = dao.findAllPhotoById(148);
-		AttractionVO a = new AttractionVO();
+		List<RestaurantVO> list = dao.findAllPhotoById(148);
+		RestaurantVO a = new RestaurantVO();
 		String realPath = "";
 		String category = "";
 		String name = "";
@@ -317,7 +307,7 @@ public class AttractController {
 				category = a.getCategory();
 				name = a.getName();
 				path = a.getPath();
-				realPath = "photo/Attraction/"+category+"/"+name+"/"+path;
+				realPath = "photo/Restaurant/"+category+"/"+name+"/"+path;
 //				System.out.println(realPath);
 //				System.out.println("next");
 			}
@@ -326,7 +316,7 @@ public class AttractController {
 		}
 //		System.out.println(realPath);
 		model.addAttribute("realPath",realPath);
-		return "Attraction/Main";
+		return "Restaurant/Main";
 	}
 	
 	// 찜 많은 관광지 찾기
@@ -339,21 +329,21 @@ public class AttractController {
 			int refNo = l.getRefNo();
 			System.out.println(i+": "+refNo);
 		}
-		return "Attraction/Main";
+		return "Restaurant/Main";
 	}
 	
-	// 관광지 상세페이지
+	// 식당 상세페이지
 	@GetMapping("/detail")
-	public ModelAndView detail(int attractNo) {
-		ModelAndView mav = new ModelAndView("Attraction/Detail");
+	public ModelAndView detail(int restauNo) {
+		ModelAndView mav = new ModelAndView("Restaurant/Detail");
 		
 		// 로그인한 멤버
 //		MemberVO m = mdao.findByNo(7);
 //		System.out.println(m);
 		
-		AttractionVO a = dao.findById(attractNo);
+		RestaurantVO a = dao.findById(restauNo);
 		
-		List<AttractionVO> list = dao.findAllPhotoById(attractNo);
+		List<RestaurantVO> list = dao.findAllPhotoById(restauNo);
 		List<String> photoList = new ArrayList<>();
 		String realPath = "";
 		String category = a.getCategory();
@@ -364,51 +354,48 @@ public class AttractController {
 				a = list.get(i);
 				name = a.getName();
 				path = a.getPath();
-				realPath = "photo/Attraction/"+category+"/"+name+"/"+path;
+				realPath = "photo/Restaurant/"+category+"/"+name+"/"+path;
 				photoList.add(realPath);
 			}
 		}else {
 			// 이미지 없을때 랜덤이미지
 			Random rand = new Random();
-			String fhotellList[] = {"그림리조트", "꼬뜨도르가족호텔", "다인리조트", "베스트웨스턴 제주호텔", "올레리조트"};
-			String guestList[] = {"민트게스트하우스", "섬게스트하우스", "슬로시티게스트하우스", "제주공항게스트하우스웨이브사운드", "토다게스트"};
-			String thotelList[] = {"(주)호텔하니크라운", "제주썬호텔", "제주팔레스호텔", "글래드호텔앤리조트㈜ 메종글래드제주", "제주로얄호텔"};
-			String hostelList[] = {"길리 리조트(구.협재 사계절 리조트)", "라이트프리(구. 에바다호스텔)", "아마스빌 리조트(구.아마스빌 호스텔)", "용두암캐빈", "해미안"};
-			String condoList[] = {"메가리조트제주", "사조그랜드리조트", "이랜드파크 켄싱턴리조트 제주한림점", "일성제주콘도미니엄", "제주토비스콘도①"};
+			String westernlList[] = {"라라코스트서귀포점", "루마카", "반양", "카우보이스테이크하우스"};
+			String japaneseList[] = {"스시앤", "아일랜드본섬", "해모둠", "해원앙", "혼참치"};
+			String chinaList[] = {"갈림성", "대우반점", "만사성", "북경반점", "일빈관"};
+			String koreanList[] = {"명가천지연무태장어", "제주광해애월점", "제주반딧불한담", "큰맘할매순대국제주곽지점", "푸른밤의해안속초식당"};
 				switch (category) {
-					case "가족호텔업":{
+					case "한식":{
+						String k = koreanList[rand.nextInt(5)];
 						for(int i=0;i<5;i++) {
-							realPath = "photo/Attraction/"+category+"/"+fhotellList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
+							realPath = "photo/Restaurant/"+category+"/"+k+"/"+"rest"+(i+1)+".jpg";				
 							photoList.add(realPath);
 						}
 					}break;
-					case "게스트하우스":{
+					case "서양식":{
+						String k = westernlList[rand.nextInt(4)];
 						for(int i=0;i<5;i++) {
-						realPath = "photo/Attraction/"+category+"/"+guestList[rand.nextInt(5)]+"/name"+(i+1)+".jpeg";
+						realPath = "photo/Restaurant/"+category+"/"+k+"/"+"rest"+(i+1)+".jpg";
 						photoList.add(realPath);
 						}
 					}break;
-					case "관광호텔업":{
+					case "일식":{
+						String k = japaneseList[rand.nextInt(5)];
 						for(int i=0;i<5;i++) {
-						realPath = "photo/Attraction/"+category+"/"+thotelList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
+						realPath = "photo/Restaurant/"+category+"/"+k+"/"+"rest"+(i+1)+".jpg";
 						photoList.add(realPath);
 						}
 					}break;
-					case "호스텔업":{
+					case "중식":{
+						String k = chinaList[rand.nextInt(5)];
 						for(int i=0;i<5;i++) {
-						realPath = "photo/Attraction/"+category+"/"+hostelList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
-						photoList.add(realPath);
-						}
-					}break;
-					case "휴양콘도미니엄업":{
-						for(int i=0;i<5;i++) {
-						realPath = "photo/Attraction/"+category+"/"+condoList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
+						realPath = "photo/Restaurant/"+category+"/"+k+"/"+"rest"+(i+1)+".jpg";
 						photoList.add(realPath);
 						}
 					}break;
 				}
 			
-//			System.out.println("대체 이미지: "+photoList);
+
 		}
 //		System.out.println(photoList);
 //		mav.addObject("m", m);
