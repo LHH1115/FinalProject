@@ -1,5 +1,7 @@
 package com.example.demo.attraction.vo;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
@@ -9,21 +11,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AttractionVO {
+public class AttractionInfoVO {
 
+	private int atiNo;
 	private int attractNo;
-	private String name;
-	private String addr;
-	private String phone;
-	private String category;
-	
-	private int apNo;
-	private String path;
+	private String info;
 	private int orders;
 	
-	private int atiNo;
-	private String info;
-	
-	private String realPath;
 	private MultipartFile uploadFile;
 }

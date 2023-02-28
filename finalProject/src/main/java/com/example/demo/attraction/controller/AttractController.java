@@ -2,6 +2,7 @@ package com.example.demo.attraction.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -16,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import com.example.demo.attraction.vo.InfoListVO;
 import com.example.demo.attraction.dao.AttractionDAO;
+import com.example.demo.attraction.vo.AttractionInfoVO;
 import com.example.demo.attraction.vo.AttractionPhotoVO;
 import com.example.demo.attraction.vo.AttractionVO;
 import com.example.demo.attraction.vo.LikeVO;
@@ -234,8 +236,22 @@ public class AttractController {
 		// 로그인한 멤버
 //		MemberVO m = mdao.findByNo(7);
 //		System.out.println(m);
-		
+		List<InfoListVO> infoList = new ArrayList<>();
 		AttractionVO a = dao.findById(attractNo);
+		List<AttractionInfoVO> atin = dao.findInfoById(attractNo);
+		atin.get(0).getOrders();
+		
+		
+			InfoListVO invo = new InfoListVO();
+			invo.setIntroduction(atin.get(0).getInfo());
+			System.out.println(invo);
+			//infoList.add(invo);
+		
+	
+		
+		
+		
+		
 		
 		List<AttractionVO> list = dao.findAllPhotoById(attractNo);
 		List<String> photoList = new ArrayList<>();
@@ -243,6 +259,7 @@ public class AttractController {
 		String category = a.getCategory();
 		String name = "";
 		String path = "";
+		
 		if(list.size() > 0) {
 			for(int i=0;i<list.size();i++) {
 				a = list.get(i);
