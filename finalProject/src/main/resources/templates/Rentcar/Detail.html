@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	.unshow{
+		display: none;
+	}
+	.show{
+		display: inline;
+	}
+
+</style>
+  <!-- jQuery -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+  <!-- iamport.payment.js -->
+  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+  <script type="text/javascript">
+	$(function(){
+		
+		$("#btn_detail").click(function(){
+			var className=$("#store_detail").attr("class")
+			
+			if(className == "show"){
+				$("#store_detail").removeClass("show");
+				$("#store_detail").addClass("unshow")
+			}else{
+				$("#store_detail").removeClass("unshow");
+				$("#store_detail").addClass("show")
+			}
+		})
+		
+		
+		var data =  {"accommoNo" : $("#accommoNo").val()};
+		
+		// 찜 여부 검색
+		$.ajax({
+			url:"/accommo/findLike",
+			data:data,
+			success:function(re){
+				if(re == 0){
+					// 찜 안한상태
+					$("#div_dolike").removeClass("unshow");
+					$("#div_dolike").addClass("show");
+					$("#div_unlike").addClass("unshow");
+				}else{
+					// 찜한 상태
+					$("#div_unlike").removeClass("unshow");
+					$("#div_dolike").addClass("unshow");
+					$("#div_unlike").addClass("show");
+				}
+			}
+		})
+		
+		var IMP = window.IMP; // 생략 가능
+		IMP.init("imp80436673"); // 예: imp00000000
+		
+		$("#btnPay").click(function(){
+			var date_s = $("#date_s").val()+"";
+			var date_e = $("#date_e").val()+"";
+			var arr1 = date_s.split('-');
+			var arr2 = date_e.split('-');
+			var dat1 = new Date(arr1[0], arr1[1], arr1[2]);
+			var dat2 = new Date(arr2[0], arr2[1], arr2[2]);
+			var diff = dat2 - dat1;
+			var currDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
+			var diffDate = parseInt(diff/currDay);
+			
+			if($("#date_s").val() == ""){
+				alert("올바른 입실일")
+			}else{
+				if($("#date_e").val() == ""){
+					alert("올바른 퇴실일")
+				}else{
+					if(diffDate < 1){
+						alert("올바르지 않은 날짜")	// 입실일이 퇴실일보다 빠를 경우
+					}else{
+						if($("#headCount").val() == ""){
+							alert("올바른 인원수")
+						}else{
+							$.ajax({
+								 url:"/accommo/getmember",
+								 dataType: "json",
+								 success:function(data){
+									console.log(data);
+									IMP.request_pay({ // param
+								        pg: "kcp",
+								        pay_method: "card",
+								        merchant_uid: "ORD"+new Date().getTime(),
+								        name: $("#name").text(),
+								        //amount: $("#totalPrice").val(),
+								        amount: 100,
+								        buyer_email: data.email,
+								        buyer_name: data.name,
+								        buyer_tel: data.phone,
+								        buyer_addr: data.addr,
+								        buyer_postcode: data.postcode
+								    }, function (rsp) { // callback
+								        if (rsp.success) {
+								            // 결제 성공 시 로직,
+								            console.log("결제완료");
+								            console.log("고유 ID: "+rsp.imp_uid);
+								            console.log("상점거래 ID: "+rsp.merchant_uid);
+								            console.log("결제금액: "+rsp.paid_amount);
+								            console.log("카드 승인번호: "+rsp.apply_num);
+								            
+								            $("#imp_uid").val(rsp.imp_uid);
+								            $("#merchant_uid").val(rsp.merchant_uid);
+								            $("#paid_amount").val(rsp.paid_amount);
+								            $("#apply_num").val(rsp.apply_num);
+								            
+								            $("#payok").trigger("submit");
+								            
+								        } else {
+								            // 결제 실패 시 로직,
+								      	  console.log("결제실패");
+								      	  console.log("실패 사유: "+rsp.error_msg);
+								      	  alert("결제가 취소되었습니다.")
+								        }
+								    });
+								}
+							});
+						}
+					}
+				}
+			}
+		});
+		
+		function requestPay() {
+		    // IMP.request_pay(param, callback) 결제창 호출
+		    
+		}
+		
+		var diffDate = "";
+		
+		$("body").on("change", "#date_e", function(){
+			var date_s = $("#date_s").val()+"";
+			var date_e = $("#date_e").val()+"";
+			var arr1 = date_s.split('-');
+			var arr2 = date_e.split('-');
+			var dat1 = new Date(arr1[0], arr1[1], arr1[2]);
+			var dat2 = new Date(arr2[0], arr2[1], arr2[2]);
+			var diff = dat2 - dat1;
+			var currDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
+			diffDate = parseInt(diff/currDay);
+			if (isNaN(diffDate)) {
+				diffDate = 0;
+				}
+			$("#totDate").val(diffDate+"박/"+(diffDate+1)+"일");
+			
+			var price = $("#price").text();
+			var headCount = $("#headCount").val();
+			var totalPrice = price*diffDate*headCount;
+			if (isNaN(totalPrice)) {
+				totalPrice = 0;
+				}
+			$("#totalPrice").val(totalPrice);
+		})
+		
+		$("body").on("change", "#date_s", function(){
+			var date_s = $("#date_s").val()+"";
+			var date_e = $("#date_e").val()+"";
+			var arr1 = date_s.split('-');
+			var arr2 = date_e.split('-');
+			var dat1 = new Date(arr1[0], arr1[1], arr1[2]);
+			var dat2 = new Date(arr2[0], arr2[1], arr2[2]);
+			var diff = dat2 - dat1;
+			var currDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
+			diffDate = parseInt(diff/currDay);
+			if (isNaN(diffDate)) {
+				diffDate = 0;
+				}
+			$("#totDate").val(diffDate+"박/"+(diffDate+1)+"일");
+			
+			var price = $("#price").text();
+			var headCount = $("#headCount").val();
+			var totalPrice = price*diffDate*headCount;
+			if (isNaN(totalPrice)) {
+				totalPrice = 0;
+				}
+			$("#totalPrice").val(totalPrice);
+		})
+		
+		$("body").on("change", "#headCount", function(){
+			
+			var price = $("#price").text();
+			var headCount = $("#headCount").val();
+			var totalPrice = price*diffDate*headCount;
+			if (isNaN(totalPrice)) {
+				totalPrice = 0;
+				}
+			$("#totalPrice").val(totalPrice);
+		})
+		
+		// 찜하기
+		$("#like").click(function(){
+			$("#like").addClass("unshow");
+			$("#like").removeClass("show");
+			$("#unlike").addClass("show");
+			$("#unlike").removeClass("unshow");
+		})
+		
+		// 찜해제
+		$("#unlike").click(function(){
+			$("#like").addClass("show");
+			$("#like").removeClass("unshow");
+			$("#unlike").addClass("unshow");
+			$("#unlike").removeClass("show");
+		})
+	}) 
+  </script>
+</head>
+<body>
+	<!-- 헤더 -->
+    <div th:insert="/main/Header.html"></div>
+	
+
+
+	<!-- 정보 -->
+	<div>
+		<h2>차량 정보</h2>
+		<th:block th:if="${status}=='ok'">
+			<button id="unlike" th:onclick="|location.href='@{/rentcar/unlike(carNo=${detail.carNo})}'|">찜해제</button>
+		</th:block>
+		<th:block th:unless="${status}=='ok'">
+			<button id="like" th:onclick="|location.href='@{/rentcar/like(carNo=${detail.carNo})}'|">찜하기</button>
+		</th:block>
+		<hr>
+		<input type="hidden" th:value="${detail.carNo}" id="carNo">
+		<h3>차량명</h3>
+		<h5 th:text="${detail.modelName}"></h5>
+		<h3>차량 사진</h3>
+		<img th:src="@{${detail.realPath}}">
+		<h3>분류</h3>
+		<h5 th:text="${detail.category}"></h5>
+		<h3>가격</h3>
+		<h5 th:text="${detail.price}+원" id="price"></h5>
+	</div>
+	<hr>
+	<button id="btn_detail">업체 정보</button>
+	<table width="50%" id="store_detail" class="unshow">
+		<thead>
+			<tr>
+				<th>업체 이름</th>
+				<th>업체 주소</th>
+				<th>업체 번호</th>
+			</tr>
+		</thead>
+		<tbody>
+			<th:block th:each="s:${rentstore}">
+				<tr>
+					<td th:text="${s.name}"></td>
+					<td th:text="${s.addr}"></td>
+					<td th:text="${s.phone}"></td>
+				</tr>
+			</th:block>
+		</tbody>		
+	</table>
+	<br>
+	<button onclick="location.href='/rentcar/main'"> 돌아가기</button>
+	
+	
+	
+</body>
+</html>
