@@ -14,8 +14,10 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import com.example.demo.vo.AccommoPhotoVO;
 import com.example.demo.vo.AccommodationVO;
 import com.example.demo.vo.EventVO;
+import com.example.demo.vo.InquiryVO;
 import com.example.demo.vo.LikeVO;
 import com.example.demo.vo.MemberVO;
+import com.example.demo.vo.ReplyVO;
 import com.example.demo.vo.ReservationVO;
 import com.example.demo.vo.ReviewVO;
 
@@ -133,9 +135,6 @@ public static SqlSessionFactory sqlSessionFactory;
 	public static int point_update(int memberno, int point) {
 		System.out.println("포인트업데이트시작");
 		int re = -1;
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("memberno", memberno);
-//		map.put("point", point);
 		MemberVO m = new MemberVO();
 		m.setMemberno(memberno);
 		m.setPoint(point);
@@ -157,9 +156,6 @@ public static SqlSessionFactory sqlSessionFactory;
 	public static int point_insert(int memberno, int point) {
 		System.out.println("포인트삽입시작");
 		int re = -1;
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("memberno", memberno);
-//		map.put("point", point);
 		MemberVO m = new MemberVO();
 		m.setMemberno(memberno);
 		m.setPoint(point);
@@ -180,4 +176,51 @@ public static SqlSessionFactory sqlSessionFactory;
 		return re;
 		
 	}
+	
+	public static List<InquiryVO> findMyInquiry(int memberno){
+		List<InquiryVO> list = null;
+		SqlSession session = sqlSessionFactory.openSession();
+		list = session.selectList("mypage.findInquiry", memberno);
+		session.close();
+		return list;
+		
+	}
+	
+	public static InquiryVO findMyInquiryByNo(int inquiryno){
+		InquiryVO i = null;
+		SqlSession session = sqlSessionFactory.openSession();
+		i = session.selectOne("mypage.findInquiryByNo", inquiryno);
+		session.close();
+		return i;
+		
+	}
+	
+	public static ReplyVO findMyReply(int inquiryno){
+		ReplyVO r = null;
+		SqlSession session = sqlSessionFactory.openSession();
+		r = session.selectOne("mypage.findReply", inquiryno);
+		session.close();
+		return r;
+		
+	}
+	
+	public static int updateInquiry(InquiryVO i) {
+		int re = -1;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.update("mypage.updateInquiry", i);
+		session.close();
+		return re;
+		
+	}
+	
+	public static int deleteInquiry(int inquiryNo) {
+		int re = -1;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.update("mypage.deleteInquiry", inquiryNo);
+		session.close();
+		return re;
+		
+	}
+	
+	
 }

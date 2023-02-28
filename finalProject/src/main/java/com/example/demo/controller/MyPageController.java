@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +18,11 @@ import com.example.demo.dao.MemberDAO;
 import com.example.demo.dao.MyPageDAO;
 import com.example.demo.vo.AccommodationVO;
 import com.example.demo.vo.EventVO;
+import com.example.demo.vo.InquiryVO;
 import com.example.demo.vo.LikeVO;
 import com.example.demo.vo.MemberVO;
 import com.example.demo.vo.MyLikeVO;
+import com.example.demo.vo.ReplyVO;
 import com.example.demo.vo.ReservationVO;
 import com.example.demo.vo.ReviewVO;
 
@@ -77,6 +81,10 @@ public class MyPageController {
 		int memberno = m_dao.findById(id).getMemberno();
 		list = mp_dao.findMyPoint(memberno);
 		int point = m_dao.findById(id).getPoint();
+		
+		for(EventVO e : list) {
+			e.setEventdate(e.getEventdate().split(" ")[0]);
+		}
 		
 		model.addAttribute("id", id);
 		model.addAttribute("point", point);
@@ -198,8 +206,6 @@ public class MyPageController {
 	@RequestMapping("/myPage/roulette_winning")
 	@ResponseBody
 	public int roulette_winning(String id, int point) {
-		System.out.println("포:"+point);
-		System.out.println("아이디:"+id);
 		int re = 0;
 		int memberno = m_dao.findById(id).getMemberno();
 		if(point != 0) {
@@ -210,6 +216,78 @@ public class MyPageController {
 		}
 		return re;
 	}
+	
+	@GetMapping("/myPage/myInquiry")
+	public void findMyInquiry(Model model, String id) {
+		List<InquiryVO> list = null;
+		int memberno = m_dao.findById(id).getMemberno();
+		list = mp_dao.findMyInquiry(memberno);
+		
+		for(InquiryVO l: list) {
+			if(mp_dao.findMyReply(l.getInquiryNo()) !=null) {
+				l.setReplyOk(1);
+			}else {
+				l.setReplyOk(0);
+			}
+		}
+		
+		model.addAttribute("list", list);
+		
+	}
+	
+	@GetMapping("/myPage/inquiryDetail")
+	public void detailInquiry(Model model, int inquiryno) {
+		InquiryVO i = null;
+		ReplyVO r = null;
+		i = mp_dao.findMyInquiryByNo(inquiryno);
+		r = mp_dao.findMyReply(inquiryno);
+		
+		model.addAttribute("inquiryno", inquiryno);
+		
+		model.addAttribute("i_title", i.getTitle());
+		model.addAttribute("i_inqdate", i.getInqdate());
+		model.addAttribute("i_content", i.getContent());
+		model.addAttribute("replyOk", i.getReplyOk());
+		
+		if(r == null) {
+			model.addAttribute("r_repdate", "");
+			model.addAttribute("r_content", "아직 답변이 달리지 않은 문의입니다.");
+		}else {
+			model.addAttribute("r_repdate", r.getRepdate());
+			model.addAttribute("r_content", r.getContent());
+		}
+	}
+	
+	@GetMapping("/myPage/updateInquiry")
+	public void updateInquiryForm(Model model, int inquiryno) {
+		InquiryVO i = null;
+		i = mp_dao.findMyInquiryByNo(inquiryno);
+		
+		model.addAttribute("i", i);
+		
+	
+	}
+	
+	@PostMapping("/myPage/updateInquiry")
+	public ModelAndView updateInquirySubmit(InquiryVO i) {
+		ModelAndView mav = new ModelAndView("redirect:/myPage/inquiryDetail?inquiryno="+i.getInquiryNo());
+		int re = -1;
+		re = mp_dao.updateInquiry(i);
+		
+		return mav;
+	
+	}
+	
+	@GetMapping("/myPage/deleteInquiry")
+	public ModelAndView deleteInquiry(int inquiryno, HttpSession session) {
+		ModelAndView mav = new ModelAndView("redirect:/myPage/myInquiry?id="+session.getAttribute("id"));
+		int re = -1;
+		re = mp_dao.deleteInquiry(inquiryno);
+		
+		return mav;
+	}
+	
+	
 	
 	
 	

@@ -7,8 +7,10 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.db.DBManager_myPage;
 import com.example.demo.vo.AccommodationVO;
 import com.example.demo.vo.EventVO;
+import com.example.demo.vo.InquiryVO;
 import com.example.demo.vo.LikeVO;
 import com.example.demo.vo.MemberVO;
+import com.example.demo.vo.ReplyVO;
 import com.example.demo.vo.ReservationVO;
 import com.example.demo.vo.ReviewVO;
 
@@ -63,5 +65,27 @@ public class MyPageDAO {
 
 		return DBManager_myPage.point_insert(memberno, point);
 	}
+	
+	public List<InquiryVO> findMyInquiry(int memberno) {
+		return DBManager_myPage.findMyInquiry(memberno);
+	}
+	
+	public InquiryVO findMyInquiryByNo(int inquiryno) {
+		return DBManager_myPage.findMyInquiryByNo(inquiryno);
+	}
+	
+	public ReplyVO findMyReply(int inquiryno) {
+		return DBManager_myPage.findMyReply(inquiryno);
+	}
+	
+	public int updateInquiry(InquiryVO i) {
+		return DBManager_myPage.updateInquiry(i);
+	}
+	
+	public int deleteInquiry(int inquiryNo) {
+		return DBManager_myPage.deleteInquiry(inquiryNo);
+	}
+	
+	
 
 }

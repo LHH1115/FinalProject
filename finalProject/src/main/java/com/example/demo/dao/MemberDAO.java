@@ -26,5 +26,7 @@ public class MemberDAO {
 	public int chagePwd(String id, String pwd) {
 		return DBManager_member.chagePwd(id, pwd);
 	}
+	
+	
 
 }

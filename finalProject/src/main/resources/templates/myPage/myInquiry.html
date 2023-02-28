@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src='https://code.jquery.com/jquery-3.6.3.min.js'></script>
+<script type="text/javascript">
+</script>
+</head>
+<body>
+<table>
+<thead>
+	<th>카테고리</th>
+	<th>제목</th>
+	<th>날짜</th>
+	<th>답변유무</th>
+</thead>
+<tbody>
+	<tr th:each="i:${list}" class="list">
+		<td th:text=${i.category}></td>
+		<td>
+		<a th:href="'/myPage/inquiryDetail?inquiryno='+${i.inquiryNo}" th:text=${i.title}></a>
+		</td>
+		<td th:text=${i.inqdate}></td>
+		<td>
+			<div th:if="${i.replyOk == 1}">O</div>
+			<div th:unless="${i.replyOk == 1}">X</div>
+		</td>
+	</tr>
+	
+	<!-- <th:block th:each="i:${#numbers.sequence(1,totalPage)}">
+		<a th:text="${i}" th:href="@{'/board/list/'+${i}}"></a>
+	</th:block>-->
+
+</tbody>
+</table>
+</body>
+</html>

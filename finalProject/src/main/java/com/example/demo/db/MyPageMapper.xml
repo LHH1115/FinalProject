@@ -20,7 +20,7 @@
   </select>
   
   <select id="findMyPoint" resultType="EventVO">
-  	select * from tbl_event where memberno = #{memberno}
+  	select category, eventdate, amount from tbl_event where memberno = #{memberno}
   </select>
   
   <select id="findMyReserv" resultType="ReservationVO">
@@ -58,5 +58,25 @@
   <insert id="insertEvent" parameterType="eventVO">
   	insert into tbl_event(eventno, memberno, eventdate, category, amount) values(seq_eventno.nextval,#{memberno},to_char(sysdate,'YYYY-MM-DD'),'룰렛보상',#{point})
   </insert>
+  
+  <select id="findInquiry" resultType="inquiryVO">
+	select * from tbl_inquiry where memberno = #{memberno}  
+  </select>
+  
+  <select id="findInquiryByNo" resultType="inquiryVO">
+	select * from tbl_inquiry where inquiryno = #{inquiryno}  
+  </select>
+  
+  <select id="findReply" resultType="replyVO">
+	select * from tbl_reply where inquiryno = #{inquiryno}  
+  </select>
+  
+  <update id="updateInquiry" parameterType="inquiryVO">
+  	update tbl_inquiry set title = #{title} , content = #{content} where inquiryno = #{inquiryNo}  
+  </update>
+  
+  <delete id="deleteInquiry">
+  	delete tbl_inquiry where inquiryno = #{inquiryNo}
+  </delete>
   
 </mapper>
