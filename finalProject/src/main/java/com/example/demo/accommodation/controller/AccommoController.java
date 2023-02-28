@@ -131,48 +131,136 @@ public class AccommoController {
 	}
 	
 	// 키워드 검색
-		@GetMapping("/main/search")
-		public ModelAndView search(String keyword, String category, int pageNum, HttpSession session) {
-			ModelAndView mav = new ModelAndView("Accommodation/Search");
-//			System.out.println("keyword:"+keyword);
-//			System.out.println("category:"+category);
-			
-			if(session.getAttribute("keyword") != null) {
-				keyword = (String) session.getAttribute("keyword");
-			}
-			if(session.getAttribute("category") != null) {
-				category = (String) session.getAttribute("category");
-			}
-			
-			int start = 1;
-			int end = 1;
-			if(pageNum == 1) {
-				start = 1;
-				end = start + pageSize - 1;
-			}else {
-				start = (pageNum-1)*pageSize+1;
-				end = start + pageSize - 1;
-			}
-			HashMap<String, Object> map = new HashMap<>();
-			map.put("keyword", keyword);
-			map.put("start", start);
-			map.put("end", end);
-			List<AccommodationVO> list = dao.findByAny(map);
-			totCnt = dao.findCountByAny(keyword);
-			totPage = (int) Math.ceil(totCnt/pageSize);
-			int startPage = (pageNum-1)/pageGroup*pageGroup+1;
-			int endPage = startPage+pageGroup-1;
-			if(totPage < endPage) {
-				endPage = totPage;
-			}
-			session.setAttribute("keyword", keyword);
-			session.setAttribute("category", category);
-			mav.addObject("totPage", totPage);
-			mav.addObject("startPage", startPage);
-			mav.addObject("endPage", endPage);
-			mav.addObject("list",list);
-			return mav;
+	@GetMapping("/main/search")
+	public ModelAndView search(String keyword, String category, int pageNum, HttpSession session) {
+		ModelAndView mav = new ModelAndView("Accommodation/Search");
+	//			System.out.println("keyword:"+keyword);
+	//			System.out.println("category:"+category);
+		
+		if(session.getAttribute("keyword") != null) {
+			keyword = (String) session.getAttribute("keyword");
 		}
+		if(session.getAttribute("category") != null) {
+			category = (String) session.getAttribute("category");
+		}
+		if(session.getAttribute("minPrice") != null) {
+			session.removeAttribute("minPrice");
+		}
+		if(session.getAttribute("maxPrice") != null) {
+			session.removeAttribute("maxPrice");
+		}
+		
+		int start = 1;
+		int end = 1;
+		if(pageNum == 1) {
+			start = 1;
+			end = start + pageSize - 1;
+		}else {
+			start = (pageNum-1)*pageSize+1;
+			end = start + pageSize - 1;
+		}
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("keyword", keyword);
+		map.put("start", start);
+		map.put("end", end);
+		List<AccommodationVO> list = dao.findByAny(map);
+		totCnt = dao.findCountByAny(keyword);
+		totPage = (int) Math.ceil(totCnt/pageSize);
+		int startPage = (pageNum-1)/pageGroup*pageGroup+1;
+		int endPage = startPage+pageGroup-1;
+		if(totPage < endPage) {
+			endPage = totPage;
+		}
+		session.setAttribute("keyword", keyword);
+		session.setAttribute("category", category);
+		mav.addObject("totPage", totPage);
+		mav.addObject("startPage", startPage);
+		mav.addObject("endPage", endPage);
+		mav.addObject("list",list);
+		return mav;
+	}
+	
+	// 상세 검색
+	@GetMapping("/detailSearch")
+	public ModelAndView detailSearch(int pageNum, 
+			String category, Integer minPrice, Integer maxPrice, HttpSession session) {
+		ModelAndView mav = new ModelAndView("Accommodation/Search");
+		
+		if(session.getAttribute("dscategory") != null) {
+			category = (String) session.getAttribute("dscategory");
+		}
+		if(session.getAttribute("minPrice") != null) {
+			minPrice = (Integer) session.getAttribute("minPrice");
+		}
+		if(session.getAttribute("maxPrice") != null) {
+			maxPrice = (Integer) session.getAttribute("maxPrice");
+		}
+		
+		int start = 1;
+		int end = 1;
+		if(pageNum == 1) {
+			start = 1;
+			end = start + pageSize - 1;
+		}else {
+			start = (pageNum-1)*pageSize+1;
+			end = start + pageSize - 1;
+		}
+		HashMap<String, Object> map = new HashMap<>();
+		if(category.equals("all")) {
+			map.put("dscategory", "");
+		}else {
+			map.put("dscategory", category);
+		}
+		
+		if(minPrice == null) {
+			minPrice = 1;
+			map.put("minPrice", 1);
+		}else {
+			map.put("minPrice", minPrice);
+		}
+		
+		if(maxPrice == null) {
+			maxPrice = 9999999;
+			map.put("maxPrice", 9999999);
+		}else {
+			map.put("maxPrice", maxPrice);
+		}
+		
+		map.put("start", start);
+		map.put("end", end);
+		
+		System.out.println(map);
+		
+		List<AccommodationVO> list = dao.detailSearch(map);
+		totCnt = dao.findCountBydetailSearch(map);
+		System.out.println(totCnt);
+		totPage = (int) Math.ceil(totCnt/pageSize);
+		int startPage = (pageNum-1)/pageGroup*pageGroup+1;
+		int endPage = startPage+pageGroup-1;
+		if(totPage < endPage) {
+			endPage = totPage;
+		}
+		session.setAttribute("dscategory", category);
+		session.setAttribute("minPrice", minPrice);
+		session.setAttribute("maxPrice", maxPrice);
+		mav.addObject("totPage", totPage);
+		mav.addObject("startPage", startPage);
+		mav.addObject("endPage", endPage);
+		mav.addObject("list",list);
+		return mav;
+	}
+	
+	//검색어 초기화
+	@GetMapping("/resetSearch")
+	@ResponseBody
+	public String resetSearch(HttpSession session) {
+		session.removeAttribute("dscategory");
+		session.removeAttribute("minPrice");
+		session.removeAttribute("maxPrice");
+		session.removeAttribute("keyword");
+		session.removeAttribute("category");
+		return "OK";
+	}
 	
 	// 사진 보유 여부 검색
 	// 없으면 랜덤이미지 사용
@@ -233,7 +321,7 @@ public class AccommoController {
 		ModelAndView mav = new ModelAndView("Accommodation/Detail");
 		
 		// 로그인한 멤버
-		MemberVO m = mdao.findByNo(1);
+		MemberVO m = mdao.findByNo(7);
 		session.setAttribute("loginM", m);
 		
 		AccommodationVO a = dao.findById(accommoNo);

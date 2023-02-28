@@ -40,6 +40,31 @@
 	WHERE RN BETWEEN ${start} AND ${end}
   </select>
   
+  <!-- 상세검색 -->
+  <select id="detailSearch" resultType="accommoVO">
+  	SELECT *
+	FROM (
+	  	SELECT T.*, ROWNUM RN
+	  	FROM (
+	  		SELECT * FROM TBL_ACCOMMODATION
+			ORDER BY PRICE
+		) T
+	  	WHERE
+	    PRICE BETWEEN ${minPrice} AND ${maxPrice}
+	    AND CATEGORY LIKE '%${dscategory}%'
+	    
+	)
+	WHERE RN BETWEEN ${start} AND ${end}
+  </select>
+  
+  <select id="findCountBydetailSearch" resultType="java.lang.Integer">
+  	SELECT COUNT(*)
+	FROM TBL_ACCOMMODATION
+	WHERE PRICE BETWEEN ${minPrice} AND ${maxPrice}
+	AND CATEGORY LIKE '%${dscategory}%'
+
+  </select>
+  
   <!-- 아무검색어로 카운트 검색 -->
   <select id="findCountByAny" resultType="java.lang.Integer" parameterType="java.lang.String">
   	SELECT COUNT(*) FROM TBL_ACCOMMODATION WHERE CATEGORY LIKE '%${keyword}%' 

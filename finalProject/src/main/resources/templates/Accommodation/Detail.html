@@ -40,6 +40,46 @@
 			}
 		})
 		
+		// 찜하기
+		$("#btn_dolike").click(function(){
+			$.ajax({
+				url:"/accommo/dolike",
+				data:data,
+				success:function(re){
+					alert(re)
+					$("#div_dolike").removeClass("show");
+					$("#div_dolike").addClass("unshow");
+					$("#div_unlike").addClass("show");
+				}
+			})
+		})
+		
+		// 찜해제
+		$("#btn_unlike").click(function(){
+			$.ajax({
+				url:"/accommo/unlike",
+				data:data,
+				success:function(re){
+					alert(re)
+					$("#div_unlike").removeClass("show");
+					$("#div_unlike").addClass("unshow");
+					$("#div_dolike").addClass("show");
+				}
+			})
+		})
+		
+		$("#btn_dolike").hover(function(){
+			$(this).attr("src", "/main/like.png")
+		},function(){
+			$(this).attr("src", "/main/unlike.png")
+		})
+		
+		$("#btn_unlike").hover(function(){
+			$(this).attr("src", "/main/unlike.png")
+		},function(){
+			$(this).attr("src", "/main/like.png")
+		})
+		
 		var IMP = window.IMP; // 생략 가능
 		IMP.init("imp80436673"); // 예: imp00000000
 		
@@ -179,34 +219,6 @@
 				}
 			$("#totalPrice").val(totalPrice);
 		})
-		
-		// 찜하기
-		$("#btn_dolike").click(function(){
-			$.ajax({
-				url:"/accommo/dolike",
-				data:data,
-				success:function(re){
-					alert(re)
-					$("#div_dolike").removeClass("show");
-					$("#div_dolike").addClass("unshow");
-					$("#div_unlike").addClass("show");
-				}
-			})
-		})
-		
-		// 찜해제
-		$("#btn_unlike").click(function(){
-			$.ajax({
-				url:"/accommo/unlike",
-				data:data,
-				success:function(re){
-					alert(re)
-					$("#div_unlike").removeClass("show");
-					$("#div_unlike").addClass("unshow");
-					$("#div_dolike").addClass("show");
-				}
-			})
-		})
 	}) 
   </script>
 </head>
@@ -220,27 +232,27 @@
 	<!-- 사진 -->
 	<th:block th:each="path: ${photoList}">
 		<span>
-			<img alt="" th:src="|/${path}|" height="350">
+			<img alt="" th:src="|/${path}|" height="350" width="350">
 		</span>
 	</th:block>
 	
 	<br>
 	
 	<!-- 찜기능 -->
-	<th:block th:if="${session.loginM.role != 'admin'}">
+	<th:block th:if="${session.loginM != null and session.loginM.role != 'admin'}">
 		<span th:text="${session.loginM.role}"></span><br>
 		<span th:text="${session.loginM.name}"></span><br>
 		<div id="div_dolike" class="unshow">
-				<input type="button" value="찜하기" id="btn_dolike">
+				<input type="image" src="/main/unlike.png" id="btn_dolike" width="40">
 		</div>
 		<div id="div_unlike" class="unshow">
-				<input type="button" value="찜해제" id="btn_unlike">
+				<input type="image" src="/main/like.png" id="btn_unlike" width="40">
 		</div>
 	</th:block>
 	
 	<!-- 관리자 기능 -->
 	<div>
-		<th:block th:unless="${session.loginM.role != 'admin'}">
+		<th:block th:if="${session.loginM != null and session.loginM.role != 'user'}">
 			<span th:text="${session.loginM.role}"></span><br>
 			<input type="button" id="btn_update" value="숙소 정보 수정"
 			th:onclick="|location.href='@{'/admin/accommo/update/'+${a.accommoNo}}'|">

@@ -16,7 +16,7 @@
     width: 250px;
     height: 100%;
     margin-left: -250px;
-    background: #000;
+    background: white;
     overflow-x: hidden;
     overflow-y: auto;
   }
@@ -42,11 +42,11 @@
   .sidebar-nav li a {
     display: block;
     text-decoration: none;
-    color: #999;
+    color: black;
   }
   
   .sidebar-nav li a:hover {
-    color: #fff;
+    color: red;
     background: rgba(255, 255, 255, 0.2);
   }
   
@@ -63,8 +63,25 @@
 		<!-- 검색 버튼 클릭 -->
 		$("#btn_search").click(function(e){
 			e.preventDefault();
+			$.ajax({
+				url:"/accommo/resetSearch",
+				success:function(data){
+				}
+			})
 			$("#f").submit();
+			alert("ok");
 		});
+		
+		$("#btn_reset").click(function(){
+			$("#f").trigger("reset");
+			$.ajax({
+				url:"/accommo/resetSearch",
+				success:function(data){
+					alert(data);
+					location.href="/accommo/main/search?pageNum=1&keyword=&category=0";
+				}
+			})
+		})
 		
 		<!-- 상세페이지 이동 -->
 		$(document).on("click", "#tr", function(){
@@ -86,17 +103,31 @@
 	<div id="page-wrapper">
 	  <!-- 사이드바 -->
 	  <div id="sidebar-wrapper">
-	  	<form action="#" id="f">
-	  	<input type="hidden" name="pageNum" value="1">
-	    <ul class="sidebar-nav">
-	      <li class="sidebar-brand">
-	        <a href="#">검색하기</a>
-	      </li>
-	      <li>검색어<input type="text"></li>
-	      <li>카테고리1<input type="text"></li>
-	      <li>카테고리2<input type="text"></li>
-	      <li><input type="button" value="검색" id="btn_search"></li>
-	    </ul>
+	  	<form action="/accommo/detailSearch" method="get" id="f">
+		  	<input type="hidden" name="pageNum" value="1">
+		    <ul class="sidebar-nav">
+		      
+		      <li>
+		      	카테고리1
+		      	<select name="category" id="category">
+		      		<option value="all">전체</option>
+		      		<option value="게스트">게하</option>
+		      		<option value="호텔">호텔</option>
+		      		<option value="콘도">콘도</option>
+		      	</select>
+		      </li>
+		      <li>
+		      	가격<br>
+		      	최소<input type="number" name="minPrice"><br>
+		      	최대<input type="number" name="maxPrice">
+		      </li>
+		      <li class="sidebar-brand">
+		        <a href="#" id="btn_search">검색하기</a>
+		      </li>
+		      <li class="sidebar-brand">
+		        <a href="#" id="btn_reset">검색어 초기화</a>
+		      </li>
+		    </ul>
 	    </form>
 	  </div>
 	  <!-- /사이드바 -->
@@ -128,24 +159,49 @@
 			</table>
 	      	<!-- 페이징 -->
 			<hr>
-			<th:block th:if="${1 < startPage}">
-				<span th:text="이전" 
-				th:onclick="|location.href='/accommo/main/search?pageNum=${startPage-1}'|"></span>
-			</th:block>
-				<th:block th:if="${totPage <= 1}">
-					<span th:text="1" 
-					th:onclick="|location.href='/accommo/main/search?pageNum=1'|"></span>
+			<th:block th:if="${session.minPrice == null}">
+				<th:block th:if="${1 < startPage}">
+					<span th:text="이전" 
+					th:onclick="|location.href='/accommo/main/search?pageNum=${startPage-1}'|"></span>
 				</th:block>
-			<th:block th:each="num : ${#numbers.sequence(startPage,endPage)}">
-				<th:block th:unless="${totPage < 1}">
-					<span th:text="${num}" 
-					th:onclick="|location.href='/accommo/main/search?pageNum=${num}'|"></span>
+					<th:block th:if="${totPage <= 1}">
+						<span th:text="1" 
+						th:onclick="|location.href='/accommo/main/search?pageNum=1'|"></span>
+					</th:block>
+				<th:block th:each="num : ${#numbers.sequence(startPage,endPage)}">
+					<th:block th:unless="${totPage < 1}">
+						<span th:text="${num}" 
+						th:onclick="|location.href='/accommo/main/search?pageNum=${num}'|"></span>
+					</th:block>
+				</th:block>
+				
+				<th:block th:if="${endPage != totPage}">
+					<span th:text="다음" 
+					th:onclick="|location.href='/accommo/main/search?pageNum=${endPage+1}'|"></span>
 				</th:block>
 			</th:block>
 			
-			<th:block th:if="${endPage != totPage}">
-				<span th:text="다음" 
-				th:onclick="|location.href='/accommo/main/search?pageNum=${endPage+1}'|"></span>
+			<th:block th:if="${session.minPrice != null}">
+			<span th:value="${session.minPrice}"></span>
+				<th:block th:if="${1 < startPage}">
+					<span th:text="이전" 
+					th:onclick="|location.href='/accommo/detailSearch?pageNum=${startPage-1}'|"></span>
+				</th:block>
+					<th:block th:if="${totPage <= 1}">
+						<span th:text="1" 
+						th:onclick="|location.href='/accommo/detailSearch?pageNum=1'|"></span>
+					</th:block>
+				<th:block th:each="num : ${#numbers.sequence(startPage,endPage)}">
+					<th:block th:unless="${totPage < 1}">
+						<span th:text="${num}" 
+						th:onclick="|location.href='/accommo/detailSearch?pageNum=${num}'|"></span>
+					</th:block>
+				</th:block>
+				
+				<th:block th:if="${endPage != totPage}">
+					<span th:text="다음" 
+					th:onclick="|location.href='/accommo/detailSearch?pageNum=${endPage+1}'|"></span>
+				</th:block>
 			</th:block>
 			<hr>
 	    </div>
