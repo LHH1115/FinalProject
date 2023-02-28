@@ -69,9 +69,9 @@ public class RentcarController {
 			HttpSession session
 			) {
 		
-//		if(category==null||category.equals("")) {
-//			category=(String)session.getAttribute("category");
-//		}
+		if(category==null||category.equals("")) {
+			category=(String)session.getAttribute("s_category");
+		}
 		
 		int total_record=0;
 		int page_size=5;
@@ -97,7 +97,7 @@ public class RentcarController {
 		total_page=(int)Math.ceil((double)total_record/page_size);
 		model.addAttribute("total_page",total_page);
 		
-//		session.setAttribute("category",category);
+		session.setAttribute("s_category",category);
 		
 	}
 	

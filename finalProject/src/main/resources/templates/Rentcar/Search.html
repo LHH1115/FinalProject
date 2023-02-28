@@ -143,7 +143,7 @@
 			<th:block th:if="${total_page>0}">
 				<hr>
 					<th:block th:each="p:${#numbers.sequence(1,total_page)}">
-						<a th:href="@{/rentcar/SearchCatAndName(pageNo=${p})}" th:text="${p}"></a>
+						<a th:href="@{/rentcar/Search(pageNo=${p})}" th:text="${p}"></a>
 					</th:block>
 				<hr>
 			</th:block>
