@@ -15,6 +15,6 @@ public class InfoListVO {
 	private String rateinformation;
 	private String mainpurpose;
 	private String parkingamount;
-	private String Facilities;
+	private String facilities;
 	private int orders;
 }

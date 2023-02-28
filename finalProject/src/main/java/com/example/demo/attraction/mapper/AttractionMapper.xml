@@ -57,8 +57,9 @@
   	ORDER BY P.ORDERS
   </select>
   <!-- 정보 순서(Orders)대로 가져오기  -->
-  <select id="findInfoById" resultType="attractVO" parameterType="java.lang.Integer">
+  <select id="findInfoById" resultType="attractInfoVO" parameterType="java.lang.Integer">
   	SELECT * FROM TBL_ATTRACTINFO WHERE ATTRACTNO = #{attractNo}
+  	ORDER BY ORDERS
   </select>
   
 </mapper>

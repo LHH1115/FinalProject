@@ -239,15 +239,25 @@ public class AttractController {
 		List<InfoListVO> infoList = new ArrayList<>();
 		AttractionVO a = dao.findById(attractNo);
 		List<AttractionInfoVO> atin = dao.findInfoById(attractNo);
-		atin.get(0).getOrders();
+//		atin.get(0).getOrders();
 		
 		
-			InfoListVO invo = new InfoListVO();
-			invo.setIntroduction(atin.get(0).getInfo());
-			System.out.println(invo);
-			//infoList.add(invo);
 		
 	
+			InfoListVO invo = new InfoListVO();
+			System.out.println("atin : "+atin);
+			invo.setIntroduction(atin.get(0).getInfo().toString());
+			invo.setCloseddays(atin.get(1).getInfo().toString());
+			invo.setOperatingtime(atin.get(2).getInfo().toString());
+			invo.setRateinformation(atin.get(3).getInfo().toString());
+			invo.setMainpurpose(atin.get(4).getInfo().toString());
+			invo.setParkingamount(atin.get(5).getInfo().toString());
+			invo.setFacilities(atin.get(6).getInfo().toString());
+			System.out.println(invo);
+//			infoList.add(invo);
+			
+		
+
 		
 		
 		
@@ -316,7 +326,7 @@ public class AttractController {
 //			System.out.println("대체 이미지: "+photoList);
 		}
 //		System.out.println(photoList);
-//		mav.addObject("m", m);
+		mav.addObject("infoList", invo);
 		mav.addObject("a", a);
 		mav.addObject("photoList", photoList);
 		return mav;
