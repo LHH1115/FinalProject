@@ -376,7 +376,7 @@
 	<hr>
 	
 	<!-- 찜기능 -->
-	<th:block th:if="${session.loginM.role != 'admin'}">
+	<th:block th:if="${session.loginM.role == 'user'}">
 		<span th:text="${session.loginM.role}"></span><br>
 		<span th:text="${session.loginM.name}"></span><br>
 		<div id="div_dolike" class="unshow">

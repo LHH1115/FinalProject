@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.attraction.dao.AttractionDAO;
+import com.example.demo.attraction.vo.AttractionInfoVO;
 import com.example.demo.attraction.vo.AttractionPhotoVO;
 import com.example.demo.attraction.vo.AttractionVO;
+import com.example.demo.attraction.vo.InfoListVO;
 import com.example.demo.attraction.vo.LikeVO;
 
 import lombok.Setter;
@@ -343,79 +345,98 @@ public class AttractController {
 	}
 	
 	// 관광지 상세페이지
-	@GetMapping("/detail")
-	public ModelAndView detail(int attractNo) {
-		ModelAndView mav = new ModelAndView("Attraction/Detail");
-		
-		// 로그인한 멤버
-//		MemberVO m = mdao.findByNo(7);
-//		System.out.println(m);
-		
-		AttractionVO a = dao.findById(attractNo);
-		
-		List<AttractionVO> list = dao.findAllPhotoById(attractNo);
-		List<String> photoList = new ArrayList<>();
-		String realPath = "";
-		String category = a.getCategory();
-		String name = "";
-		String path = "";
-		if(list.size() > 0) {
-			for(int i=0;i<list.size();i++) {
-				a = list.get(i);
-				name = a.getName();
-				path = a.getPath();
-				realPath = "photo/Attraction/"+category+"/"+name+"/"+path;
-				photoList.add(realPath);
-			}
-		}else {
-			// 이미지 없을때 랜덤이미지
-			Random rand = new Random();
-			String fhotellList[] = {"그림리조트", "꼬뜨도르가족호텔", "다인리조트", "베스트웨스턴 제주호텔", "올레리조트"};
-			String guestList[] = {"민트게스트하우스", "섬게스트하우스", "슬로시티게스트하우스", "제주공항게스트하우스웨이브사운드", "토다게스트"};
-			String thotelList[] = {"(주)호텔하니크라운", "제주썬호텔", "제주팔레스호텔", "글래드호텔앤리조트㈜ 메종글래드제주", "제주로얄호텔"};
-			String hostelList[] = {"길리 리조트(구.협재 사계절 리조트)", "라이트프리(구. 에바다호스텔)", "아마스빌 리조트(구.아마스빌 호스텔)", "용두암캐빈", "해미안"};
-			String condoList[] = {"메가리조트제주", "사조그랜드리조트", "이랜드파크 켄싱턴리조트 제주한림점", "일성제주콘도미니엄", "제주토비스콘도①"};
-				switch (category) {
-					case "가족호텔업":{
-						for(int i=0;i<5;i++) {
-							realPath = "photo/Attraction/"+category+"/"+fhotellList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
-							photoList.add(realPath);
-						}
-					}break;
-					case "게스트하우스":{
-						for(int i=0;i<5;i++) {
-						realPath = "photo/Attraction/"+category+"/"+guestList[rand.nextInt(5)]+"/name"+(i+1)+".jpeg";
-						photoList.add(realPath);
-						}
-					}break;
-					case "관광호텔업":{
-						for(int i=0;i<5;i++) {
-						realPath = "photo/Attraction/"+category+"/"+thotelList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
-						photoList.add(realPath);
-						}
-					}break;
-					case "호스텔업":{
-						for(int i=0;i<5;i++) {
-						realPath = "photo/Attraction/"+category+"/"+hostelList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
-						photoList.add(realPath);
-						}
-					}break;
-					case "휴양콘도미니엄업":{
-						for(int i=0;i<5;i++) {
-						realPath = "photo/Attraction/"+category+"/"+condoList[rand.nextInt(5)]+"/acc"+(i+1)+".jpeg";
-						photoList.add(realPath);
-						}
-					}break;
-				}
+		@GetMapping("/detail")
+		public ModelAndView detail(int attractNo) {
+			ModelAndView mav = new ModelAndView("Attraction/Detail");
 			
-//			System.out.println("대체 이미지: "+photoList);
+			// 로그인한 멤버
+//			MemberVO m = mdao.findByNo(7);
+//			System.out.println(m);
+			List<InfoListVO> infoList = new ArrayList<>();
+			AttractionVO a = dao.findById(attractNo);
+			List<AttractionInfoVO> atin = dao.findInfoById(attractNo);
+//			atin.get(0).getOrders();
+			
+				InfoListVO invo = new InfoListVO();
+				System.out.println("atin : "+atin);
+				invo.setIntroduction(atin.get(0).getInfo().toString());
+				invo.setCloseddays(atin.get(1).getInfo().toString());
+				invo.setOperatingtime(atin.get(2).getInfo().toString());
+				invo.setRateinformation(atin.get(3).getInfo().toString());
+				invo.setMainpurpose(atin.get(4).getInfo().toString());
+				invo.setParkingamount(atin.get(5).getInfo().toString());
+				invo.setFacilities(atin.get(6).getInfo().toString());
+				System.out.println(invo);
+	
+			List<AttractionVO> list = dao.findAllPhotoById(attractNo);
+			List<String> photoList = new ArrayList<>();
+			String realPath = "";
+			String category = a.getCategory();
+			String name = "";
+			String path = "";
+			
+			if(list.size() > 0) {
+				for(int i=0;i<list.size();i++) {
+					a = list.get(i);
+					name = a.getName();
+					path = a.getPath();
+					realPath = "photo/Attraction/"+category+"/"+name+"/"+path;
+					photoList.add(realPath);
+				}
+			}else {
+				// 이미지 없을때 랜덤이미지
+				Random rand = new Random();
+				String parklList[] = {"노리매","동백포레스트","휴애리"};
+				String museumList[] = {"양금석 가옥","의귀리 김만일묘역"};
+				String forestList[] = {"마흐니 숲길","큰엉해안경승지"};
+				String riseList[] = {"물영아리 오름","사라오름"};
+				String themeParkList[] = {"코코몽 에코파크"};
+					switch (category) {
+						case "숲":{						
+							String k = forestList[rand.nextInt(3)];
+							for(int i=0;i<5;i++) {
+								realPath = "photo/Attraction/"+category+"/"+k+"/"+"att"+(i+1)+".jpg";
+								photoList.add(realPath);
+							}
+						}break;
+						case "오름":{
+							String k = riseList[rand.nextInt(2)];
+							for(int i=0;i<5;i++) {
+								realPath = "photo/Attraction/"+category+"/"+k+"/"+"att"+(i+1)+".jpg";
+							photoList.add(realPath);
+							}
+						}break;
+						case "테마파크":{
+							String k = themeParkList[rand.nextInt(2)];
+							for(int i=0;i<5;i++) {
+								realPath = "photo/Attraction/"+category+"/"+k+"/"+"att"+(i+1)+".jpg";
+							photoList.add(realPath);
+							}
+						}break;
+						case "공원":{
+							String k = parklList[rand.nextInt(2)];
+							for(int i=0;i<5;i++) {
+								realPath = "photo/Attraction/"+category+"/"+k+"/"+"att"+(i+1)+".jpg";
+							photoList.add(realPath);
+							}
+						}break;
+						case "박물관":{
+							String k = museumList[rand.nextInt(1)];
+							for(int i=0;i<5;i++) {
+								realPath = "photo/Attraction/"+category+"/"+k+"/"+"att"+(i+1)+".jpg";
+							photoList.add(realPath);
+							}
+						}break;
+					}
+				
+//				System.out.println("대체 이미지: "+photoList);
+			}
+//			System.out.println(photoList);
+			mav.addObject("infoList", invo);
+			mav.addObject("a", a);
+			mav.addObject("photoList", photoList);
+			return mav;
 		}
-//		System.out.println(photoList);
-//		mav.addObject("m", m);
-		mav.addObject("a", a);
-		mav.addObject("photoList", photoList);
-		return mav;
-	}
 	
 	
 }

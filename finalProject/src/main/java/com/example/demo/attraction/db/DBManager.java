@@ -9,9 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-
-
-
+import com.example.demo.attraction.vo.AttractionInfoVO;
 import com.example.demo.attraction.vo.AttractionPhotoVO;
 import com.example.demo.attraction.vo.AttractionVO;
 import com.example.demo.attraction.vo.LikeVO;
@@ -54,7 +52,6 @@ public class DBManager {
 	public static List<AttractionVO> findByAny(HashMap<String, Object> map) {
 		SqlSession session = sqlSessionFactory.openSession();
 		List<AttractionVO> list = session.selectList("attract.findByAny", map);
-		System.out.println("DBManger:"+list.size());
 		session.close();
 		return list;
 	}
@@ -78,7 +75,12 @@ public class DBManager {
 	public static List<AttractionVO> findAllPhotoById(int attractNo) {
 		SqlSession session = sqlSessionFactory.openSession();
 		List<AttractionVO> list = session.selectList("attract.findAllPhotoById", attractNo);
-		System.out.println("DBManger_photobyid:"+list.size());
+		session.close();
+		return list;
+	}
+	public static List<AttractionInfoVO> findInfoById(int attractNo) {
+		SqlSession session = sqlSessionFactory.openSession();
+		List<AttractionInfoVO> list = session.selectList("attract.findInfoById", attractNo);
 		session.close();
 		return list;
 	}

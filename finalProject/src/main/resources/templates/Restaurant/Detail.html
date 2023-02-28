@@ -189,17 +189,6 @@ $(function(){
     </div>
 
 	
-	<h2 th:text="${a.name}" id="name"></h2>
-	<h3 th:text="${a.category}"></h3>
-	
-	<!-- 사진 -->
-	<th:block th:each="path: ${photoList}">
-		<span>
-			<img alt="" th:src="|/${path}|" height="350">
-		</span>
-	</th:block>
-
-	
 	
 </body>
 </html>
