@@ -23,12 +23,12 @@ public class MyPageDAO {
 		return DBManager_myPage.updateInfo(m);
 	}
 	
-	public List<EventVO> findMyPoint(int memberno) {
-		return DBManager_myPage.findMyPoint(memberno);
+	public List<EventVO> findMyPoint(int memberno,int start, int end) {
+		return DBManager_myPage.findMyPoint(memberno, start, end);
 	}
 	
-	public List<ReservationVO> findMyReserv(int memberno) {
-		return DBManager_myPage.findMyReserv(memberno);
+	public List<ReservationVO> findMyReserv(int memberno ,int start, int end) {
+		return DBManager_myPage.findMyReserv(memberno , start, end);
 	}
 	
 	public AccommodationVO findAcc(int accommono) {
@@ -43,8 +43,8 @@ public class MyPageDAO {
 		return DBManager_myPage.findReview(accommono, memberno);
 	}
 	
-	public List<LikeVO> findMyLike(int memberno, String category) {
-		return DBManager_myPage.findMyLike(memberno, category);
+	public List<LikeVO> findMyLike(int memberno, String category,int start, int end) {
+		return DBManager_myPage.findMyLike(memberno, category, start, end);
 	}
 	
 	public String findaccphoto(int accommoNo) {
@@ -66,8 +66,8 @@ public class MyPageDAO {
 		return DBManager_myPage.point_insert(memberno, point);
 	}
 	
-	public List<InquiryVO> findMyInquiry(int memberno) {
-		return DBManager_myPage.findMyInquiry(memberno);
+	public List<InquiryVO> findMyInquiry(int memberno, int start, int end) {
+		return DBManager_myPage.findMyInquiry(memberno, start, end);
 	}
 	
 	public InquiryVO findMyInquiryByNo(int inquiryno) {
@@ -85,6 +85,23 @@ public class MyPageDAO {
 	public int deleteInquiry(int inquiryNo) {
 		return DBManager_myPage.deleteInquiry(inquiryNo);
 	}
+	
+	public int pointTotalRecord() {
+		return DBManager_myPage.pointTotalRecord();
+	}
+	
+	public int reservTotalRecord() {
+		return DBManager_myPage.reservTotalRecord();
+	}
+	
+	public int likeTotalRecord() {
+		return DBManager_myPage.likeTotalRecord();
+	}
+	
+	public int inquiryTotalRecord() {
+		return DBManager_myPage.inquiryTotalRecord();
+	}
+	
 	
 	
 

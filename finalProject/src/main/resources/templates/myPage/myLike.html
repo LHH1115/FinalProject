@@ -14,5 +14,9 @@
 	<a th:href=${l.link}><img th:src="'/photo/'+${l.photopath}" width=300 height= 300></a><br>
 	<span th:text=${l.name}></span>
 </div>
+
+<th:block th:each="i:${#numbers.sequence(1,totalPage)}">
+		<a th:text="${i}" th:href="'/myPage/myLike?pageNUM='+${i}+'&category='+${category}"></a>
+</th:block>
 </body>
 </html>

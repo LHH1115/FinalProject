@@ -15,16 +15,23 @@
   	update tbl_member set name = #{name}, jumin = #{jumin}, addr = #{addr}, postcode = #{postcode}, email = #{email}, phone = #{phone} where id = #{id}
   </update>
   
-  <select id="pointTotalRec" resultType="Integer">
-  	select count(*) from tbl_event where id = #{id} 
-  </select>
   
   <select id="findMyPoint" resultType="EventVO">
-  	select category, eventdate, amount from tbl_event where memberno = #{memberno}
+  	select * from (
+     select T.*, rownum rn
+     from  tbl_event T
+     where memberno = #{memberno}
+   )
+   where rn between #{start} and #{end}
   </select>
   
   <select id="findMyReserv" resultType="ReservationVO">
-  	select * from tbl_reservation where memberno = #{memberno}
+  	select * from (
+     select T.*, rownum rn
+     from  tbl_reservation T
+     where memberno = #{memberno}
+   )
+   where rn between #{start} and #{end}
   </select>
   
   <select id="findAccommo" resultType="AccommodationVO">
@@ -40,7 +47,13 @@
   </select>
   
   <select id="findMyLike" resultType="likeVO">
-  	select * from tbl_like where memberno = #{memberno} and category = #{category}
+  	select * from (
+     select T.*, rownum rn
+     from  tbl_like T
+     where memberno = #{memberno} and category = #{category}
+   )
+   where rn between #{start} and #{end}
+  	
   </select>
   
   <select id="findAccphoto" resultType="accommoPhotoVO">
@@ -60,7 +73,13 @@
   </insert>
   
   <select id="findInquiry" resultType="inquiryVO">
-	select * from tbl_inquiry where memberno = #{memberno}  
+	<!-- select * from tbl_inquiry where memberno = #{memberno}   -->
+	select * from (
+     select T.*, rownum rn
+     from  tbl_inquiry T
+     where memberno = #{memberno}
+   )
+   where rn between #{start} and #{end}
   </select>
   
   <select id="findInquiryByNo" resultType="inquiryVO">
@@ -78,5 +97,21 @@
   <delete id="deleteInquiry">
   	delete tbl_inquiry where inquiryno = #{inquiryNo}
   </delete>
+  
+  <select id="pointTotalRecord" resultType="java.lang.Integer" >
+  	select count(*) from tbl_event
+  </select>
+  
+  <select id="reservTotalRecord" resultType="java.lang.Integer" >
+  	select count(*) from tbl_reservation
+  </select>
+  
+  <select id="likeTotalRecord" resultType="java.lang.Integer" >
+  	select count(*) from tbl_like
+  </select>
+  
+  <select id="inquiryTotalRecord" resultType="java.lang.Integer" >
+  	select count(*) from tbl_inquiry
+  </select>
   
 </mapper>

@@ -28,11 +28,12 @@
 		</td>
 	</tr>
 	
-	<!-- <th:block th:each="i:${#numbers.sequence(1,totalPage)}">
-		<a th:text="${i}" th:href="@{'/board/list/'+${i}}"></a>
-	</th:block>-->
 
 </tbody>
 </table>
+
+	<th:block th:each="i:${#numbers.sequence(1,totalPage)}">
+		<a th:text="${i}" th:href="'/myPage/myInquiry?pageNUM='+${i}"></a>
+	</th:block>
 </body>
 </html>

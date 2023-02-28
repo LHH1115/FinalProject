@@ -28,12 +28,10 @@ $(function(){
 		<td th:text=${p.eventdate}></td>
 		<td th:text=${p.amount}></td>
 	</tr>
-	
-	<!-- <th:block th:each="i:${#numbers.sequence(1,totalPage)}">
-		<a th:text="${i}" th:href="@{'/board/list/'+${i}}"></a>
-	</th:block>-->
-
 </tbody>
 </table>
+<th:block th:each="i:${#numbers.sequence(1,totalPage)}">
+		<a th:text="${i}" th:href="'/myPage/myPoint?pageNUM='+${i}"></a>
+</th:block>
 </body>
 </html>

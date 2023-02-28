@@ -44,18 +44,27 @@ public static SqlSessionFactory sqlSessionFactory;
 		return re;
 	}
 	
-	public static List<EventVO> findMyPoint(int memberNo) {
+	public static List<EventVO> findMyPoint(int memberNo, int start, int end) {
 		List<EventVO> list = null;
 		SqlSession session = sqlSessionFactory.openSession();
-		list = session.selectList("mypage.findMyPoint", memberNo);
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("memberno", memberNo);
+		map.put("start", start);
+		map.put("end", end);
+		
+		list = session.selectList("mypage.findMyPoint", map);
 		session.close();
 		return list;
 	}
 	
-	public static List<ReservationVO> findMyReserv(int memberNo) {
+	public static List<ReservationVO> findMyReserv(int memberNo,int start,int end) {
 		List<ReservationVO> list = null;
 		SqlSession session = sqlSessionFactory.openSession();
-		list = session.selectList("mypage.findMyReserv", memberNo);
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("memberno", memberNo);
+		map.put("start", start);
+		map.put("end", end);
+		list = session.selectList("mypage.findMyReserv", map);
 		session.close();
 		return list;
 	}
@@ -89,12 +98,15 @@ public static SqlSessionFactory sqlSessionFactory;
 		return re;
 	}
 	
-	public static List<LikeVO> findMyLike(int memberNo, String category){
+	public static List<LikeVO> findMyLike(int memberNo, String category, int start, int end){
 		List<LikeVO> list = null;
 		SqlSession session = sqlSessionFactory.openSession();
 		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println("카테고리:"+category);
 		map.put("memberno", memberNo);
 		map.put("category", category);
+		map.put("start", start);
+		map.put("end", end);
 		list = session.selectList("mypage.findMyLike", map);
 		session.close();
 		return list;
@@ -177,10 +189,16 @@ public static SqlSessionFactory sqlSessionFactory;
 		
 	}
 	
-	public static List<InquiryVO> findMyInquiry(int memberno){
+	public static List<InquiryVO> findMyInquiry(int memberno, int start, int end){
 		List<InquiryVO> list = null;
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("memberno", memberno);
+		map.put("start", start);
+		map.put("end", end);
+		
+		
 		SqlSession session = sqlSessionFactory.openSession();
-		list = session.selectList("mypage.findInquiry", memberno);
+		list = session.selectList("mypage.findInquiry", map);
 		session.close();
 		return list;
 		
@@ -220,6 +238,37 @@ public static SqlSessionFactory sqlSessionFactory;
 		session.close();
 		return re;
 		
+	}
+	
+
+	
+	public static int pointTotalRecord() {
+		SqlSession session = sqlSessionFactory.openSession(true);
+		int re = session.selectOne("mypage.pointTotalRecord");
+		session.close();
+		return re;
+	}
+	
+	
+	public static int reservTotalRecord() {
+		SqlSession session = sqlSessionFactory.openSession(true);
+		int re = session.selectOne("mypage.reservTotalRecord");
+		session.close();
+		return re;
+	}
+	
+	public static int likeTotalRecord() {
+		SqlSession session = sqlSessionFactory.openSession(true);
+		int re = session.selectOne("mypage.likeTotalRecord");
+		session.close();
+		return re;
+	}
+	
+	public static int inquiryTotalRecord() {
+		SqlSession session = sqlSessionFactory.openSession(true);
+		int re = session.selectOne("mypage.inquiryTotalRecord");
+		session.close();
+		return re;
 	}
 	
 	

@@ -62,14 +62,15 @@ function review_chk(id,accommoNo,date_e){
 		<td th:text=${r.name}></td>
 		<td th:text=${r.totalPrice}></td>
 		<td><button th:text='리뷰남기기' th:id="${session.id}" th:accommoNo="${r.accommoNo}" th:date_e="${r.date_e}" th:onclick="review_chk(this.getAttribute('id'),this.getAttribute('accommoNo'),this.getAttribute('date_e'))"></button></td>
-		<!-- <td><a id ='goToreview' th:href="'/myPage/reviewInsert?id='+${session.id}+'&accommoNo='+${r.accommoNo}" th:text='리뷰남기기'></a></td> -->
 	</tr>
 	
-	<!-- <th:block th:each="i:${#numbers.sequence(1,totalPage)}">
-		<a th:text="${i}" th:href="@{'/board/list/'+${i}}"></a>
-	</th:block>-->
+
 
 </tbody>
 </table>
+
+<th:block th:each="i:${#numbers.sequence(1,totalPage)}">
+		<a th:text="${i}" th:href="'/myPage/myReservation?pageNUM='+${i}"></a>
+</th:block>
 </body>
 </html>

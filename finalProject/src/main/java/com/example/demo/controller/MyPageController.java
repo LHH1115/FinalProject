@@ -50,7 +50,9 @@ public class MyPageController {
 	}
 	
 	@GetMapping("/myPage/updateMyInfo")
-	public void updateMyInfoForm(Model model,String id) {
+	public void updateMyInfoForm(Model model,HttpSession session) {
+		String id = (String) session.getAttribute("id");
+		
 		MemberVO m = m_dao.findById(id);
 		String[] addr = m.getAddr().split("/");
 		String[] jumin = m.getJumin().split("-");
@@ -76,16 +78,26 @@ public class MyPageController {
 	}
 	
 	@GetMapping("/myPage/myPoint")
-	public void PointPage(Model model, String id) {
+	public void PointPage(Model model, HttpSession session, int pageNUM) {
+		String id = (String) session.getAttribute("id");
+		
+		totalRecord = mp_dao.pointTotalRecord();
+		totalPage = (int)Math.ceil(totalRecord/(double)pageSIZE);
+		
+		int start = (pageNUM-1)*pageSIZE+1;
+		int end = start + pageSIZE - 1;
+		
 		List<EventVO> list = null;
 		int memberno = m_dao.findById(id).getMemberno();
-		list = mp_dao.findMyPoint(memberno);
+		list = mp_dao.findMyPoint(memberno,start,end);
 		int point = m_dao.findById(id).getPoint();
 		
 		for(EventVO e : list) {
 			e.setEventdate(e.getEventdate().split(" ")[0]);
 		}
 		
+		
+		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("id", id);
 		model.addAttribute("point", point);
 		model.addAttribute("list", list);
@@ -93,35 +105,47 @@ public class MyPageController {
 	}
 	
 	@GetMapping("/myPage/roulette")
-	public void Roulette(Model model,String id) {
+	public void Roulette(Model model,HttpSession session) {
+		String id = (String) session.getAttribute("id");
 		model.addAttribute("id", id);
 	}
 	
 	@GetMapping("/myPage/myReservation")
-	public void ReservationPage(Model model, String id) {
+	public void ReservationPage(Model model, HttpSession session, int pageNUM) {
+		String id = (String) session.getAttribute("id");
+		
+		totalRecord = mp_dao.reservTotalRecord();
+		totalPage = (int)Math.ceil(totalRecord/(double)pageSIZE);
+		
+		int start = (pageNUM-1)*pageSIZE+1;
+		int end = start + pageSIZE - 1;
+		
+		
 		List<ReservationVO> list = null;
 		int memberno = m_dao.findById(id).getMemberno();
-		list = mp_dao.findMyReserv(memberno);
+		list = mp_dao.findMyReserv(memberno,start,end);
 		
 		for(ReservationVO r : list) {
 			String name = mp_dao.findAcc(r.getAccommoNo()).getName();
 			r.setName(name);
 		}
 		
-		
+		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("list", list);
 		
 	}
 	
 	@GetMapping("/myPage/reviewInsert")
-	public void insertReview(Model model,String id, int accommoNo) {
+	public void insertReview(Model model,HttpSession session, int accommoNo) {
+		String id = (String) session.getAttribute("id");
 		model.addAttribute("id", id);
 		model.addAttribute("accommoNo", accommoNo);
 	}
 	
 	@PostMapping("/myPage/reviewInsert")
-	public ModelAndView insertReview(ReviewVO r, String id) {
-		ModelAndView mav = new ModelAndView("redirect:/myPage/myReservation?id="+id);
+	public ModelAndView insertReview(ReviewVO r, HttpSession session) {
+		String id = (String) session.getAttribute("id");
+		ModelAndView mav = new ModelAndView("redirect:/myPage/myReservation?pageNUM=1");
 		int memberno = m_dao.findById(id).getMemberno();
 		r.setMemberNo(memberno);
 		
@@ -131,7 +155,8 @@ public class MyPageController {
 	
 	@RequestMapping("/myPage/review_chk")
 	@ResponseBody
-	public int findReview(int accommono, String id) {
+	public int findReview(int accommono, HttpSession session) {
+		String id = (String) session.getAttribute("id");
 		int re = 0;
 		int memberno = m_dao.findById(id).getMemberno();
 		re = mp_dao.findReview(accommono, memberno);
@@ -139,10 +164,18 @@ public class MyPageController {
 	}
 	
 	@GetMapping("/myPage/myLike")
-	public void LikePage(Model model, String id, String category) {
+	public void LikePage(Model model, HttpSession session, String category, int pageNUM) {
+		String id = (String) session.getAttribute("id");
+		totalRecord = mp_dao.likeTotalRecord();
+		totalPage = (int)Math.ceil(totalRecord/(double)pageSIZE);
+		
+		int start = (pageNUM-1)*pageSIZE+1;
+		int end = start + pageSIZE - 1;
+		
+		
 		List<LikeVO> list = null;
 		int memberno = m_dao.findById(id).getMemberno();
-		list = (ArrayList<LikeVO>) mp_dao.findMyLike(memberno, category);
+		list = (ArrayList<LikeVO>) mp_dao.findMyLike(memberno, category, start, end);
 		
 		ArrayList<MyLikeVO> mylist = new ArrayList<MyLikeVO>();
 		
@@ -188,15 +221,16 @@ public class MyPageController {
 			}
 		}
 		
-		
-		
+		model.addAttribute("category", category);
+		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("list", mylist);
 		
 	}
 	
 	@RequestMapping("/myPage/roulette_chk")
 	@ResponseBody
-	public int roulette_chk(String id) {
+	public int roulette_chk(HttpSession session) {
+		String id = (String) session.getAttribute("id");
 		int re = 0;
 		MemberVO m = m_dao.findById(id);
 		re = m.getRoulettecount();
@@ -205,7 +239,8 @@ public class MyPageController {
 	
 	@RequestMapping("/myPage/roulette_winning")
 	@ResponseBody
-	public int roulette_winning(String id, int point) {
+	public int roulette_winning(HttpSession session, int point) {
+		String id = (String) session.getAttribute("id");
 		int re = 0;
 		int memberno = m_dao.findById(id).getMemberno();
 		if(point != 0) {
@@ -218,10 +253,17 @@ public class MyPageController {
 	}
 	
 	@GetMapping("/myPage/myInquiry")
-	public void findMyInquiry(Model model, String id) {
+	public void findMyInquiry(Model model, HttpSession session,int pageNUM) {
+		String id = (String) session.getAttribute("id");
+		totalRecord = mp_dao.inquiryTotalRecord();
+		totalPage = (int)Math.ceil(totalRecord/(double)pageSIZE);
+		
+		int start = (pageNUM-1)*pageSIZE+1;
+		int end = start + pageSIZE - 1;
+		
 		List<InquiryVO> list = null;
 		int memberno = m_dao.findById(id).getMemberno();
-		list = mp_dao.findMyInquiry(memberno);
+		list = mp_dao.findMyInquiry(memberno,start,end);
 		
 		for(InquiryVO l: list) {
 			if(mp_dao.findMyReply(l.getInquiryNo()) !=null) {
@@ -230,7 +272,7 @@ public class MyPageController {
 				l.setReplyOk(0);
 			}
 		}
-		
+		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("list", list);
 		
 	}
