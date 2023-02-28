@@ -230,9 +230,9 @@
 	<h3 th:text="${a.category}"></h3>
 	
 	<!-- 사진 -->
-	<th:block th:each="path: ${photoList}">
+	<th:block th:each="p: ${photoList}">
 		<span>
-			<img alt="" th:src="|/${path}|" height="350" width="350">
+			<img alt="" th:src="|/${p.realPath}|" height="350" width="350">
 		</span>
 	</th:block>
 	
