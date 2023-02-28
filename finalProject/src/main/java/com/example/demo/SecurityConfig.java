@@ -26,9 +26,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.loginPage("/member/loginMember").permitAll()
 		.defaultSuccessUrl("/myPage/loginok");
 		
-//		httpSecurity.logout()
-//		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//		.invalidateHttpSession(true).logoutSuccessUrl("/member/loginMember");
+		http.logout()
+		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+		.invalidateHttpSession(true).logoutSuccessUrl("/");
 		
 		http.httpBasic();
 	}

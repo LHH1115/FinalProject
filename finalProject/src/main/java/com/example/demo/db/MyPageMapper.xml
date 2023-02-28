@@ -7,7 +7,56 @@
   	select * from tbl_member where id = #{id}
   </select>	
   
+  <select id="findNoById">
+  	select memberno from tbl_member where id = #{id}
+  </select>
+  
   <update id="updateInfo" parameterType="memberVO">
   	update tbl_member set name = #{name}, jumin = #{jumin}, addr = #{addr}, postcode = #{postcode}, email = #{email}, phone = #{phone} where id = #{id}
   </update>
+  
+  <select id="pointTotalRec" resultType="Integer">
+  	select count(*) from tbl_event where id = #{id} 
+  </select>
+  
+  <select id="findMyPoint" resultType="EventVO">
+  	select * from tbl_event where memberno = #{memberno}
+  </select>
+  
+  <select id="findMyReserv" resultType="ReservationVO">
+  	select * from tbl_reservation where memberno = #{memberno}
+  </select>
+  
+  <select id="findAccommo" resultType="AccommodationVO">
+  	select * from tbl_accommodation where accommono = #{accommono}
+  </select>
+  
+  <insert id="insertReview" parameterType="ReviewVO">
+  	insert into tbl_review(reviewno, memberno, title, accommoNo, content, stars) values(seq_review.nextval,#{memberNo},#{title},#{accommoNo},#{content},#{stars})
+  </insert>		
+  
+  <select id="findReview" resultType="Integer">
+  	select count(*) from tbl_review where accommono = #{accommono} and memberno = #{memberno}
+  </select>
+  
+  <select id="findMyLike" resultType="likeVO">
+  	select * from tbl_like where memberno = #{memberno} and category = #{category}
+  </select>
+  
+  <select id="findAccphoto" resultType="accommoPhotoVO">
+  	select * from tbl_accommophoto where accommono = #{accommono}
+  </select>
+  
+  <update id="useRcount" parameterType="memberVO" >
+  	update tbl_member set roulettecount = roulettecount-1 where memberno = #{memberno}
+  </update>
+  
+   <update id="updatePoint" parameterType="memberVO">
+  	update tbl_member set point = point+#{point} where memberno = #{memberno}
+  </update>
+  
+  <insert id="insertEvent" parameterType="eventVO">
+  	insert into tbl_event(eventno, memberno, eventdate, category, amount) values(seq_eventno.nextval,#{memberno},to_char(sysdate,'YYYY-MM-DD'),'룰렛보상',#{point})
+  </insert>
+  
 </mapper>

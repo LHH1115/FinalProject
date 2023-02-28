@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,17 +8,32 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.dao.MemberDAO;
 import com.example.demo.dao.MyPageDAO;
+import com.example.demo.vo.AccommodationVO;
+import com.example.demo.vo.EventVO;
+import com.example.demo.vo.LikeVO;
 import com.example.demo.vo.MemberVO;
+import com.example.demo.vo.MyLikeVO;
+import com.example.demo.vo.ReservationVO;
+import com.example.demo.vo.ReviewVO;
 
 @Controller
 public class MyPageController {
+	
+	public int pageSIZE = 5;
+	public int totalRecord = 0;
+	public int totalPage = 1;
+	
+	
+	
 	@Autowired
 	private MemberDAO m_dao;
-
+	
 	public void setmDao(MemberDAO m_dao) {
 		this.m_dao = m_dao;
 	}
@@ -53,6 +69,146 @@ public class MyPageController {
 		System.out.println(re);
 		
 		return mav;
+	}
+	
+	@GetMapping("/myPage/myPoint")
+	public void PointPage(Model model, String id) {
+		List<EventVO> list = null;
+		int memberno = m_dao.findById(id).getMemberno();
+		list = mp_dao.findMyPoint(memberno);
+		int point = m_dao.findById(id).getPoint();
+		
+		model.addAttribute("id", id);
+		model.addAttribute("point", point);
+		model.addAttribute("list", list);
+		
+	}
+	
+	@GetMapping("/myPage/roulette")
+	public void Roulette(Model model,String id) {
+		model.addAttribute("id", id);
+	}
+	
+	@GetMapping("/myPage/myReservation")
+	public void ReservationPage(Model model, String id) {
+		List<ReservationVO> list = null;
+		int memberno = m_dao.findById(id).getMemberno();
+		list = mp_dao.findMyReserv(memberno);
+		
+		for(ReservationVO r : list) {
+			String name = mp_dao.findAcc(r.getAccommoNo()).getName();
+			r.setName(name);
+		}
+		
+		
+		model.addAttribute("list", list);
+		
+	}
+	
+	@GetMapping("/myPage/reviewInsert")
+	public void insertReview(Model model,String id, int accommoNo) {
+		model.addAttribute("id", id);
+		model.addAttribute("accommoNo", accommoNo);
+	}
+	
+	@PostMapping("/myPage/reviewInsert")
+	public ModelAndView insertReview(ReviewVO r, String id) {
+		ModelAndView mav = new ModelAndView("redirect:/myPage/myReservation?id="+id);
+		int memberno = m_dao.findById(id).getMemberno();
+		r.setMemberNo(memberno);
+		
+		mp_dao.insertReview(r);
+		return mav;
+	}
+	
+	@RequestMapping("/myPage/review_chk")
+	@ResponseBody
+	public int findReview(int accommono, String id) {
+		int re = 0;
+		int memberno = m_dao.findById(id).getMemberno();
+		re = mp_dao.findReview(accommono, memberno);
+		return re;
+	}
+	
+	@GetMapping("/myPage/myLike")
+	public void LikePage(Model model, String id, String category) {
+		List<LikeVO> list = null;
+		int memberno = m_dao.findById(id).getMemberno();
+		list = (ArrayList<LikeVO>) mp_dao.findMyLike(memberno, category);
+		
+		ArrayList<MyLikeVO> mylist = new ArrayList<MyLikeVO>();
+		
+		if(category == "accmmodation") {
+			for(LikeVO l : list) {
+				MyLikeVO m = new MyLikeVO();
+				AccommodationVO acc =  mp_dao.findAcc(l.getRefno());
+				m.setName(acc.getName());
+				m.setPhotopath(mp_dao.findaccphoto(acc.getAccommoNo()));
+				m.setLink("/accommo/detail?accommoNo="+l.getRefno());
+				mylist.add(m);
+				
+			}
+		}else if(category == "attraction") {
+			for(LikeVO l : list) {
+				MyLikeVO m = new MyLikeVO();
+				AccommodationVO acc =  mp_dao.findAcc(l.getRefno());
+				m.setName(acc.getName());
+				m.setPhotopath(mp_dao.findaccphoto(acc.getAccommoNo()));
+				m.setLink("/accommo/detail?accommoNo="+l.getRefno());
+				mylist.add(m);
+				
+			}
+		}else if(category == "restaurant") {
+			for(LikeVO l : list) {
+				MyLikeVO m = new MyLikeVO();
+				AccommodationVO acc =  mp_dao.findAcc(l.getRefno());
+				m.setName(acc.getName());
+				m.setPhotopath(mp_dao.findaccphoto(acc.getAccommoNo()));
+				m.setLink("/accommo/detail?accommoNo="+l.getRefno());
+				mylist.add(m);
+				
+			}
+		}else {
+			for(LikeVO l : list) {
+				MyLikeVO m = new MyLikeVO();
+				AccommodationVO acc =  mp_dao.findAcc(l.getRefno());
+				m.setName(acc.getName());
+				m.setPhotopath(mp_dao.findaccphoto(acc.getAccommoNo()));
+				m.setLink("/accommo/detail?accommoNo="+l.getRefno());
+				mylist.add(m);
+				
+			}
+		}
+		
+		
+		
+		model.addAttribute("list", mylist);
+		
+	}
+	
+	@RequestMapping("/myPage/roulette_chk")
+	@ResponseBody
+	public int roulette_chk(String id) {
+		int re = 0;
+		MemberVO m = m_dao.findById(id);
+		re = m.getRoulettecount();
+		return re;
+	}
+	
+	@RequestMapping("/myPage/roulette_winning")
+	@ResponseBody
+	public int roulette_winning(String id, int point) {
+		System.out.println("포:"+point);
+		System.out.println("아이디:"+id);
+		int re = 0;
+		int memberno = m_dao.findById(id).getMemberno();
+		if(point != 0) {
+		re = mp_dao.roulette_count(memberno);
+		re = mp_dao.point_update(memberno, point);
+		re = mp_dao.point_insert(memberno, point);
+		System.out.println(re);
+		}
+		return re;
 	}
 	
 	

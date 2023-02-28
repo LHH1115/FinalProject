@@ -76,6 +76,6 @@ public class DBManager_member {
 		re = session.update("member.changePwd", map);
 		session.close();
 		return re;
-		
 	}
+	
 }
