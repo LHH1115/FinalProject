@@ -62,6 +62,13 @@ public class DBManager {
 			sqlSession.close();
 			return memberReviewList;
 		}
+		
+		public static MemberVO findByNo(int memberNo) {
+			SqlSession session = sessionFactory.openSession();
+			MemberVO m = session.selectOne("member.findByNo", memberNo);
+			session.close();
+			return m;
+		}
 	
 }
 

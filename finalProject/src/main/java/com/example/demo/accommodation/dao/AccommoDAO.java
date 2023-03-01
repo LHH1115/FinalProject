@@ -30,8 +30,16 @@ public class AccommoDAO {
 		return DBManager.findByAny(map);	
 	}
 	
+	public List<AccommodationVO> detailSearch(HashMap<String, Object> map){
+		return DBManager.detailSearch(map);
+	}
+	
 	public int findCountByAny(String keyword) {
 		return DBManager.findCountByAny(keyword);
+	}
+	
+	public int findCountBydetailSearch(HashMap<String, Object> map) {
+		return DBManager.findCountBydetailSearch(map);
 	}
 	
 	public int findPCnt(AccommoPhotoVO a) {
@@ -69,4 +77,14 @@ public class AccommoDAO {
 	public int deleteById(int accommoNo) {
 		return DBManager.deleteById(accommoNo);
 	}
+	
+	public int updatePhoto(AccommoPhotoVO a) {
+		return DBManager.updatePhoto(a);
+	}
+	
+	public int insertPhoto(AccommoPhotoVO a) {
+		return DBManager.insertPhoto(a);
+	}
+
+	
 }

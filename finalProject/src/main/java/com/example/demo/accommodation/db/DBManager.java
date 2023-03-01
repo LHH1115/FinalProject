@@ -56,10 +56,25 @@ public class DBManager {
 		return list;
 	}
 	
+	public static List<AccommodationVO> detailSearch(HashMap<String, Object> map) {
+		SqlSession session = sqlSessionFactory.openSession();
+		List<AccommodationVO> list = session.selectList("accommo.detailSearch", map);
+		session.close();
+		return list;
+	}
+	
 	public static int findCountByAny(String keyword) {
 		int re = 0;
 		SqlSession session = sqlSessionFactory.openSession();
 		re= session.selectOne("accommo.findCountByAny", keyword);
+		session.close();
+		return re;
+	}
+	
+	public static int findCountBydetailSearch(HashMap<String, Object> map) {
+		int re = 0;
+		SqlSession session = sqlSessionFactory.openSession();
+		re= session.selectOne("accommo.findCountBydetailSearch", map);
 		session.close();
 		return re;
 	}
@@ -132,6 +147,24 @@ public class DBManager {
 		session.close();
 		return re;
 	}
+	
+	public static int updatePhoto(AccommoPhotoVO a) {
+		int re = 0;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.update("accommoPhoto.updatePhoto", a);
+		session.close();
+		return re;
+	}
+	
+	public static int insertPhoto(AccommoPhotoVO a) {
+		int re = 0;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.insert("accommoPhoto.insertPhoto", a);
+		session.close();
+		return re;
+	}
+
+	
 	
 }
 

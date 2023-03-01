@@ -54,6 +54,10 @@
     font-size: 1.3em;
     line-height: 3em;
   }
+  
+  .row{margin:10px; }
+.card-img-top{width:526px;height:400px;}
+.col{padding: 10px;}
 
 </style>
 <!-- JQuery -->
@@ -75,8 +79,12 @@
 </script>
 </head>
 <body>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
 
+	<!-- 헤더 -->
+    <div th:insert="/main/Header.html"></div>
+
+
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
 	
 	<div id="page-wrapper">
 	  <!-- 사이드바 -->
@@ -97,7 +105,7 @@
 	  <!-- /사이드바 -->
 	
 	  <!-- 본문 -->
-	  <div id="page-content-wrapper">
+	 <!--  <div id="page-content-wrapper">
 	    <div class="container-fluid">
 	    <h2>검색 결과</h2>
 	    	<table>
@@ -118,7 +126,29 @@
 					</th:block>
 					<td th:text="${a.category}"></td>
 				</tr>
-			</table>
+			</table> -->
+			
+			 <div id="page-content-wrapper">
+	    <div class="container-fluid">
+	    <h2>검색 결과</h2>
+	    <hr>
+				<div class="row">
+					<div class="col">
+					  	<div class="row row-cols-1 row-cols-md-3 g-4">
+						  <div class="col" th:each="a: ${list}">
+						    <div class="card" id="attr_info">
+						      <img th:src="@{|/${a.realPath}|}" class="card-img-top" >
+						      <div class="card-body">
+						      <h2 style="font-size: 35px;" class="card-title" th:text="${a.name}"></h2>
+						      <p style="font-size:28px" class="card-text" th:text="${a.category}"></p>
+						       <p class="card-text" th:text="${a.addr}"></p>
+								<button th:attractNo="${a.attractNo}" id="tr" class="btn btn-primary">자세히 보기</button>
+						      </div>
+						    </div>
+						  </div>					
+						</div>
+					</div>
+			 	</div>
 	      	<!-- 페이징 -->
 			<hr>
 			<th:block th:if="${1 < startPage}">

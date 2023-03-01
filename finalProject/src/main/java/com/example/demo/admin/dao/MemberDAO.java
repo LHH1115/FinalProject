@@ -33,6 +33,10 @@ public class MemberDAO {
 		return DBManager.memberReservationList(memberNo);
 	}
 	
+	public MemberVO findByNo(int memberNo) {
+		return DBManager.findByNo(memberNo);
+	}
+	
 }
 
 

@@ -50,6 +50,11 @@
 		order by accommono
 	</select>
 	
+	 <!-- memberNo 로 검색하기 -->
+    <select id="findByNo" resultType="memberVO" parameterType="java.lang.Integer">
+  		SELECT * FROM TBL_MEMBER WHERE MEMBERNO = #{memberNo}
+  	</select>
+	
 	
 </mapper>
 

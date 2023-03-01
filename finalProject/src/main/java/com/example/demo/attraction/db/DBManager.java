@@ -9,9 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-
-
-
+import com.example.demo.attraction.vo.AttractionInfoVO;
 import com.example.demo.attraction.vo.AttractionPhotoVO;
 import com.example.demo.attraction.vo.AttractionVO;
 import com.example.demo.attraction.vo.LikeVO;
@@ -80,12 +78,41 @@ public class DBManager {
 		session.close();
 		return list;
 	}
+	public static List<AttractionInfoVO> findInfoById(int attractNo) {
+		SqlSession session = sqlSessionFactory.openSession();
+		List<AttractionInfoVO> list = session.selectList("attract.findInfoById", attractNo);
+		session.close();
+		return list;
+	}
 	
 	public static List<LikeVO> findMostLike(int count){
 		SqlSession session = sqlSessionFactory.openSession();
 		List<LikeVO> list = session.selectList("like.findMostLike", count);
 		session.close();
 		return list;
+	}
+	
+	public static LikeVO findLikeByM(HashMap<String, Object> map){
+		SqlSession session = sqlSessionFactory.openSession();
+		LikeVO l = session.selectOne("like.findLikeByM", map);
+		session.close();
+		return l;
+	}
+	
+	public static int doLike(LikeVO l) {
+		int re = 0;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.insert("like.doLike", l);
+		session.close();
+		return re;
+	}
+	
+	public static int unLike(LikeVO l) {
+		int re = 0;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.delete("like.unLike", l);
+		session.close();
+		return re;
 	}
 	
 	

@@ -6,6 +6,15 @@
   <select id="findPCnt" resultType="java.lang.Integer" parameterType="accommoPhotoVo">
   	SELECT COUNT(apNo) FROM TBL_ACCOMMOPHOTO WHERE ACCOMMONO = #{accommoNo}
   </select>
+  
+  <update id="updatePhoto" parameterType="accommoPhotoVo">
+  	UPDATE TBL_ACCOMMOPHOTO SET PATH = #{PATH} WHERE ACCOMMONO = #{accommoNo} AND APNO = #{apNo}
+  </update>
+  
+  <insert id="insertPhoto" parameterType="accommoPhotoVo">
+  	INSERT INTO TBL_ACCOMMOPHOTO(APNO, ACCOMMONO, PATH, ORDERS) 
+  	VALUES (SEQ_ACCOMMOPHOTO.NEXTVAL, #{accommoNo}, #{path}, #{orders})
+  </insert>
 </mapper>
 
 

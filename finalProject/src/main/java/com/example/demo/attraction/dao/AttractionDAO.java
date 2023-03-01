@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.attraction.db.DBManager;
+import com.example.demo.attraction.vo.AttractionInfoVO;
 import com.example.demo.attraction.vo.AttractionPhotoVO;
 import com.example.demo.attraction.vo.AttractionVO;
 import com.example.demo.attraction.vo.LikeVO;
@@ -40,9 +41,24 @@ public class AttractionDAO {
 	public List<AttractionVO> findAllPhotoById(int attractNo) {
 		return DBManager.findAllPhotoById(attractNo);
 	}
+	public List<AttractionInfoVO> findInfoById(int attractNo) {
+		return DBManager.findInfoById(attractNo);
+	}
 	
 	public List<LikeVO> findMostLike(int count){
 		return DBManager.findMostLike(count);
+	}
+	
+	public LikeVO findLikeByM(HashMap<String, Object> map){
+		return DBManager.findLikeByM(map);
+	}
+	
+	public int doLike(LikeVO l) {
+		return DBManager.doLike(l);
+	}
+	
+	public int unLike(LikeVO l) {
+		return DBManager.unLike(l);
 	}
 	
 	

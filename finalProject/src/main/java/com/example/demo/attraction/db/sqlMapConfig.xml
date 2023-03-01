@@ -7,6 +7,7 @@
   <typeAliases>
   	<typeAlias type="com.example.demo.attraction.vo.AttractionVO" alias="attractVO"/>
   	<typeAlias type="com.example.demo.attraction.vo.AttractionPhotoVO" alias="attractPhotoVO"/>
+  	<typeAlias type="com.example.demo.attraction.vo.AttractionInfoVO" alias="attractInfoVO"/>
   	<typeAlias type="com.example.demo.attraction.vo.LikeVO" alias="likeVO"/>
   </typeAliases>
   <environments default="development">
@@ -23,6 +24,7 @@
   <mappers>
     <mapper resource="com/example/demo/attraction/mapper/AttractionMapper.xml"/>
     <mapper resource="com/example/demo/attraction/mapper/AttractionPhotoMapper.xml"/>
+    <mapper resource="com/example/demo/attraction/mapper/AttractionInfoMapper.xml"/>
     <mapper resource="com/example/demo/attraction/mapper/LikeMapper.xml"/>
   </mappers>
 </configuration>

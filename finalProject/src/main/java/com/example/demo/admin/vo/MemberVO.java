@@ -18,7 +18,7 @@ public class MemberVO {
 	private String email;
 	private String phone;
 	private int point;
-	private int role;
+	private String role;
 	private String mbti;
 	private int rouletteCount;
 	
