@@ -58,6 +58,11 @@ public class RestaurantDAO {
 	public int unLike(LikeVO l) {
 		return DBManager.unLike(l);
 	}
+
+	public int updateById(RestaurantVO r) {
+		// TODO Auto-generated method stub
+		return DBManager.updateById(r);
+	}
 	
 	
 }

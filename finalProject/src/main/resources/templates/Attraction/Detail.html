@@ -263,8 +263,8 @@
 	<div>
 		<th:block th:if="${session.loginM != null and session.loginM.role != 'user'}">
 			<span th:text="${session.loginM.role}"></span><br>
-			<input type="button" id="btn_update" value="식당 정보 수정"
-			th:onclick="|location.href='@{'/admin/accommo/update/'+${r.restauNo}}'|">
+			<input type="button" id="btn_update" value="관광지 정보 수정"
+			th:onclick="|location.href='@{'/admin/attract/update/'+${a.attractNo}}'|">
 		</th:block>
 	</div>
 	

@@ -107,6 +107,14 @@ public class DBManager {
 		session.close();
 		return re;
 	}
+
+	public static int updateById(RestaurantVO r) {
+		int re = 0;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.update("restau.updateById", r);
+		session.close();
+		return re;
+	}
 	
 	
 	

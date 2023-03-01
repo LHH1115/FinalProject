@@ -51,7 +51,7 @@ public class RestaurantController {
 		session.removeAttribute("category");	// 페이징 처리 세션 제거
 		
 		// 로그인한 멤버
-		MemberVO m = mdao.findByNo(7);
+		MemberVO m = mdao.findByNo(1);
 		session.setAttribute("loginM", m);
 		
 		// 인기숙소
@@ -259,6 +259,7 @@ public class RestaurantController {
 			}
 		}else {
 			// 이미지 없을때 랜덤이미지
+			System.out.println("사진없음");
 			Random rand = new Random();
 			String koreanList[] = {"명가천지연무태장어", "제주광해애월점", "제주반딧불한담", "큰맘할매순대국", "푸른밤의해안속초식당"};
 			String westernList[] = {"루마카", "반양", "카우보이스테이크하우스"};

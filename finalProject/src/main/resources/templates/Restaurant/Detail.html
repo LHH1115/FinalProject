@@ -263,13 +263,15 @@ $(function(){
 	</th:block>
 	
 	<!-- 관리자 기능 -->
-	<div>
-		<th:block th:if="${session.loginM != null and session.loginM.role != 'user'}">
+	
+	<th:block th:if="${session.loginM != null and session.loginM.role != 'user'}">
+		<div>
 			<span th:text="${session.loginM.role}"></span><br>
 			<input type="button" id="btn_update" value="식당 정보 수정"
-			th:onclick="|location.href='@{'/admin/accommo/update/'+${r.restauNo}}'|">
-		</th:block>
-	</div>
+			th:onclick="|location.href='@{'/admin/restau/update/'+${r.restauNo}}'|">
+		</div>
+	</th:block>
+	
 
 </body>
 </html>

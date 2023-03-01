@@ -79,7 +79,6 @@ public class AdminAccomoController {
 							PhotoListVO p = new PhotoListVO();
 							try {
 								if (list.get(i) != null && list.get(i).getOrders() == i+1) {
-									
 									p.setName(list.get(i).getName());
 									p.setPath(list.get(i).getPath());
 									p.setCategory(list.get(i).getCategory());
