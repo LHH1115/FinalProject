@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>제주다컴</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript">   
+	
+</script>
+</head>
+<body>
+<div th:insert="/main/header.html" id="headers"></div>
+<!-- =============================================================================================================  -->
+
+<div class="container">
+<hr>
+<h2>관리자 페이지</h2>
+
+<button type="button" onclick="location.href='/admin/memberManage'">회원관리</button> &nbsp;&nbsp;
+<button type="button" onclick="location.href='/admin/inquiryManage'">문의사항관리</button>&nbsp;&nbsp;
+
+
+<hr>
+<h2>문의사항 관리</h2>
+<hr>
+	<form action = "/admin/inquiryManage">
+		<select name="search_cat">
+			<option value="">== 카테고리 ==</option>
+			<option value="숙박">숙박</option>
+			<option value="식당">식당</option>
+			<option value="관광지">관광지</option>
+			<option value="렌트카">렌트카</option>
+		</select> &nbsp
+		
+		<select name="search_col">
+			<option value="">== 구분 ==</option>
+			<option value="id">ID</option>
+			<option value="제목">제목</option>
+		</select> &nbsp
+		
+		<input type="search" name="keyword"> &nbsp
+		<input type="submit" value="검색">
+	</form>
+	&nbsp
+	<hr>
+
+	<a href="/admin/inquiryManage?reset=all">전체목록</a>
+	<hr>
+		
+	<table border="2" width="90%" align="center">
+		<thead>
+			<tr>
+				<th>회원ID</th>
+				<th>제목</th>
+				<th>카테고리</th>
+				<th>문의날짜</th>
+				<th>답변여부</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="l:${list}">
+				<td th:text="${l.id}"></td>
+				<td>
+					<a th:text="${l.title}" th:href="@{/admin/replyManage(inquiryNo=${l.inquiryNo})}"></a>
+				</td>
+				<td th:text="${l.category}"></td>
+				<td th:text="${l.inqdate}"></td>
+				 <!-- 
+				<th:block th:if="${l.replyOk>0}">
+				<td>
+				완료
+				</td>
+				</th:block>
+				<th:block th:unless="${l.replyOk>0}">
+				<td>
+				미완료
+				</td>
+				</th:block>-->
+			</tr>
+		</tbody>
+	</table>
+	
+	<div align="center">	
+		<th:block th:if="${this_page>1}">
+		<a th:href="@{/admin/inquiryManage(pageNo=${this_page-1})}">이전</a>
+		</th:block>
+		<th:block th:each="p:${#numbers.sequence(1,total_page)}">
+			<a th:text="${p}" th:href="@{/admin/inquiryManage(pageNo=${p})}"></a>
+		</th:block>
+		
+		<th:block th:if="${this_page<total_page}">
+		<a th:href="@{/admin/inquiryManage(pageNo=${this_page+1})}">다음</a>
+		</th:block>
+	</div>
+
+</div>
+<!-- =============================================================================================================  -->
+<div id="footers"></div>
+</body>
+</html>

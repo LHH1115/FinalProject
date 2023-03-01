@@ -24,8 +24,8 @@ import com.example.demo.accommodation.dao.AccommoDAO;
 import com.example.demo.accommodation.vo.AccommoPhotoVO;
 import com.example.demo.accommodation.vo.AccommodationVO;
 import com.example.demo.accommodation.vo.PhotoListVO;
-import com.example.demo.member.dao.MemberDAO;
-import com.example.demo.member.vo.MemberVO;
+import com.example.demo.admin.dao.MemberDAO;
+import com.example.demo.admin.vo.MemberVO;
 
 import lombok.Setter;
 
