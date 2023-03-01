@@ -57,5 +57,15 @@
   	ORDER BY P.ORDERS
   </select>
   
+  <!-- 정보 수정 -->
+  <update id="updateById" parameterType="restaurantVO">
+  	UPDATE TBL_RESTAURANT SET ADDR = #{addr}, PHONE = #{phone} WHERE RESTAUNO = #{restauNo}
+  </update>
+  
+  <!-- 삭제 -->
+  <delete id="deleteById" parameterType="java.lang.Integer">
+  	DELETE TBL_RESTAURANT WHERE RESTAUNO = #{restauNo}
+  </delete>
+  
 </mapper>
 

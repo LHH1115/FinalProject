@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.accommodation.vo.AccommodationVO;
 import com.example.demo.admin.dao.MemberDAO;
 import com.example.demo.admin.vo.MemberVO;
 import com.example.demo.restaurant.dao.RestaurantDAO;
 import com.example.demo.restaurant.vo.LikeVO;
+import com.example.demo.restaurant.vo.PhotoListVO;
 import com.example.demo.restaurant.vo.RestaurantPhotoVO;
 import com.example.demo.restaurant.vo.RestaurantVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -50,10 +52,6 @@ public class RestaurantController {
 		session.removeAttribute("keyword");		// 페이징 처리 세션 제거
 		session.removeAttribute("category");	// 페이징 처리 세션 제거
 		
-		// 로그인한 멤버
-		MemberVO m = mdao.findByNo(1);
-		session.setAttribute("loginM", m);
-		
 		// 인기숙소
 		List<LikeVO> like_list = dao.findMostLike(5);	// Top 5 나열
 		LikeVO l = new LikeVO();
@@ -81,7 +79,7 @@ public class RestaurantController {
 					a.setRealPath(realPath);
 				}
 			}else {
-				realPath = "photo/Restaurant/노리매/att1.jpeg";
+				realPath = "photo/Restaurant/명가천지연무태장어/rest1.jpg";
 				a.setRealPath(realPath);
 			}
 			restau_list.add(a);
@@ -119,7 +117,63 @@ public class RestaurantController {
 		map.put("start", start);
 		map.put("end", end);
 		List<RestaurantVO> list = dao.findByAny(map);
-		System.out.println(list);
+		
+		for(int i =0;i<list.size();i++) {
+			int refNo = list.get(i).getRestauNo();
+			List<RestaurantVO> photo_list = dao.findAllPhotoById(refNo);
+			String rrealPath = "";
+			String rcategory = list.get(i).getCategory();
+			String rname = list.get(i).getName();
+			String rpath = "";
+			
+			if(photo_list.size() > 0) {
+				for(int j=0;j<photo_list.size();j++) {
+					RestaurantVO forPhoto = new RestaurantVO();
+					forPhoto = photo_list.get(0);
+					rpath = forPhoto.getPath();
+					rrealPath = "photo/Restaurant/"+rcategory+"/"+rname+"/"+rpath;
+					list.get(i).setRealPath(rrealPath);
+				}
+			}else {
+				Random rand = new Random();
+				String koreanList[] = {"명가천지연무태장어", "제주광해애월점", "제주반딧불한담애월점", "큰맘할매순대국제주곽지점", "푸른밤의해안속초식당"};
+				String westernList[] = {"루마카", "반양", "카우보이스테이크하우스"};
+				String japaneseList[] = {"스시앤", "아일랜드본섬", "해모둠", "해원앙", "혼참치"};
+				String chineseList[] = {"길림성", "대우반점", "만사성", "북경반점", "일빈관"};
+					switch (rcategory) {
+						case "한식":{
+							String name = koreanList[rand.nextInt(5)];
+							for(int j=0;j<5;j++) {
+								rrealPath = "photo/Restaurant/"+rcategory+"/"+name+"/rest"+(j+1)+".jpg";
+								list.get(i).setRealPath(rrealPath);
+							}
+						}break;
+						case "서양식":{
+							String name = westernList[rand.nextInt(3)];
+							for(int j=0;j<5;j++) {
+								rrealPath = "photo/Restaurant/"+rcategory+"/"+name+"/rest"+(j+1)+".jpg";
+							list.get(i).setRealPath(rrealPath);
+							}
+						}break;
+						case "일식":{
+							String name = japaneseList[rand.nextInt(5)];
+							for(int j=0;j<5;j++) {
+								rrealPath = "photo/Restaurant/"+rcategory+"/"+name+"/rest"+(j+1)+".jpg";
+							list.get(i).setRealPath(rrealPath);
+							}
+						}break;
+						case "중식":{
+							String name = chineseList[rand.nextInt(5)];
+							for(int j=0;j<5;j++) {
+								rrealPath = "photo/Restaurant/"+rcategory+"/"+name+"/rest"+(j+1)+".jpg";
+							list.get(i).setRealPath(rrealPath);
+							}
+						}break;
+					}
+			}
+			
+		}
+		
 		totCnt = dao.findCountByAny(keyword);
 		totPage = (int) Math.ceil(totCnt/pageSize);
 		int startPage = (pageNum-1)/pageGroup*pageGroup+1;
@@ -163,6 +217,63 @@ public class RestaurantController {
 			map.put("start", start);
 			map.put("end", end);
 			List<RestaurantVO> list = dao.findByAny(map);
+			
+			for(int i =0;i<list.size();i++) {
+				int refNo = list.get(i).getRestauNo();
+				List<RestaurantVO> photo_list = dao.findAllPhotoById(refNo);
+				String rrealPath = "";
+				String rcategory = list.get(i).getCategory();
+				String rname = list.get(i).getName();
+				String rpath = "";
+				
+				if(photo_list.size() > 0) {
+					for(int j=0;j<photo_list.size();j++) {
+						RestaurantVO forPhoto = new RestaurantVO();
+						forPhoto = photo_list.get(0);
+						rpath = forPhoto.getPath();
+						rrealPath = "photo/Restaurant/"+rcategory+"/"+rname+"/"+rpath;
+						list.get(i).setRealPath(rrealPath);
+					}
+				}else {
+					Random rand = new Random();
+					String koreanList[] = {"명가천지연무태장어", "제주광해애월점", "제주반딧불한담애월점", "큰맘할매순대국제주곽지점", "푸른밤의해안속초식당"};
+					String westernList[] = {"루마카", "반양", "카우보이스테이크하우스"};
+					String japaneseList[] = {"스시앤", "아일랜드본섬", "해모둠", "해원앙", "혼참치"};
+					String chineseList[] = {"길림성", "대우반점", "만사성", "북경반점", "일빈관"};
+						switch (rcategory) {
+							case "한식":{
+								String name = koreanList[rand.nextInt(5)];
+								for(int j=0;j<5;j++) {
+									rrealPath = "photo/Restaurant/"+rcategory+"/"+name+"/rest"+(j+1)+".jpg";
+									list.get(i).setRealPath(rrealPath);
+								}
+							}break;
+							case "서양식":{
+								String name = westernList[rand.nextInt(3)];
+								for(int j=0;j<5;j++) {
+									rrealPath = "photo/Restaurant/"+rcategory+"/"+name+"/rest"+(j+1)+".jpg";
+								list.get(i).setRealPath(rrealPath);
+								}
+							}break;
+							case "일식":{
+								String name = japaneseList[rand.nextInt(5)];
+								for(int j=0;j<5;j++) {
+									rrealPath = "photo/Restaurant/"+rcategory+"/"+name+"/rest"+(j+1)+".jpg";
+								list.get(i).setRealPath(rrealPath);
+								}
+							}break;
+							case "중식":{
+								String name = chineseList[rand.nextInt(5)];
+								for(int j=0;j<5;j++) {
+									rrealPath = "photo/Restaurant/"+rcategory+"/"+name+"/rest"+(j+1)+".jpg";
+								list.get(i).setRealPath(rrealPath);
+								}
+							}break;
+						}
+				}
+				
+			}
+			
 			totCnt = dao.findCountByAny(keyword);
 			totPage = (int) Math.ceil(totCnt/pageSize);
 			int startPage = (pageNum-1)/pageGroup*pageGroup+1;
@@ -244,49 +355,163 @@ public class RestaurantController {
 		RestaurantVO r = dao.findById(restauNo);
 		
 		List<RestaurantVO> list = dao.findAllPhotoById(restauNo);
-		List<String> photoList = new ArrayList<>();
+		List<PhotoListVO> photoList = new ArrayList<>();
 		String realPath = "";
 		String category = r.getCategory();
-		String name = "";
-		String path = "";
-		if(list.size() > 0) {
+		
+		Random rand = new Random();
+		String koreanList[] = {"명가천지연무태장어", "제주광해애월점", "제주반딧불한담애월점", "큰맘할매순대국제주곽지점", "푸른밤의해안속초식당"};
+		String westernList[] = {"루마카", "반양", "카우보이스테이크하우스"};
+		String japaneseList[] = {"스시앤", "아일랜드본섬", "해모둠", "해원앙", "혼참치"};
+		String chineseList[] = {"길림성", "대우반점", "만사성", "북경반점", "일빈관"};
+		
+		if(list.size() > 4) {
 			for(int i=0;i<list.size();i++) {
+				PhotoListVO p = new PhotoListVO();
 				r = list.get(i);
-				name = r.getName();
-				path = r.getPath();
-				realPath = "photo/Restaurant/"+category+"/"+name+"/"+path;
-				photoList.add(realPath);
+				p.setName(r.getName());
+				p.setPath(r.getPath());
+				p.setCategory(category);
+				p.setRealPath("photo/Restaurant/"+p.getCategory()+"/"+p.getName()+"/"+p.getPath());
+				
+				p.setOrders(i);
+				photoList.add(p);
 			}
 		}else {
 			// 이미지 없을때 랜덤이미지
-			System.out.println("사진없음");
-			Random rand = new Random();
-			String koreanList[] = {"명가천지연무태장어", "제주광해애월점", "제주반딧불한담", "큰맘할매순대국", "푸른밤의해안속초식당"};
-			String westernList[] = {"루마카", "반양", "카우보이스테이크하우스"};
-			String japaneseList[] = {"스시앤", "아일랜드본섬", "해모둠", "해원앙", "혼참치"};
-				switch (category) {
-					case "한식":{
-						String k = koreanList[rand.nextInt(5)];
-						for(int i=0;i<5;i++) {
-							realPath = "photo/Restaurant/"+category+"/"+k+"/"+k+"_"+(i+1)+".jpg";
-							photoList.add(realPath);
+			switch (category) {
+				case "한식":{
+					String name = koreanList[rand.nextInt(4)];
+					for(int i=0;i<5;i++) {
+						PhotoListVO p = new PhotoListVO();
+						try {
+							if (list.get(i) != null && list.get(i).getOrders() == i+1) {
+								System.out.println(1);
+								p.setName(list.get(i).getName());
+								p.setPath(list.get(i).getPath());
+								p.setCategory(list.get(i).getCategory());
+								p.setRealPath("photo/Restaurant/"+category+"/"+p.getName()+"/"+p.getPath());
+								p.setOrders(list.get(i).getOrders());
+								photoList.add(p);
+							}else {
+								System.out.println(2);
+								realPath = "photo/Restaurant/"+category+"/"+name+"/rest"+(i+1)+".jpg";
+								p.setName(r.getName());
+								p.setPath("rest"+(i+1)+".jpg");
+								p.setCategory(category);
+								p.setRealPath(realPath);
+								p.setOrders(i);
+								photoList.add(p);
+							}
+						}catch(IndexOutOfBoundsException e) {
+							System.out.println(i+":"+3);
+							realPath = "photo/Restaurant/"+category+"/"+name+"/rest"+(i+1)+".jpg";
+							p.setName(r.getName());
+							p.setPath("rest"+(i+1)+".jpg");
+							p.setCategory(category);
+							p.setRealPath(realPath);
+							p.setOrders(i);
+							photoList.add(p);
 						}
-					}break;
-					case "서양식":{
-						String k = westernList[rand.nextInt(3)];
-						for(int i=0;i<5;i++) {
-						realPath = "photo/Restaurant/"+category+"/"+k+"/"+k+"_"+(i+1)+".jpg";
-						photoList.add(realPath);
+					}
+				}break;
+				case "서양식":{
+					String name = westernList[rand.nextInt(4)];
+					for(int i=0;i<5;i++) {
+						PhotoListVO p = new PhotoListVO();
+						try {
+							if (list.get(i) != null && list.get(i).getOrders() == i+1) {
+								p.setName(list.get(i).getName());
+								p.setPath(list.get(i).getPath());
+								p.setCategory(list.get(i).getCategory());
+								p.setRealPath("photo/Restaurant/"+category+"/"+p.getName()+"/"+p.getPath());
+								p.setOrders(list.get(i).getOrders());
+								photoList.add(p);
+							}else {
+								realPath = "photo/Restaurant/"+category+"/"+name+"/rest"+(i+1)+".jpg";
+								p.setName(r.getName());
+								p.setPath("rest"+(i+1)+".jpg");
+								p.setCategory(category);
+								p.setRealPath(realPath);
+								p.setOrders(i);
+								photoList.add(p);
+							}
+						}catch(IndexOutOfBoundsException e) {
+							realPath = "photo/Restaurant/"+category+"/"+name+"/rest"+(i+1)+".jpg";
+							p.setName(r.getName());
+							p.setPath("rest"+(i+1)+".jpg");
+							p.setCategory(category);
+							p.setRealPath(realPath);
+							p.setOrders(i);
+							photoList.add(p);
 						}
-					}break;
-					case "일식":{
-						String k = japaneseList[rand.nextInt(4)];
-						for(int i=0;i<5;i++) {
-						realPath = "photo/Restaurant/"+category+"/"+k+"/"+k+"_"+(i+1)+".jpg";
-						photoList.add(realPath);
+					}
+				}break;
+				case "일식":{
+					String name = japaneseList[rand.nextInt(4)];
+					for(int i=0;i<5;i++) {
+						PhotoListVO p = new PhotoListVO();
+						try {
+							if (list.get(i) != null && list.get(i).getOrders() == i+1) {
+								p.setName(list.get(i).getName());
+								p.setPath(list.get(i).getPath());
+								p.setCategory(list.get(i).getCategory());
+								p.setRealPath("photo/Restaurant/"+category+"/"+p.getName()+"/"+p.getPath());
+								p.setOrders(list.get(i).getOrders());
+								photoList.add(p);
+							}else {
+								realPath = "photo/Restaurant/"+category+"/"+name+"/rest"+(i+1)+".jpg";
+								p.setName(r.getName());
+								p.setPath("rest"+(i+1)+".jpg");
+								p.setCategory(category);
+								p.setRealPath(realPath);
+								p.setOrders(i);
+								photoList.add(p);
+							}
+						}catch(IndexOutOfBoundsException e) {
+							realPath = "photo/Restaurant/"+category+"/"+name+"/rest"+(i+1)+".jpg";
+							p.setName(r.getName());
+							p.setPath("rest"+(i+1)+".jpg");
+							p.setCategory(category);
+							p.setRealPath(realPath);
+							p.setOrders(i);
+							photoList.add(p);
 						}
-					}break;
-				}
+					}
+				}break;
+				case "중식":{
+					String name = chineseList[rand.nextInt(4)];
+					for(int i=0;i<5;i++) {
+						PhotoListVO p = new PhotoListVO();
+						try {
+							if (list.get(i) != null && list.get(i).getOrders() == i+1) {
+								p.setName(list.get(i).getName());
+								p.setPath(list.get(i).getPath());
+								p.setCategory(list.get(i).getCategory());
+								p.setRealPath("photo/Restaurant/"+category+"/"+p.getName()+"/"+p.getPath());
+								p.setOrders(list.get(i).getOrders());
+								photoList.add(p);
+							}else {
+								realPath = "photo/Restaurant/"+category+"/"+name+"/rest"+(i+1)+".jpg";
+								p.setName(r.getName());
+								p.setPath("rest"+(i+1)+".jpg");
+								p.setCategory(category);
+								p.setRealPath(realPath);
+								p.setOrders(i);
+								photoList.add(p);
+							}
+						}catch(IndexOutOfBoundsException e) {
+							realPath = "photo/Restaurant/"+category+"/"+name+"/rest"+(i+1)+".jpg";
+							p.setName(r.getName());
+							p.setPath("rest"+(i+1)+".jpg");
+							p.setCategory(category);
+							p.setRealPath(realPath);
+							p.setOrders(i);
+							photoList.add(p);
+						}
+					}
+				}break;
+			}
 		}
 		mav.addObject("r", r);
 		mav.addObject("photoList", photoList);

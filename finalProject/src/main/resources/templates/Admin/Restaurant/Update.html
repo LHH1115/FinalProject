@@ -92,7 +92,7 @@
 	
 	<!-- 사진 -->
 	
-	<form action="/admin/accommo/imgUpdate" method="post" id="form_img" enctype="multipart/form-data">
+	<form action="/admin/restau/imgUpdate" method="post" id="form_img" enctype="multipart/form-data">
 		<th:block th:each="p: ${photoList}">
 			<div style="float: left; margin-left: 10px">
 				<img alt="" th:src="|/${p.realPath}|" width="350" height="350" 
@@ -113,8 +113,8 @@
 	<!-- 수정 폼 태그 -->
 	<div style="clear: left">
 		<hr>
-		<form action="/admin/accommo/updateSubmit" method="post" id="updateF">
-			<input type="number" name="accommoNo" th:value="${r.restauNo}" id="restauNo" readonly="readonly">
+		<form action="/admin/restau/updateSubmit" method="post" id="updateF">
+			<input type="number" name=restauNo th:value="${r.restauNo}" id="restauNo" readonly="readonly">
 			주소: <input type="text" name="addr" th:value="${r.addr}">
 			전화: <input type="text" name="phone" th:value="${r.phone}">
 		</form>

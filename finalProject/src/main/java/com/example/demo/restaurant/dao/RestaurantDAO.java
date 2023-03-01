@@ -63,6 +63,15 @@ public class RestaurantDAO {
 		// TODO Auto-generated method stub
 		return DBManager.updateById(r);
 	}
+
+	public int deleteById(int restauNo) {
+		return DBManager.deleteById(restauNo);
+	}
+
+	public int insertPhoto(RestaurantPhotoVO rp) {
+		return DBManager.insertPhoto(rp);
+		
+	}
 	
 	
 }

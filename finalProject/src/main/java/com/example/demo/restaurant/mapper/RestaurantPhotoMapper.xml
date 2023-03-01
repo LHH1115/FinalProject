@@ -6,6 +6,15 @@
   <select id="findPCnt" resultType="java.lang.Integer" parameterType="restaurantPhotoVO">
   	SELECT COUNT(apNo) FROM TBL_RESTAURANTPHOTO WHERE RESTAUNO = #{restauNo}
   </select>
+  
+  <update id="updatePhoto" parameterType="restaurantPhotoVO">
+  	UPDATE TBL_RESTAURANTPHOTO SET PATH = #{PATH} WHERE RESTAUNO = #{restauNo} AND APNO = #{apNo}
+  </update>
+  
+  <insert id="insertPhoto" parameterType="restaurantPhotoVO">
+  	INSERT INTO TBL_RESTAURANTPHOTO(RPNO, RESTAUNO, PATH, ORDERS) 
+  	VALUES (SEQ_RESTPHOTO.NEXTVAL, #{restauNo}, #{path}, #{orders})
+  </insert>
 </mapper>
 
 

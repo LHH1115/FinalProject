@@ -238,13 +238,13 @@ $(function(){
 	
 	<div class="items-slider-container js-items-slider-container">
 	       <div class="slider slider-for">
-            <div th:each="path: ${photoList}">
-                <img th:src="|/${path}|">
+            <div th:each="p: ${photoList}">
+                <img th:src="|/${p.RealPath}|">
             </div>
         </div>        
         <div class="slider slider-nav" style="width: 1005px;height: 110px;">           
-            <div th:each="path: ${photoList}">
-                <img th:src="|/${path}|">
+            <div th:each="p: ${photoList}">
+                <img th:src="|/${p.RealPath}|">
             </div>
         </div>     
     </div>

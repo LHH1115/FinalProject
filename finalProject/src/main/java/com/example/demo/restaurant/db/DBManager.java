@@ -115,6 +115,22 @@ public class DBManager {
 		session.close();
 		return re;
 	}
+
+	public static int deleteById(int restauNo) {
+		int re = 0;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.delete("restau.deleteById", restauNo);
+		session.close();
+		return re;
+	}
+
+	public static int insertPhoto(RestaurantPhotoVO rp) {
+		int re = 0;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.insert("restaurantPhoto.insertPhoto", rp);
+		session.close();
+		return re;
+	}
 	
 	
 	

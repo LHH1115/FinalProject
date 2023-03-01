@@ -51,9 +51,10 @@ public class AdminRestauController {
 		String category = r.getCategory();
 		
 		Random rand = new Random();
-		String koreanList[] = {"명가천지연무태장어", "제주광해애월점", "제주반딧불한담", "큰맘할매순대국", "푸른밤의해안속초식당"};
+		String koreanList[] = {"명가천지연무태장어", "제주광해애월점", "제주반딧불한담애월점", "큰맘할매순대국제주곽지점", "푸른밤의해안속초식당"};
 		String westernList[] = {"루마카", "반양", "카우보이스테이크하우스"};
 		String japaneseList[] = {"스시앤", "아일랜드본섬", "해모둠", "해원앙", "혼참치"};
+		String chineseList[] = {"길림성", "대우반점", "만사성", "북경반점", "일빈관"};
 		
 		if(list.size() > 4) {
 			for(int i=0;i<list.size();i++) {
@@ -62,7 +63,7 @@ public class AdminRestauController {
 				p.setName(r.getName());
 				p.setPath(r.getPath());
 				p.setCategory(category);
-				p.setRealPath("photo/Restaurant/"+p.getCategory()+"/"+p.getName()+"/"+p.getName()+"_"+(i+1)+".jpg");
+				p.setRealPath("photo/Restaurant/"+p.getCategory()+"/"+p.getName()+"/"+p.getPath());
 				
 				p.setOrders(i);
 				photoList.add(p);
@@ -71,31 +72,30 @@ public class AdminRestauController {
 			// 이미지 없을때 랜덤이미지
 			switch (category) {
 				case "한식":{
-					System.out.println("한식 case");
-					String k = koreanList[rand.nextInt(5)];
-					PhotoListVO p = new PhotoListVO();
+					String name = koreanList[rand.nextInt(4)];
 					for(int i=0;i<5;i++) {
+						PhotoListVO p = new PhotoListVO();
 						try {
 							if (list.get(i) != null && list.get(i).getOrders() == i+1) {
 								p.setName(list.get(i).getName());
 								p.setPath(list.get(i).getPath());
 								p.setCategory(list.get(i).getCategory());
-								p.setRealPath("photo/Restaurant/"+category+"/"+k+"/"+k+"_"+(i+1)+".jpg");
+								p.setRealPath("photo/Restaurant/"+category+"/"+p.getName()+"/"+p.getPath());
 								p.setOrders(list.get(i).getOrders());
 								photoList.add(p);
 							}else {
-								realPath = "photo/Restaurant/"+category+"/"+k+"/"+k+"_"+(i+1)+".jpg";
+								realPath = "photo/Restaurant/"+category+"/"+name+"/rest"+(i+1)+".jpg";
 								p.setName(r.getName());
-								p.setPath(k+"_"+(i+1)+".jpg");
+								p.setPath("rest"+(i+1)+".jpg");
 								p.setCategory(category);
 								p.setRealPath(realPath);
 								p.setOrders(i);
 								photoList.add(p);
 							}
 						}catch(IndexOutOfBoundsException e) {
-							realPath = "photo/Restaurant/"+category+"/"+k+"/"+k+"_"+(i+1)+".jpg";
+							realPath = "photo/Restaurant/"+category+"/"+name+"/rest"+(i+1)+".jpg";
 							p.setName(r.getName());
-							p.setPath(k+"_"+(i+1)+".jpg");
+							p.setPath("rest"+(i+1)+".jpg");
 							p.setCategory(category);
 							p.setRealPath(realPath);
 							p.setOrders(i);
@@ -104,30 +104,30 @@ public class AdminRestauController {
 					}
 				}break;
 				case "서양식":{
-					String k = westernList[rand.nextInt(3)];
-					PhotoListVO p = new PhotoListVO();
+					String name = westernList[rand.nextInt(4)];
 					for(int i=0;i<5;i++) {
+						PhotoListVO p = new PhotoListVO();
 						try {
 							if (list.get(i) != null && list.get(i).getOrders() == i+1) {
 								p.setName(list.get(i).getName());
 								p.setPath(list.get(i).getPath());
 								p.setCategory(list.get(i).getCategory());
-								p.setRealPath("photo/Restaurant/"+category+"/"+k+"/"+k+"_"+(i+1)+".jpg");
+								p.setRealPath("photo/Restaurant/"+category+"/"+p.getName()+"/"+p.getPath());
 								p.setOrders(list.get(i).getOrders());
 								photoList.add(p);
 							}else {
-								realPath = "photo/Restaurant/"+category+"/"+k+"/"+k+"_"+(i+1)+".jpg";
+								realPath = "photo/Restaurant/"+category+"/"+name+"/rest"+(i+1)+".jpg";
 								p.setName(r.getName());
-								p.setPath(k+"_"+(i+1)+".jpg");
+								p.setPath("rest"+(i+1)+".jpg");
 								p.setCategory(category);
 								p.setRealPath(realPath);
 								p.setOrders(i);
 								photoList.add(p);
 							}
 						}catch(IndexOutOfBoundsException e) {
-							realPath = "photo/Restaurant/"+category+"/"+k+"/"+k+"_"+(i+1)+".jpg";
+							realPath = "photo/Restaurant/"+category+"/"+name+"/rest"+(i+1)+".jpg";
 							p.setName(r.getName());
-							p.setPath(k+"_"+(i+1)+".jpg");
+							p.setPath("rest"+(i+1)+".jpg");
 							p.setCategory(category);
 							p.setRealPath(realPath);
 							p.setOrders(i);
@@ -136,30 +136,62 @@ public class AdminRestauController {
 					}
 				}break;
 				case "일식":{
-					String k = japaneseList[rand.nextInt(4)];
-					PhotoListVO p = new PhotoListVO();
+					String name = japaneseList[rand.nextInt(4)];
 					for(int i=0;i<5;i++) {
+						PhotoListVO p = new PhotoListVO();
 						try {
 							if (list.get(i) != null && list.get(i).getOrders() == i+1) {
 								p.setName(list.get(i).getName());
 								p.setPath(list.get(i).getPath());
 								p.setCategory(list.get(i).getCategory());
-								p.setRealPath("photo/Restaurant/"+category+"/"+k+"/"+k+"_"+(i+1)+".jpg");
+								p.setRealPath("photo/Restaurant/"+category+"/"+p.getName()+"/"+p.getPath());
 								p.setOrders(list.get(i).getOrders());
 								photoList.add(p);
 							}else {
-								realPath = "photo/Restaurant/"+category+"/"+k+"/"+k+"_"+(i+1)+".jpg";
+								realPath = "photo/Restaurant/"+category+"/"+name+"/rest"+(i+1)+".jpg";
 								p.setName(r.getName());
-								p.setPath(k+"_"+(i+1)+".jpg");
+								p.setPath("rest"+(i+1)+".jpg");
 								p.setCategory(category);
 								p.setRealPath(realPath);
 								p.setOrders(i);
 								photoList.add(p);
 							}
 						}catch(IndexOutOfBoundsException e) {
-							realPath = "photo/Restaurant/"+category+"/"+k+"/"+k+"_"+(i+1)+".jpg";
+							realPath = "photo/Restaurant/"+category+"/"+name+"/rest"+(i+1)+".jpg";
 							p.setName(r.getName());
-							p.setPath(k+"_"+(i+1)+".jpg");
+							p.setPath("rest"+(i+1)+".jpg");
+							p.setCategory(category);
+							p.setRealPath(realPath);
+							p.setOrders(i);
+							photoList.add(p);
+						}
+					}
+				}break;
+				case "중식":{
+					String name = chineseList[rand.nextInt(4)];
+					for(int i=0;i<5;i++) {
+						PhotoListVO p = new PhotoListVO();
+						try {
+							if (list.get(i) != null && list.get(i).getOrders() == i+1) {
+								p.setName(list.get(i).getName());
+								p.setPath(list.get(i).getPath());
+								p.setCategory(list.get(i).getCategory());
+								p.setRealPath("photo/Restaurant/"+category+"/"+p.getName()+"/"+p.getPath());
+								p.setOrders(list.get(i).getOrders());
+								photoList.add(p);
+							}else {
+								realPath = "photo/Restaurant/"+category+"/"+name+"/rest"+(i+1)+".jpg";
+								p.setName(r.getName());
+								p.setPath("rest"+(i+1)+".jpg");
+								p.setCategory(category);
+								p.setRealPath(realPath);
+								p.setOrders(i);
+								photoList.add(p);
+							}
+						}catch(IndexOutOfBoundsException e) {
+							realPath = "photo/Restaurant/"+category+"/"+name+"/rest"+(i+1)+".jpg";
+							p.setName(r.getName());
+							p.setPath("rest"+(i+1)+".jpg");
 							p.setCategory(category);
 							p.setRealPath(realPath);
 							p.setOrders(i);
@@ -171,7 +203,6 @@ public class AdminRestauController {
 		}
 		mav.addObject("r", r);
 		mav.addObject("photoList", photoList);
-		System.out.println(photoList);
 		MemberVO m = mdao.findByNo(1);
 		session.setAttribute("loginM", m);
 		return mav;
@@ -180,8 +211,8 @@ public class AdminRestauController {
 	@PostMapping("/updateSubmit")
 	public ModelAndView updateSubmit(RestaurantVO r) {
 		ModelAndView mav = new ModelAndView();
-		int accommoNo = r.getRestauNo();
-		mav.setViewName("redirect:/admin/accommo/update/"+accommoNo);
+		int restauNo = r.getRestauNo();
+		mav.setViewName("redirect:/admin/restau/update/"+restauNo);
 		System.out.println(r);
 		// update 문
 		int re = dao.updateById(r);
@@ -193,11 +224,11 @@ public class AdminRestauController {
 		return mav;
 	}
 	
-	@GetMapping("/delete/{accommoNo}")
-	public ModelAndView delete(@PathVariable int accommoNo) {
-		ModelAndView mav = new ModelAndView("redirect:/admin/accommo/update/"+accommoNo);
-		System.out.println(accommoNo);
-//		int re = dao.deleteById(accommoNo);
+	@GetMapping("/delete/{restauNo}")
+	public ModelAndView delete(@PathVariable int restauNo) {
+		ModelAndView mav = new ModelAndView("redirect:/admin/restau/update/"+restauNo);
+		System.out.println(restauNo);
+//		int re = dao.deleteById(restauNo);
 		return mav;
 	}
 	
@@ -226,7 +257,7 @@ public class AdminRestauController {
 				
 				RestaurantPhotoVO rp = new RestaurantPhotoVO();
 				rp.setRestauNo(restauNo);
-				rp.setPath("acc"+(i+1)+".jpeg");
+				rp.setPath("rest"+(i+1)+".jpg");
 				rp.setOrders((i+1));
 				
 				List<RestaurantVO> list = dao.findAllPhotoById(restauNo);
@@ -234,11 +265,11 @@ public class AdminRestauController {
 					System.out.println("기존 사진 있음");
 					// 기존 사진 있음
 					// 이전 파일 삭제
-					File file = new File(savePath + "/" + "acc"+(i+1)+".jpeg");
+					File file = new File(savePath + "/" + "rest"+(i+1)+".jpg");
 					file.delete();
 				}else {
 					System.out.println("기존 사진 없음");
-					//dao.insertPhoto(rp);
+					dao.insertPhoto(rp);
 					File folder = new File(savePath);
 					if(!folder.exists()) {
 						try {
@@ -252,7 +283,7 @@ public class AdminRestauController {
 				}
 				
 				try {
-					FileOutputStream fos = new FileOutputStream(savePath + "/" + "acc"+(i+1)+".jpeg");
+					FileOutputStream fos = new FileOutputStream(savePath + "/" + "rest"+(i+1)+".jpg");
 					FileCopyUtils.copy(uploadFile.get(i).getBytes(),fos);
 					fos.close();
 					
@@ -270,7 +301,7 @@ public class AdminRestauController {
 			
 		}
 		
-		mav.setViewName("redirect:/admin/accommo/update/"+restauNo);
+		mav.setViewName("redirect:/admin/restau/update/"+restauNo);
 		return mav;
 	}
 }
