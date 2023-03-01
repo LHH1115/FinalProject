@@ -29,5 +29,6 @@
   <mappers>
     <mapper resource="com/example/demo/db/MemberMapper.xml"/>
     <mapper resource="com/example/demo/db/MyPageMapper.xml"/>
+    <mapper resource="com/example/demo/db/PointMapper.xml"/>
   </mappers>
 </configuration>

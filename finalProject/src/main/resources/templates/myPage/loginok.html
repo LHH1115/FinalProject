@@ -12,6 +12,7 @@ $(function(){
 </head>
 <body>
 <span  th:text="${session.id}+'님이 로그인 하였습니다.'"></span>
+<a href="/">메인</a>
 <a href="/logout">로그아웃</a>
 <input type="hidden" th:value="${session.id}" readonly="readonly" id="id">
 <a th:href="'/myPage/updateMyInfo?id='+${session.id}">회원정보수정</a>

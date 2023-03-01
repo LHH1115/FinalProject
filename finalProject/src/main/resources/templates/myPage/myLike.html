@@ -6,10 +6,10 @@
 </head>
 <body>
 <h1>찜목록</h1>
-<a th:href="'/myPage/myLike?id='+${session.id}+'&category=accommodation'">숙박</a>
-<a th:href="'/myPage/myLike?id='+${session.id}+'&category=accommodation'">음식점</a>
-<a th:href="'/myPage/myLike?id='+${session.id}+'&category=accommodation'">관광지</a>
-<a th:href="'/myPage/myLike?id='+${session.id}+'&category=accommodation'">렌트카</a>
+<a href="/myPage/myLike?pageNUM=1&category=accommodation">숙박</a>
+<a href="/myPage/myLike?pageNUM=1&category=accommodation">음식점</a>
+<a href="/myPage/myLike?pageNUM=1&category=accommodation">관광지</a>
+<a href="/myPage/myLike?pageNUM=1&category=accommodation">렌트카</a>
 <div th:each="l:${list}" class="list">
 	<a th:href=${l.link}><img th:src="'/photo/'+${l.photopath}" width=300 height= 300></a><br>
 	<span th:text=${l.name}></span>
