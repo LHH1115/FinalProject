@@ -21,6 +21,9 @@
 <hr> 
 <h2>관리자 페이지</h2>
 
+
+<h2>LIST</h2>
+
 <button type="button" onclick="location.href='/admin/memberManage'">회원관리</button> &nbsp;&nbsp;
 <button type="button" onclick="location.href='/admin/inquiryManage'">문의사항관리</button>&nbsp;&nbsp;
 
@@ -70,7 +73,6 @@
 				</td>
 				<td th:text="${l.category}"></td>
 				<td th:text="${l.inqdate}"></td>
-				 <!-- 
 				<th:block th:if="${l.replyOk>0}">
 				<td>
 				완료
@@ -80,7 +82,7 @@
 				<td>
 				미완료
 				</td>
-				</th:block>-->
+				</th:block>
 			</tr>
 		</tbody>
 	</table>

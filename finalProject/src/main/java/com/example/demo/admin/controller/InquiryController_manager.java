@@ -25,6 +25,7 @@ import lombok.Setter;
 @Setter
 public class InquiryController_manager {
 	
+	
 	@Autowired
 	InquiryDAO inquiryDAO;
 	
@@ -44,7 +45,6 @@ public class InquiryController_manager {
 			@RequestParam(value="pageNo", defaultValue = "1") int pageNo,
 			HttpSession session
 			) {
-		System.out.println("reset : "+reset);
 		if(reset!=null && reset.equals("all")) {
 //			session.invalidate();
 			session.removeAttribute("search_col");
@@ -84,17 +84,7 @@ public class InquiryController_manager {
 		map.put("end", end);
 		
 		List<InquiryVO> list=inquiryDAO.findAll(map);
-//		for(InquiryVO vo:list) {
-//			
-//			int re=replyDAO.countAll(vo.getInquiryNo());
-//			
-//			if(re>0) {
-//				vo.setReplyOk(1);
-//			}else {
-//				vo.setReplyOk(0);
-//			}
-//		}
-		
+		System.out.println(list.get(1).getReplyOk());
 		
 		session.setAttribute("search_col", search_col);
 		session.setAttribute("search_cat", search_cat);
@@ -106,6 +96,7 @@ public class InquiryController_manager {
 		model.addAttribute("this_page",pageNo);
 		return model;
 	}
+	
 	
 	
 	

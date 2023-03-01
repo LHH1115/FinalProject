@@ -5,13 +5,13 @@
 <mapper namespace="inquiry">
    
    	<select id="findByInquiryNo" resultType="inquiryVO">
-   		select inquiryNo,i.memberNo,title,content,category,inqdate,id from tbl_inquiry i, tbl_member m where i.memberno=m.memberno and inquiryNo=#{inquiryNo}
+   		select inquiryNo,i.memberNo,title,content,category,inqdate,id,replyOk from tbl_inquiry i, tbl_member m where i.memberno=m.memberno and inquiryNo=#{inquiryNo}
    	</select>
    	
    	<select id="findAll" resultType="inquiryVO">
-		select inquiryNo,memberNo,title,content,category,inqdate,id from 
+		select inquiryNo,memberNo,title,content,category,inqdate,id,replyOk from 
 		(select rownum n, a.* from
-		(select inquiryNo,i.memberNo,title,content,category,inqdate,id from tbl_inquiry i, tbl_member m where i.memberno=m.memberno  	
+		(select inquiryNo,i.memberNo,title,content,category,inqdate,id,replyOk from tbl_inquiry i, tbl_member m where i.memberno=m.memberno  	
 		<if test="search_cat!=null and !search_cat.equals('')">
    			and category=#{search_cat}
    		</if>
@@ -22,8 +22,18 @@
    	</select> 	
    
 	<insert id="insertInquiry" parameterType="InquiryVO">
-  		insert into tbl_inquiry(inquiryNo,memberNo,title,content,category,inqdate) values(#{inquiryNo},5,#{title},#{content},#{category},sysdate)	
+  		insert into tbl_inquiry(inquiryNo,memberNo,title,content,category,inqdate,replyOk) values(#{inquiryNo},5,#{title},#{content},#{category},sysdate,0)	
 	</insert>
+	
+	<update id="updateReplyOk" parameterType="Integer">
+		update tbl_inquiry set replyOk=1 where inquiryNo=#{no}
+	</update>
+	
+	<update id="updateReplyNo" parameterType="Integer">
+		update tbl_inquiry set replyOk=0 where inquiryNo=#{no}
+	</update>
+	
+	
 	
 	<select id="getNextNo" resultType="Integer">
 		select nvl(max(inquiryNo),0)+1 from tbl_inquiry
@@ -38,7 +48,6 @@
 		<if test="search_col!=null and !search_col.equals('') and keyword!=null and !keyword.equals('')">
 			and ${search_col} like '%'||#{keyword}||'%'
 		</if>
-		
 	</select>
 	
 </mapper>
