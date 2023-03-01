@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,7 @@ public class RentcarController {
 		String category = vo.getCategory();
 		String photopath=vo.getPhotoPath();
 		vo.setRealPath("/photo/RentCar/"+category+"/"+photopath);
+		System.out.println(vo.getRealPath());
 		return vo;
 	}
 	
@@ -162,7 +164,7 @@ public class RentcarController {
 	}
 	
 	@GetMapping("/rentcar/Detail")
-	public void detail(int carNo, Model model) {
+	public void detail(int carNo, Model model,HttpSession session) {
 		RentcarVO vo = setRealPath(carNo);
 		
 //		List<String> list=rentcarDAO.findRentByCarno(carNo);
@@ -175,17 +177,19 @@ public class RentcarController {
 		
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("category","RentCar");
-		map.put("memberNo",4);
+		map.put("memberNo",1);
 //		member에서 번호 받아와야한다.
 		map.put("carNo",carNo);
 		LikeVO lvo=likeDAO.findLikeByM(map);
-		System.out.println(lvo);
-		
+		System.out.println("detail : "+vo);
 		if(lvo !=null) {
 			model.addAttribute("status","ok");
 		}
+		model.addAttribute("memberNo",1);
 		model.addAttribute("detail",vo);
 		model.addAttribute("rentstore",list2);
+		session.setAttribute("detail",vo);
+		session.setAttribute("rentstore", list2);
 	}
 	
 	@GetMapping("/rentcar/storename")

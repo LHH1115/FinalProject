@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var carNo = $("#carNo").val();		
+		var modelName = $("#modelName").val();
+		var category = $("#category").val();
+		var price = $("#price").val();
+		
+		$("#delete").click(function(){
+			
+			if(confirm("삭제하시겠습니까?")){
+				$.ajax({
+					url:"/admin/rentcar/delete",
+					data:{"carNo":carNo,"modelName":modelName,"category":category,"price":price},
+					success:function(){
+						$(location).attr("href","/rentcar/main");
+					}
+				})
+			}
+			
+		})
+	})
+</script>
+</head>
+<body>
+	<!-- 헤더 -->
+    <div th:insert="/main/Header.html"></div>
+	
+
+
+	<!-- 정보 -->
+	<div>
+		<h2>차량 정보 수정</h2>
+		<hr>
+		<form action="/admin/rentcar/update" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="carNo" th:value="${session.detail.carNo}" id="carNo">
+			<h3>차량명</h3>
+			<input type="text" name="modelName" th:value="${session.detail.modelName}" id="modelName">
+			<h3>차량 사진</h3>
+			<img th:src="${session.detail.realPath}">
+			<input type="file" name="uploadFile"><br>
+			<input type="hidden" name="realPath" th:value="${session.detail.realPath}" id="realPath">
+			<h3>분류</h3>
+			<input type="text" name="category" th:value="${session.detail.category}" id="category">
+			<h3>가격</h3>
+			<input type="number" name="price" th:value="${session.detail.price}" id="price">원
+			<br>
+			<input type="submit" value="수정">
+		</form>
+		<button id="delete">삭제</button>	
+	</div>
+	<hr>
+	<!-- 여기 -->
+	<button th:onclick="|location.href='@{/rentcar/Detail(carNo=${session.detail.carNo})}'|"> 돌아가기</button>
+
+
+
+</body>
+</html>

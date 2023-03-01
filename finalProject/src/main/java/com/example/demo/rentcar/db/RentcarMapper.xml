@@ -29,7 +29,7 @@
 	</select>
 	
 	<update id="updateById" parameterType="rentcarVO">
-		update tbl_car set modelname=#{modelname}, photopath=#{photopath}, category=#{category}, price=#{price} where carno=#{carno}
+		update tbl_car set modelname=#{modelName}, photopath=#{photoPath}, category=#{category}, price=#{price} where carno=#{carNo}
 	</update>
 	  
 	<delete id="deleteById" parameterType="Integer">

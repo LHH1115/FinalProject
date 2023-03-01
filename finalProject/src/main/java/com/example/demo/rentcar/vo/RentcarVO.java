@@ -1,5 +1,7 @@
 package com.example.demo.rentcar.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,5 +23,7 @@ public class RentcarVO {
 	private int price;
 	
 	private String realPath;
+	
+	private MultipartFile uploadFile;
 	
 }
