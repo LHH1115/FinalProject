@@ -8,13 +8,17 @@
 <link href="/Main/infobar.css" rel="stylesheet" type="text/css">
  
 <script src="https://kit.fontawesome.com/bb9544ccb9.js" crossorigin="anonymous"></script>
-
+<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="/main/sist.js"></script>
 <script type="text/javascript">
 	$(function(){
 		
-		
+		$.noConflict();	// 충돌방지 코드
+
 	})
 	
 	function onload(){
@@ -49,53 +53,111 @@
 		})
 	}
 </script>
+<style type="text/css">		
+header {
+	width:100%;
+	height:55px;
+	color:white;
+	background-color:#ff8c00;
+	margin:0px;
+	box-sizing:border-box;
+	padding:13px 40px;	
+}
+			
+ul {
+	list-style-type:none;
+	margin:0px;
+}
+			
+header li {
+	border:0px dotted red;
+	display:inline;
+	font-size:20px;
+	text-align:right;
+	padding:0px 20px;
+	float:right;
+}
+			
+header li:first-child {	
+	padding-right:0px;
+}
+			
+header li:first-child {
+	border-left:1px solid white;
+}
+			
+header a {
+	text-decoration:none;
+	color:white;
+}
+	
+nav a {
+	text-decoration:none;
+	color:black;
+}
+			
+nav {
+	width:100%;
+	height:90px;
+	line-height:90px;
+	color:black;
+	background-color:white;
+	margin:0px;
+	box-sizing:border-box;
+	padding:0px 40px;
+	border:0px solid red;
+}
+			
+nav h1>i {
+	font-size:70px;
+	vertical-align:middle;
+	margin:0px;
+}
+			
+nav>h1 {
+	margin:0px;
+	border:0px solid orange;
+}
+			
+nav ul {
+	border:0px solid blue;
+	margin:0px;
+	padding:0px 500px;
+	float:right;				
+}
+			
+nav li {		
+	display:inline;	
+	font-size:27px;
+	padding:0px 15px;
+	margin:0px;
+}
+
+.normalclass {
+	font-weight:normal;
+}
+
+</style>
 </head>
 <body onload="onload()">
-<!-- 메뉴바 -->
-	<nav class="header">
-    <div class="wrap">
-        <div class="menubar">
-            <div class="menuLogo">
-                <a href="/"><img src="/Main/logo.png" class="logo"></a>
-            </div>
-            <ul class="menuItem">
-                 <li>
-                    <a href="">숙박</a>
-                    <ul>
-                        <li><a href="/accommo/main">숙소 메인</a></li>
-                     
-                    </ul>
-                 </li>
-                
-                 <li>
-                    <a href="">관광지</a>
-                    <ul>
-                        <li><a href="/attract/main">관광지 메인</a></li>
-                    </ul>
-                 </li>
-                
-                  <li>
-                    <a href="">식당</a>
-                    <ul>
-                        <li><a href="/restau/main">식당 메인</a></li>
-                    </ul>
-                  </li>
-                
-                   <li>
-                    <a href="">렌트카</a>
-                    <ul>
-                        <li><a href="#">렌트카 메인</a></li>
-                    </ul>
-                  </li>
-                  
-                  <li>
-                  	<a href="#">
-                  		현재날씨 : <span id="fcstValue"></span>℃<br>
-                  		<!-- 기준시간 : <span id="fcstTime"></span> -->
-                  	</a>
-                  </li>
-                  
-                   <th:block th:unless="${session.loginM.role != 'user'}">
+
+		<Header>
+			<ul>
+				<li><a href="#">마이페이지 </a></li>
+				<li><a href="#">로그인 </a></li>
+				<li><a href="#">회원가입 </a></li>
+			</ul>
+
+		</header>
+		
+		<nav>
+
+			<ul>
+				<li><a href="/accommo/main">숙소</a></li>	
+				<li><a href="/restau/main">식당</a></li>	
+				<li><a href="/attract/main">관광지</a></li>	
+				<li><a href="#">렌트카</a></li>	
+				<th:block th:unless="${session.loginM.role != 'user'}">
 	                  <li>
 	                    <a href="/main/inquiry">문의하기</a>
 	                  </li>
@@ -111,11 +173,19 @@
 	                    </ul>
 	                  </li>
                   </th:block>
-            </ul>
-        </div>
-    </div>
-    </nav>
-<!-- 메뉴바 -->	
+				<li>
+                  	<a href="#">
+                  		현재날씨 : <span id="fcstValue"></span>℃<br>
+                  		<!-- 기준시간 : <span id="fcstTime"></span> -->
+                  	</a>
+                  </li>
+			</ul>
+			
+			<h1>
+			<i><a href="/"><img src="/Main/logo.png" class="logo"></a></i>
+			<span class="normalclass" style="font-size: 50px"> 제주다컴 </span>
+			</h1>
+		</nav>
 	
 </body>
 </html>
