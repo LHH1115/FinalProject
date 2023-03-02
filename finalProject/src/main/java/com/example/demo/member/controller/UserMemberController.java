@@ -75,7 +75,7 @@ public class UserMemberController {
 		
 		
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
-		mailMessage.setFrom("hohyung95@gmail.com");   //자신의 gmail을 써 줍니다.
+		mailMessage.setFrom("");   //자신의 gmail을 써 줍니다.
 		mailMessage.setTo(email);
 		mailMessage.setSubject("인증코드 전송");
 		mailMessage.setText(code);
