@@ -20,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.accommodation.vo.AccommodationVO;
 import com.example.demo.admin.dao.MemberDAO;
-import com.example.demo.admin.vo.MemberVO;
+import com.example.demo.member.vo.MemberVO;
 import com.example.demo.restaurant.dao.RestaurantDAO;
 import com.example.demo.restaurant.vo.LikeVO;
 import com.example.demo.restaurant.vo.PhotoListVO;
@@ -75,7 +75,7 @@ public class RestaurantController {
 					category = a.getCategory();
 					name = forPhoto.getName();
 					path = forPhoto.getPath();
-					realPath = "photo/Restaurant/"+name+"/"+path;
+					realPath = "photo/Restaurant/"+category+"/"+name+"/"+path;
 					a.setRealPath(realPath);
 				}
 			}else {
@@ -645,7 +645,7 @@ public class RestaurantController {
 		int re = 0;	//찜 x
 		MemberVO m = (MemberVO) session.getAttribute("loginM");
 		int restauNo = Integer.parseInt(request.getParameter("restauNo"));
-		int memberNo = m.getMemberNo();
+		int memberNo = m.getMemberno();
 		HashMap<String, Object> map = new HashMap<>();
 		
 		map.put("memberNo", memberNo);
@@ -673,7 +673,7 @@ public class RestaurantController {
 		LikeVO l = new LikeVO();
 		l.setCategory("restau");
 		MemberVO m = (MemberVO) session.getAttribute("loginM");
-		l.setMemberNo(m.getMemberNo());
+		l.setMemberNo(m.getMemberno());
 		l.setRefNo(restauNo);
 		
 		dao.doLike(l);
@@ -689,7 +689,7 @@ public class RestaurantController {
 		LikeVO l = new LikeVO();
 		l.setCategory("restau");
 		MemberVO m = (MemberVO) session.getAttribute("loginM");
-		l.setMemberNo(m.getMemberNo());
+		l.setMemberNo(m.getMemberno());
 		l.setRefNo(restauNo);
 		
 		dao.unLike(l);

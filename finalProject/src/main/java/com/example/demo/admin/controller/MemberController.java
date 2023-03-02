@@ -127,7 +127,8 @@ public class MemberController {
 	// 메인 페이지
 		@GetMapping("/")
 		public ModelAndView main(HttpSession session) {
-			ModelAndView mav = new ModelAndView("main/mainPage.html");	
+			ModelAndView mav = new ModelAndView("main/mainPage.html");
+			System.out.println(session.getAttribute("id"));
 			return mav;
 		}
 

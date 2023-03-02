@@ -3,17 +3,17 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<properties resource="com/example/demo/db/db.properties"/>
+	<properties resource="com/example/demo/member/db/db.properties"/>
 	<typeAliases>
-		<typeAlias type="com.example.demo.vo.MemberVO" alias="memberVO"/>
-		<typeAlias type="com.example.demo.vo.EventVO" alias="eventVO"/>
-		<typeAlias type="com.example.demo.vo.ReservationVO" alias="reservationVO"/>
-		<typeAlias type="com.example.demo.vo.AccommodationVO" alias="accommodationVO"/>
-		<typeAlias type="com.example.demo.vo.ReviewVO" alias="reviewVO"/>
-		<typeAlias type="com.example.demo.vo.LikeVO" alias="likeVO"/>
-		<typeAlias type="com.example.demo.vo.AccommoPhotoVO" alias="accommoPhotoVO"/>
-		<typeAlias type="com.example.demo.vo.InquiryVO" alias="inquiryVO"/>
-		<typeAlias type="com.example.demo.vo.ReplyVO" alias="replyVO"/>
+		<typeAlias type="com.example.demo.member.vo.MemberVO" alias="memberVO"/>
+		<typeAlias type="com.example.demo.member.vo.EventVO" alias="eventVO"/>
+		<typeAlias type="com.example.demo.member.vo.ReservationVO" alias="reservationVO"/>
+		<typeAlias type="com.example.demo.member.vo.AccommodationVO" alias="accommodationVO"/>
+		<typeAlias type="com.example.demo.member.vo.ReviewVO" alias="reviewVO"/>
+		<typeAlias type="com.example.demo.member.vo.LikeVO" alias="likeVO"/>
+		<typeAlias type="com.example.demo.member.vo.AccommoPhotoVO" alias="accommoPhotoVO"/>
+		<typeAlias type="com.example.demo.member.vo.InquiryVO" alias="inquiryVO"/>
+		<typeAlias type="com.example.demo.member.vo.ReplyVO" alias="replyVO"/>
 	</typeAliases>
   <environments default="development">
     <environment id="development">
@@ -27,8 +27,8 @@
     </environment>
   </environments>
   <mappers>
-    <mapper resource="com/example/demo/db/MemberMapper.xml"/>
-    <mapper resource="com/example/demo/db/MyPageMapper.xml"/>
-    <mapper resource="com/example/demo/db/PointMapper.xml"/>
+    <mapper resource="com/example/demo/member/db/MemberMapper.xml"/>
+    <mapper resource="com/example/demo/member/db/MyPageMapper.xml"/>
+    <mapper resource="com/example/demo/member/db/PointMapper.xml"/>
   </mappers>
 </configuration>

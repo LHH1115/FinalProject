@@ -19,7 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 //		http.csrf().disable();
 		http.authorizeHttpRequests()
-		.mvcMatchers("/","/member/**","/Main/**","/main/**").permitAll()
+		.mvcMatchers("/","/member/**","/Main/**","/main/**","/photo/**").permitAll()
 		.anyRequest().authenticated();
 		
 		http.formLogin()

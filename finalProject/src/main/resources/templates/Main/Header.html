@@ -95,19 +95,15 @@
                   	</a>
                   </li>
                   
-                  <!-- <li>
-                    <a href="">로그인</a>
-                    <ul>
-                        <li><a href="#">렌트카 메인</a></li>
-                    </ul>
+                 <li>
+                    <a href="/member/loginMember">로그인</a>
                   </li>
                   
-                  <li>
-                    <a href="">회원가입</a>
-                    <ul>
-                        <li><a href="#">렌트카 메인</a></li>
-                    </ul>
-                  </li> -->
+                   <li>
+                    <a href="/member/insertMember">회원가입</a>
+                  </li>
+                  
+                  
                   <th:block th:if="${session.loginM != null}">
 	                  <th:block th:unless="${session.loginM.role != 'user'}">
 		                  <li>

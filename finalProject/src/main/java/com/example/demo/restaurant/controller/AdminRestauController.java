@@ -203,8 +203,6 @@ public class AdminRestauController {
 		}
 		mav.addObject("r", r);
 		mav.addObject("photoList", photoList);
-		MemberVO m = mdao.findByNo(1);
-		session.setAttribute("loginM", m);
 		return mav;
 	}
 	

@@ -127,8 +127,10 @@ public class UserMemberController {
 	
 	}
 	
-	@GetMapping("/myPage/loginok")
-	public void getLoginSession(HttpSession session) {
+	@RequestMapping("/myPage/loginok")
+	public ModelAndView getLoginSession(HttpSession session) {
+		
+		ModelAndView mav = new ModelAndView("redirect:/");
 		//인증된 회원의 정보를 갖고오기 위해서 먼저 시큐리티의 인증객체가 필요
 		Authentication authentication = 
 							SecurityContextHolder.getContext().getAuthentication();
@@ -139,6 +141,10 @@ public class UserMemberController {
 				
 		//세션에 상태유지
 		session.setAttribute("id",id);
+		MemberVO m = dao.findById(id);
+		session.setAttribute("loginM", m);
+		System.out.println("동작");
+		return mav;
 		
 	}
 	

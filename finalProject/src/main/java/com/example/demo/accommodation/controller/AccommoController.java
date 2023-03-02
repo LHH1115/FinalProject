@@ -24,7 +24,7 @@ import com.example.demo.accommodation.vo.LikeVO;
 import com.example.demo.accommodation.vo.PhotoListVO;
 import com.example.demo.accommodation.vo.ReservationVO;
 import com.example.demo.admin.dao.MemberDAO;
-import com.example.demo.admin.vo.MemberVO;
+import com.example.demo.member.vo.MemberVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -496,10 +496,6 @@ public class AccommoController {
 	public ModelAndView detail(int accommoNo, HttpSession session) {
 		ModelAndView mav = new ModelAndView("Accommodation/Detail");
 		
-		// 로그인한 멤버
-		MemberVO m = mdao.findByNo(1);
-		session.setAttribute("loginM", m);
-		
 		AccommodationVO a = dao.findById(accommoNo);
 		
 		List<AccommodationVO> list = dao.findAllPhotoById(accommoNo);
@@ -734,7 +730,7 @@ public class AccommoController {
 	@GetMapping("/getmember")
 	@ResponseBody
 	public String getMember() {
-		MemberVO m = mdao.findByNo(7);
+		com.example.demo.admin.vo.MemberVO m = mdao.findByNo(7);
 		ObjectMapper mapper = new ObjectMapper(); 
 		String jsonString = "";
 		try {
@@ -753,7 +749,7 @@ public class AccommoController {
 		int re = 0;	//찜 x
 		MemberVO m = (MemberVO) session.getAttribute("loginM");
 		int accommoNo = Integer.parseInt(request.getParameter("accommoNo"));
-		int memberNo = m.getMemberNo();
+		int memberNo = m.getMemberno();
 		HashMap<String, Object> map = new HashMap<>();
 		
 		map.put("memberNo", memberNo);
@@ -781,7 +777,7 @@ public class AccommoController {
 		LikeVO l = new LikeVO();
 		l.setCategory("accommo");
 		MemberVO m = (MemberVO) session.getAttribute("loginM");
-		l.setMemberNo(m.getMemberNo());
+		l.setMemberNo(m.getMemberno());
 		l.setRefNo(accommoNo);
 		
 		dao.doLike(l);
@@ -797,7 +793,7 @@ public class AccommoController {
 		LikeVO l = new LikeVO();
 		l.setCategory("accommo");
 		MemberVO m = (MemberVO) session.getAttribute("loginM");
-		l.setMemberNo(m.getMemberNo());
+		l.setMemberNo(m.getMemberno());
 		l.setRefNo(accommoNo);
 		
 		dao.unLike(l);

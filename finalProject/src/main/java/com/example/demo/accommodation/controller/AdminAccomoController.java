@@ -239,8 +239,6 @@ public class AdminAccomoController {
 		mav.addObject("a", a);
 		mav.addObject("photoList", photoList);
 		// System.out.println(photoList);
-		MemberVO m = mdao.findByNo(1);
-		session.setAttribute("loginM", m);
 		return mav;
 	}
 	
