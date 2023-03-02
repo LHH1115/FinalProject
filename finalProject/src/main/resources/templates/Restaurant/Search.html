@@ -5,8 +5,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-  /* 사이드바 래퍼 스타일 */
-  
   #page-wrapper {
     padding-left: 250px;
   }
@@ -16,7 +14,7 @@
     width: 250px;
     height: 100%;
     margin-left: -250px;
-    background: #000;
+    background: white;
     overflow-x: hidden;
     overflow-y: auto;
   }
@@ -42,17 +40,23 @@
   .sidebar-nav li a {
     display: block;
     text-decoration: none;
-    color: #999;
+    color: black;
   }
   
   .sidebar-nav li a:hover {
-    color: #fff;
+    color: red;
     background: rgba(255, 255, 255, 0.2);
   }
   
   .sidebar-nav > .sidebar-brand {
     font-size: 1.3em;
     line-height: 3em;
+  }
+  
+  table {
+  border:1 solid;
+  width: 60%;
+  table-layout: fixed;
   }
 
 .row{margin:10px; }
@@ -64,13 +68,30 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 <script type="text/javascript">
 	$(function(){
-		
+		<!-- 검색 버튼 클릭 -->
 		$("#btn_search").click(function(e){
 			e.preventDefault();
+			$.ajax({
+				url:"/restau/resetSearch",
+				success:function(data){
+				}
+			})
 			$("#f").submit();
+			alert("ok");
 		});
 		
+		$("#btn_reset").click(function(){
+			$("#f").trigger("reset");
+			$.ajax({
+				url:"/restau/resetSearch",
+				success:function(data){
+					alert(data);
+					location.href="/restau/main/search?pageNum=1&keyword=&category=0";
+				}
+			})
+		})
 		
+		<!-- 상세페이지 이동 -->
 		$(document).on("click", "#tr", function(){
 			var restauNo = $(this).attr("restauNo");
 			location.href="/restau/detail?restauNo="+restauNo;
@@ -89,17 +110,28 @@
 	<div id="page-wrapper">
 	  <!-- 사이드바 -->
 	  <div id="sidebar-wrapper">
-	  	<form action="#" id="f">
-	  	<input type="hidden" name="pageNum" value="1">
-	    <ul class="sidebar-nav">
-	      <li class="sidebar-brand">
-	        <a href="#">검색하기</a>
-	      </li>
-	      <li>검색어<input type="text"></li>
-	      <li>카테고리1<input type="text"></li>
-	      <li>카테고리2<input type="text"></li>
-	      <li><input type="button" value="검색" id="btn_search"></li>
-	    </ul>
+	  	<form action="/accommo/detailSearch" method="get" id="f">
+		  	<input type="hidden" name="pageNum" value="1">
+		    <ul class="sidebar-nav">
+		      
+		      <li>
+		      	카테고리1
+		      	<select name="category" id="category">
+		      		<option value="all">전체</option>
+		      		<option value="한식">한식</option>
+		      		<option value="일식">일식</option>
+		      		<option value="중식">중식</option>
+		      		<option value="양식">양식</option>
+		      	</select>
+		      	<input type="text" name="keyword">
+		      </li>
+		      <li class="sidebar-brand">
+		        <a href="#" id="btn_search">검색하기</a>
+		      </li>
+		      <li class="sidebar-brand">
+		        <a href="#" id="btn_reset">검색어 초기화</a>
+		      </li>
+		    </ul>
 	    </form>
 	  </div>
 	  <!-- /사이드바 -->
