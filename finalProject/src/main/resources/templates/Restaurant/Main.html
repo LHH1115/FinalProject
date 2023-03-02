@@ -18,16 +18,40 @@
 		})
 		
 		$("#btn_korean").click(function(){
-			location.href="/restau/searchC?pageNum=1&keyword=한식";
+				$.ajax({
+					url:"/restau/resetSearch",
+					success:function(data){
+						alert(data);
+						location.href="/restau/searchC?pageNum=1&keyword=한식";
+					}
+				})
 		})
 		$("#btn_western").click(function(){
-			location.href="/restau/searchC?pageNum=1&keyword=서양식";
+			$.ajax({
+				url:"/restau/resetSearch",
+				success:function(data){
+					alert(data);
+					location.href="/restau/searchC?pageNum=1&keyword=서양식";
+				}
+			})
 		})
 		$("#btn_japanese").click(function(){
-			location.href="/restau/searchC?pageNum=1&keyword=일식";
+			$.ajax({
+				url:"/restau/resetSearch",
+				success:function(data){
+					alert(data);
+					location.href="/restau/searchC?pageNum=1&keyword=일식";
+				}
+			})
 		})
 		$("#btn_china").click(function(){
-			location.href="/restau/searchC?pageNum=1&keyword=중식";
+			$.ajax({
+				url:"/restau/resetSearch",
+				success:function(data){
+					alert(data);
+					location.href="/restau/searchC?pageNum=1&keyword=중식";
+				}
+			})
 		})
 		
 		/* 인기 관광지 상세이동 */
