@@ -110,20 +110,20 @@
 	<div id="page-wrapper">
 	  <!-- 사이드바 -->
 	  <div id="sidebar-wrapper">
-	  	<form action="/accommo/detailSearch" method="get" id="f">
+	  	<form action="/restau/detailSearch" method="get" id="f">
 		  	<input type="hidden" name="pageNum" value="1">
 		    <ul class="sidebar-nav">
 		      
 		      <li>
 		      	카테고리1
-		      	<select name="category" id="category">
+		      	<select name="dscategory" id="category">
 		      		<option value="all">전체</option>
 		      		<option value="한식">한식</option>
 		      		<option value="일식">일식</option>
 		      		<option value="중식">중식</option>
-		      		<option value="양식">양식</option>
+		      		<option value="서양식">양식</option>
 		      	</select>
-		      	<input type="text" name="keyword">
+		      	<input type="text" name="dskeyword" placeholder="검색어를 입력하세요">
 		      </li>
 		      <li class="sidebar-brand">
 		        <a href="#" id="btn_search">검색하기</a>
@@ -167,24 +167,48 @@
 			
 	      	<!-- 페이징 -->
 			<hr>
-			<th:block th:if="${1 < startPage}">
-				<span th:text="이전" 
-				th:onclick="|location.href='/restau/main/search?pageNum=${startPage-1}'|"></span>
-			</th:block>
-				<th:block th:if="${totPage <= 1}">
-					<span th:text="1" 
-					th:onclick="|location.href='/restau/main/search?pageNum=1'|"></span>
+			<th:block th:if="${session.dscategory == null}">
+				<th:block th:if="${1 < startPage}">
+					<span th:text="이전" 
+					th:onclick="|location.href='/restau/main/search?pageNum=${startPage-1}'|"></span>
 				</th:block>
-			<th:block th:each="num : ${#numbers.sequence(startPage,endPage)}">
-				<th:block th:unless="${totPage < 1}">
-					<span th:text="${num}" 
-					th:onclick="|location.href='/restau/main/search?pageNum=${num}'|"></span>
+					<th:block th:if="${totPage <= 1}">
+						<span th:text="1" 
+						th:onclick="|location.href='/restau/main/search?pageNum=1'|"></span>
+					</th:block>
+				<th:block th:each="num : ${#numbers.sequence(startPage,endPage)}">
+					<th:block th:unless="${totPage < 1}">
+						<span th:text="${num}" 
+						th:onclick="|location.href='/restau/main/search?pageNum=${num}'|"></span>
+					</th:block>
+				</th:block>
+				
+				<th:block th:if="${endPage != totPage}">
+					<span th:text="다음" 
+					th:onclick="|location.href='/restau/main/search?pageNum=${endPage+1}'|"></span>
 				</th:block>
 			</th:block>
 			
-			<th:block th:if="${endPage != totPage}">
-				<span th:text="다음" 
-				th:onclick="|location.href='/restau/main/search?pageNum=${endPage+1}'|"></span>
+			<th:block th:if="${session.dscategory != null}">
+				<th:block th:if="${1 < startPage}">
+					<span th:text="이전" 
+					th:onclick="|location.href='/restau/detailSearch?pageNum=${startPage-1}'|"></span>
+				</th:block>
+					<th:block th:if="${totPage <= 1}">
+						<span th:text="1" 
+						th:onclick="|location.href='/restau/detailSearch?pageNum=1'|"></span>
+					</th:block>
+				<th:block th:each="num : ${#numbers.sequence(startPage,endPage)}">
+					<th:block th:unless="${totPage < 1}">
+						<span th:text="${num}" 
+						th:onclick="|location.href='/restau/detailSearch?pageNum=${num}'|"></span>
+					</th:block>
+				</th:block>
+				
+				<th:block th:if="${endPage != totPage}">
+					<span th:text="다음" 
+					th:onclick="|location.href='/restau/detailSearch?pageNum=${endPage+1}'|"></span>
+				</th:block>
 			</th:block>
 			<hr>
 	    </div>

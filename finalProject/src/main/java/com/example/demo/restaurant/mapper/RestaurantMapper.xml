@@ -40,6 +40,29 @@
 	WHERE RN BETWEEN ${start} AND ${end}
   </select>
   
+  <!-- 상세검색 -->
+  <select id="detailSearch" resultType="restaurantVO">
+  	SELECT *
+	FROM (
+	  	SELECT T.*, ROWNUM RN
+	  	FROM TBL_RESTAURANT T
+	  	WHERE 
+	  	CATEGORY = #{dscategory}
+	    OR ADDR LIKE '%${dskeyword}%'
+	    OR NAME LIKE '%${dskeyword}%'
+	)
+	WHERE RN BETWEEN ${start} AND ${end}
+  </select>
+  
+  <select id="findCountBydetailSearch" resultType="java.lang.Integer">
+  	SELECT COUNT(*)
+	FROM TBL_RESTAURANT
+	WHERE 
+	CATEGORY = #{dscategory}
+	OR ADDR LIKE '%${dskeyword}%'
+	OR NAME LIKE '%${dskeyword}%'
+  </select>
+  
   <!-- 아무검색어로 카운트 검색 -->
   <select id="findCountByAny" resultType="java.lang.Integer" parameterType="java.lang.String">
   	SELECT COUNT(*) FROM TBL_RESTAURANT WHERE CATEGORY LIKE '%${keyword}%' 

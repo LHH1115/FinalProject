@@ -8,7 +8,6 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
 import com.example.demo.restaurant.vo.LikeVO;
 import com.example.demo.restaurant.vo.RestaurantPhotoVO;
 import com.example.demo.restaurant.vo.RestaurantVO;
@@ -128,6 +127,21 @@ public class DBManager {
 		int re = 0;
 		SqlSession session = sqlSessionFactory.openSession(true);
 		re = session.insert("restaurantPhoto.insertPhoto", rp);
+		session.close();
+		return re;
+	}
+
+	public static List<RestaurantVO> detailSearch(HashMap<String, Object> map) {
+		SqlSession session = sqlSessionFactory.openSession();
+		List<RestaurantVO> list = session.selectList("restau.detailSearch", map);
+		session.close();
+		return list;
+	}
+
+	public static int findCountBydetailSearch(HashMap<String, Object> map) {
+		int re = 0;
+		SqlSession session = sqlSessionFactory.openSession();
+		re= session.selectOne("restau.findCountBydetailSearch", map);
 		session.close();
 		return re;
 	}

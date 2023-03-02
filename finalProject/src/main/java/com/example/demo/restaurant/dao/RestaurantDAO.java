@@ -72,6 +72,14 @@ public class RestaurantDAO {
 		return DBManager.insertPhoto(rp);
 		
 	}
+
+	public List<RestaurantVO> detailSearch(HashMap<String, Object> map) {
+		return DBManager.detailSearch(map);
+	}
+
+	public int findCountBydetailSearch(HashMap<String, Object> map) {
+		return DBManager.findCountBydetailSearch(map);
+	}
 	
 	
 }

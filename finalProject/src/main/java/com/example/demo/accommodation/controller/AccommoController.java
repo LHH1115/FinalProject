@@ -193,16 +193,13 @@ public class AccommoController {
 	
 	// 키워드 검색
 	@GetMapping("/main/search")
-	public ModelAndView search(String keyword, String category, int pageNum, HttpSession session) {
+	public ModelAndView search(String keyword, int pageNum, HttpSession session) {
 		ModelAndView mav = new ModelAndView("Accommodation/Search");
 	//			System.out.println("keyword:"+keyword);
 	//			System.out.println("category:"+category);
 		
 		if(session.getAttribute("keyword") != null) {
 			keyword = (String) session.getAttribute("keyword");
-		}
-		if(session.getAttribute("category") != null) {
-			category = (String) session.getAttribute("category");
 		}
 		if(session.getAttribute("minPrice") != null) {
 			session.removeAttribute("minPrice");
@@ -293,7 +290,6 @@ public class AccommoController {
 			endPage = totPage;
 		}
 		session.setAttribute("keyword", keyword);
-		session.setAttribute("category", category);
 		mav.addObject("totPage", totPage);
 		mav.addObject("startPage", startPage);
 		mav.addObject("endPage", endPage);
@@ -439,7 +435,6 @@ public class AccommoController {
 		session.removeAttribute("minPrice");
 		session.removeAttribute("maxPrice");
 		session.removeAttribute("keyword");
-		session.removeAttribute("category");
 		return "OK";
 	}
 	
