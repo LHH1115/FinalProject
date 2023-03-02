@@ -10,6 +10,13 @@
 		$("#content2").html($("#content1").text());
 		$("#content1").css("display","none");
 				
+		$("#deleteReply").on("click",function(e){
+			if(!confirm("삭제하시겠습니까?")){
+				e.preventDefault();
+			}
+		});
+		
+		
 	})
 
 </script>
@@ -33,7 +40,7 @@
 	<span th:text="${inquiryVo.content}" id="content1"></span>
 	<div id="content2"></div>
 	<hr>
-	<th:block th:if="${countReply==0}">
+	<th:block th:if="${replyOk==0}">
 		<h3>답변 작성</h3>
 		<form action="/admin/replyManage" method="post">
 			<textarea rows="10" cols="100" name="content" ></textarea><br>
@@ -42,14 +49,14 @@
 		</form>
 	</th:block>
 	
-	<th:block th:unless="${countReply==0}">
+	<th:block th:unless="${replyOk==0}">
 		<h3>답변 수정</h3>
 		<form action="/admin/replyUpdate" method="post">
 			<textarea rows="10" cols="100" name="content" th:text="${replyVo.content}"></textarea><br>
 			<input type="hidden" name="inquiryNo" th:value="${inquiryVo.inquiryNo}">
 			<input type="submit" value="수정">
 		</form>
-		<a th:href="@{/admin/replyDelete(no=${inquiryVo.inquiryNo})}">삭제</a>
+		<a id="deleteReply" th:href="@{/admin/replyDelete(no=${inquiryVo.inquiryNo})}">삭제</a>
 	</th:block>
 	
 	<a th:href="@{/admin/inquiryManage}">돌아가기</a>

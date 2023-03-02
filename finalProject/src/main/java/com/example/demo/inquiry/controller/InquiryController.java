@@ -30,8 +30,10 @@ public class InquiryController {
 		vo.setInquiryNo(inquiryDao.getNextNo());
 //		String content=vo.getContent();		
 		int re=inquiryDao.insertInquiry(vo);
-				
-		ModelAndView mav = new ModelAndView("redirect:/");		
+		
+			
+		ModelAndView mav = new ModelAndView("main/mainPage.html");
+			
 		return mav;
 	}
 	

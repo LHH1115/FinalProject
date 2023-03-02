@@ -19,6 +19,7 @@ public class InquiryVO {
 	private Date inqdate;
 	
 	private int replyOk;
+//	1이 답변완료, 0이 답변미완료
 	private String id;
 	
 }

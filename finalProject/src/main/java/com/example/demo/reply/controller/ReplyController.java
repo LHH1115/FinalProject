@@ -31,24 +31,26 @@ public class ReplyController {
 						int inquiryNo
 	) {
 		InquiryVO ivo=inquiryDAO.findByInquiryNo(inquiryNo);
-		int re=replyDAO.countAll(inquiryNo);
+		int replyOk=ivo.getReplyOk();
 		ReplyVO rvo=replyDAO.findByInquiryNo(inquiryNo);
 		System.out.println(ivo);
 		System.out.println(rvo);
+		System.out.println(replyOk);
+		
 		
 		model.addAttribute("inquiryVo", ivo);
-		model.addAttribute("countReply",re);
+		model.addAttribute("replyOk",replyOk);
 		model.addAttribute("replyVo",rvo);
 		return model;
 	}
 	
 	@PostMapping("/admin/replyManage")
 	public ModelAndView answerReply(ReplyVO vo) {
-		System.out.println("여기까지");
 		ModelAndView mav = new ModelAndView("redirect:/admin/inquiryManage");
 		int no=replyDAO.getNextNo();
 		vo.setReplyNo(no);	
 		replyDAO.insertReply(vo);
+		inquiryDAO.updateReplyOk(vo.getInquiryNo());
 		return mav;
 	}
 	
@@ -61,9 +63,9 @@ public class ReplyController {
 	
 	@GetMapping("/admin/replyDelete")
 	public ModelAndView deleteReply(int no) {
-		System.out.println("dd");
 		ModelAndView mav = new ModelAndView("redirect:/admin/inquiryManage");
 		replyDAO.deleteReply(no);
+		inquiryDAO.updateReplyNo(no);
 		return mav;
 	}
 	

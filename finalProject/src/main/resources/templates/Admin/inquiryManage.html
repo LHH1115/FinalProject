@@ -10,16 +10,25 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript">   
+
+	$(function(){
+		$("#headers").load("/header.html");  		//헤더 인클루드
+		//$("#footers").load("layout/footer.html");  		//푸터부분 인클루드
+				
+	})
 	
 </script>
 </head>
 <body>
-<div th:insert="/main/header.html" id="headers"></div>
+<div id="headers"></div>
 <!-- =============================================================================================================  -->
 
 <div class="container">
 <hr>
 <h2>관리자 페이지</h2>
+
+
+<h2>LIST</h2>
 
 <button type="button" onclick="location.href='/admin/memberManage'">회원관리</button> &nbsp;&nbsp;
 <button type="button" onclick="location.href='/admin/inquiryManage'">문의사항관리</button>&nbsp;&nbsp;
@@ -70,7 +79,6 @@
 				</td>
 				<td th:text="${l.category}"></td>
 				<td th:text="${l.inqdate}"></td>
-				 <!-- 
 				<th:block th:if="${l.replyOk>0}">
 				<td>
 				완료
@@ -80,7 +88,7 @@
 				<td>
 				미완료
 				</td>
-				</th:block>-->
+				</th:block>
 			</tr>
 		</tbody>
 	</table>
