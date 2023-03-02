@@ -21,8 +21,8 @@ public class SpringConfig {
 		JavaMailSenderImpl r = new JavaMailSenderImpl();
 		r.setHost("smtp.gmail.com");
 		r.setPort(587);
-		r.setUsername("");      //자신의 gmail을 써 줍니다.
-		r.setPassword("");		//발행된 암호를 써 줍니다.
+		r.setUsername("hohyung95@gmail.com");      //자신의 gmail을 써 줍니다.
+		r.setPassword("qfsahexfeavasnzx");		//발행된 암호를 써 줍니다.
 		r.setDefaultEncoding("UTF-8");
 		
 		Properties prop = new Properties();

@@ -27,7 +27,7 @@ public static SqlSessionFactory sqlSessionFactory;
 	
 	static {
 		try {
-			String resource = "com/example/demo/db/SqlMapConfig.xml";
+			String resource = "com/example/demo/member/db/SqlMapConfig.xml";
 			InputStream inputStream = Resources.getResourceAsStream(resource);
 			sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 			

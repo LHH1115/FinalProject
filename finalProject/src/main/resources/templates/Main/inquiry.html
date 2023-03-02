@@ -33,6 +33,7 @@
 	<hr>
 	
 	<form action = "/main/inquiry" method="post">
+	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 		<div class="form-group">
 			<label for="Title">제목</label> 
 			<input type="text" name="title" class="form-control" placeholder="Enter title" id="title">

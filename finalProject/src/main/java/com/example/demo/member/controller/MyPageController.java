@@ -113,8 +113,8 @@ public class MyPageController {
 	@GetMapping("/myPage/myReservation")
 	public void ReservationPage(Model model, HttpSession session, int pageNUM) {
 		String id = (String) session.getAttribute("id");
-		
-		totalRecord = mp_dao.reservTotalRecord();
+		int memberno = m_dao.findById(id).getMemberno();
+		totalRecord = mp_dao.reservTotalRecord(memberno);
 		totalPage = (int)Math.ceil(totalRecord/(double)pageSIZE);
 		
 		int start = (pageNUM-1)*pageSIZE+1;
@@ -122,7 +122,7 @@ public class MyPageController {
 		
 		
 		List<ReservationVO> list = null;
-		int memberno = m_dao.findById(id).getMemberno();
+		
 		list = mp_dao.findMyReserv(memberno,start,end);
 		
 		for(ReservationVO r : list) {
@@ -166,20 +166,33 @@ public class MyPageController {
 	@GetMapping("/myPage/myLike")
 	public void LikePage(Model model, HttpSession session, String category, int pageNUM) {
 		String id = (String) session.getAttribute("id");
-		totalRecord = mp_dao.likeTotalRecord();
+		int memberno = m_dao.findById(id).getMemberno();
+		totalRecord = mp_dao.likeTotalRecord(memberno);
 		totalPage = (int)Math.ceil(totalRecord/(double)pageSIZE);
-		
+		System.out.println("totalRecord"+totalRecord);
+		System.out.println(totalPage);
 		int start = (pageNUM-1)*pageSIZE+1;
 		int end = start + pageSIZE - 1;
 		
 		
 		List<LikeVO> list = null;
-		int memberno = m_dao.findById(id).getMemberno();
+		
 		list = (ArrayList<LikeVO>) mp_dao.findMyLike(memberno, category, start, end);
 		
 		ArrayList<MyLikeVO> mylist = new ArrayList<MyLikeVO>();
-		
-		if(category == "accmmodation") {
+		if(category.equals("accommo")) {
+			for(LikeVO l : list) {
+				MyLikeVO m = new MyLikeVO();
+				AccommodationVO acc =  mp_dao.findAcc(l.getRefno());
+				m.setName(acc.getName());
+				String realPath ="/photo/Accommodation/"+acc.getCategory()+"/"+acc.getName()+"/acc1.jpeg";
+				System.out.println(realPath);
+				m.setPhotopath(realPath);
+				m.setLink("/accommo/detail?accommoNo="+l.getRefno());
+				mylist.add(m);
+				
+			}
+		}else if(category == "attract") {
 			for(LikeVO l : list) {
 				MyLikeVO m = new MyLikeVO();
 				AccommodationVO acc =  mp_dao.findAcc(l.getRefno());
@@ -189,17 +202,7 @@ public class MyPageController {
 				mylist.add(m);
 				
 			}
-		}else if(category == "attraction") {
-			for(LikeVO l : list) {
-				MyLikeVO m = new MyLikeVO();
-				AccommodationVO acc =  mp_dao.findAcc(l.getRefno());
-				m.setName(acc.getName());
-				m.setPhotopath(mp_dao.findaccphoto(acc.getAccommoNo()));
-				m.setLink("/accommo/detail?accommoNo="+l.getRefno());
-				mylist.add(m);
-				
-			}
-		}else if(category == "restaurant") {
+		}else if(category == "restau") {
 			for(LikeVO l : list) {
 				MyLikeVO m = new MyLikeVO();
 				AccommodationVO acc =  mp_dao.findAcc(l.getRefno());
@@ -243,8 +246,8 @@ public class MyPageController {
 		String id = (String) session.getAttribute("id");
 		int re = 0;
 		int memberno = m_dao.findById(id).getMemberno();
-		if(point != 0) {
 		re = mp_dao.roulette_count(memberno);
+		if(point != 0) {
 		re = mp_dao.point_update(memberno, point);
 		re = mp_dao.point_insert(memberno, point);
 		System.out.println(re);
@@ -255,15 +258,16 @@ public class MyPageController {
 	@GetMapping("/myPage/myInquiry")
 	public void findMyInquiry(Model model, HttpSession session,int pageNUM) {
 		String id = (String) session.getAttribute("id");
-		totalRecord = mp_dao.inquiryTotalRecord();
+		int memberno = m_dao.findById(id).getMemberno();
+		totalRecord = mp_dao.inquiryTotalRecord(memberno);
 		totalPage = (int)Math.ceil(totalRecord/(double)pageSIZE);
 		
 		int start = (pageNUM-1)*pageSIZE+1;
 		int end = start + pageSIZE - 1;
 		
 		List<InquiryVO> list = null;
-		int memberno = m_dao.findById(id).getMemberno();
 		list = mp_dao.findMyInquiry(memberno,start,end);
+		System.out.println(list);
 		
 		for(InquiryVO l: list) {
 			if(mp_dao.findMyReply(l.getInquiryNo()) !=null) {
@@ -322,7 +326,7 @@ public class MyPageController {
 	
 	@GetMapping("/myPage/deleteInquiry")
 	public ModelAndView deleteInquiry(int inquiryno, HttpSession session) {
-		ModelAndView mav = new ModelAndView("redirect:/myPage/myInquiry?id="+session.getAttribute("id"));
+		ModelAndView mav = new ModelAndView("redirect:/myPage/myInquiry?pageNUM=1");
 		int re = -1;
 		re = mp_dao.deleteInquiry(inquiryno);
 		

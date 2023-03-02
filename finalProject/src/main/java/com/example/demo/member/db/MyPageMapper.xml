@@ -57,7 +57,7 @@
   </select>
   
   <select id="findAccphoto" resultType="accommoPhotoVO">
-  	select * from tbl_accommophoto where accommono = #{accommono}
+  	select * from tbl_accommophoto where accommono = #{accommono} and orders = 1
   </select>
   
   <update id="useRcount" parameterType="memberVO" >
@@ -103,15 +103,15 @@
   </select>
   
   <select id="reservTotalRecord" resultType="java.lang.Integer" >
-  	select count(*) from tbl_reservation
+  	select count(*) from tbl_reservation where memberno = #{memberno}
   </select>
   
   <select id="likeTotalRecord" resultType="java.lang.Integer" >
-  	select count(*) from tbl_like
+  	select count(*) from tbl_like where memberno = #{memberno}
   </select>
   
   <select id="inquiryTotalRecord" resultType="java.lang.Integer" >
-  	select count(*) from tbl_inquiry
+  	select count(*) from tbl_inquiry where memberno = #{memberno}
   </select>
   
 </mapper>

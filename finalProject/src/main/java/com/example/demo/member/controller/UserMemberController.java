@@ -75,7 +75,7 @@ public class UserMemberController {
 		
 		
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
-		mailMessage.setFrom("");   //자신의 gmail을 써 줍니다.
+		mailMessage.setFrom("hohyung95@gmail.com");   //자신의 gmail을 써 줍니다.
 		mailMessage.setTo(email);
 		mailMessage.setSubject("인증코드 전송");
 		mailMessage.setText(code);
@@ -130,7 +130,7 @@ public class UserMemberController {
 	@RequestMapping("/myPage/loginok")
 	public ModelAndView getLoginSession(HttpSession session) {
 		
-		ModelAndView mav = new ModelAndView("redirect:/");
+		ModelAndView mav = new ModelAndView("redirect:/myPage/updateMyInfo");
 		//인증된 회원의 정보를 갖고오기 위해서 먼저 시큐리티의 인증객체가 필요
 		Authentication authentication = 
 							SecurityContextHolder.getContext().getAuthentication();

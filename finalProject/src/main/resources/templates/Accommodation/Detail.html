@@ -307,7 +307,7 @@ var data =  {"accommoNo" : $("#accommoNo").val()};
 				}
 			$("#totDate").val(diffDate+"박/"+(diffDate+1)+"일");
 			
-			var price = $("#price").text();
+			var price = $("#price").val();
 			var headCount = $("#headCount").val();
 			var totalPrice = price*diffDate*headCount;
 			if (isNaN(totalPrice)) {
@@ -331,7 +331,7 @@ var data =  {"accommoNo" : $("#accommoNo").val()};
 				}
 			$("#totDate").val(diffDate+"박/"+(diffDate+1)+"일");
 			
-			var price = $("#price").text();
+			var price = $("#price").val();
 			var headCount = $("#headCount").val();
 			var totalPrice = price*diffDate*headCount;
 			if (isNaN(totalPrice)) {
@@ -342,7 +342,7 @@ var data =  {"accommoNo" : $("#accommoNo").val()};
 		
 		$("body").on("change", "#headCount", function(){
 			
-			var price = $("#price").text();
+			var price = $("#price").val();
 			var headCount = $("#headCount").val();
 			var totalPrice = price*diffDate*headCount;
 			if (isNaN(totalPrice)) {
@@ -371,6 +371,7 @@ var data =  {"accommoNo" : $("#accommoNo").val()};
 		<span style="font-size: 1.2em; font-weight: lighter;" th:text="${a.phone}"></span>
 		<span style="font-size: 1.3em; font-weight: normal;">&nbsp;&nbsp;[가격] &nbsp;</span>
 		<span style="font-size: 1.2em; font-weight: lighter;" th:text="|${a.price}원|"></span>
+		<input type="text" id="price" th:value="${a.price}">
 	</div>
 	
 	<div class="items-slider-container js-items-slider-container">
@@ -414,6 +415,7 @@ var data =  {"accommoNo" : $("#accommoNo").val()};
 		<button id="btnPay">결제하기</button>
 		<hr>
 		<form action="/accommo/reservation" method="post" id="payok">
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 			입실일자 <input type="date" name="date_s" id="date_s">
 			퇴실일자 <input type="date" name="date_e" id="date_e">
 			총 일자 <input type="text" id="totDate" readonly="readonly">

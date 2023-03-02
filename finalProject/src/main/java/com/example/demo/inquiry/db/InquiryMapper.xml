@@ -22,7 +22,7 @@
    	</select> 	
    
 	<insert id="insertInquiry" parameterType="InquiryVO">
-  		insert into tbl_inquiry(inquiryNo,memberNo,title,content,category,inqdate,replyOk) values(#{inquiryNo},5,#{title},#{content},#{category},sysdate,0)	
+  		insert into tbl_inquiry(inquiryNo,memberNo,title,content,category,inqdate,replyOk) values(#{inquiryNo},#{memberNo},#{title},#{content},#{category},sysdate,0)	
 	</insert>
 	
 	<update id="updateReplyOk" parameterType="Integer">

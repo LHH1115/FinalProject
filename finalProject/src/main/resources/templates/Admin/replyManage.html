@@ -43,6 +43,7 @@
 	<th:block th:if="${replyOk==0}">
 		<h3>답변 작성</h3>
 		<form action="/admin/replyManage" method="post">
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 			<textarea rows="10" cols="100" name="content" ></textarea><br>
 			<input type="hidden" name="inquiryNo" th:value="${inquiryVo.inquiryNo}">
 			<input type="submit" value="등록">
@@ -52,6 +53,7 @@
 	<th:block th:unless="${replyOk==0}">
 		<h3>답변 수정</h3>
 		<form action="/admin/replyUpdate" method="post">
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 			<textarea rows="10" cols="100" name="content" th:text="${replyVo.content}"></textarea><br>
 			<input type="hidden" name="inquiryNo" th:value="${inquiryVo.inquiryNo}">
 			<input type="submit" value="수정">

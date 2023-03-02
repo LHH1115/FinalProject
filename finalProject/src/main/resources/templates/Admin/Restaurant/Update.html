@@ -93,6 +93,7 @@
 	<!-- 사진 -->
 	
 	<form action="/admin/restau/imgUpdate" method="post" id="form_img" enctype="multipart/form-data">
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 		<th:block th:each="p: ${photoList}">
 			<div style="float: left; margin-left: 10px">
 				<img alt="" th:src="|/${p.realPath}|" width="350" height="350" 
@@ -114,6 +115,7 @@
 	<div style="clear: left">
 		<hr>
 		<form action="/admin/restau/updateSubmit" method="post" id="updateF">
+			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 			<input type="number" name=restauNo th:value="${r.restauNo}" id="restauNo" readonly="readonly">
 			주소: <input type="text" name="addr" th:value="${r.addr}">
 			전화: <input type="text" name="phone" th:value="${r.phone}">

@@ -23,7 +23,7 @@ import com.example.demo.accommodation.vo.AccommodationVO;
 import com.example.demo.accommodation.vo.LikeVO;
 import com.example.demo.accommodation.vo.PhotoListVO;
 import com.example.demo.accommodation.vo.ReservationVO;
-import com.example.demo.admin.dao.MemberDAO;
+import com.example.demo.member.dao.UserMemberDAO;
 import com.example.demo.member.vo.MemberVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,7 +44,7 @@ public class AccommoController {
 	private AccommoDAO dao;
 	
 	@Autowired
-	private MemberDAO mdao;
+	private UserMemberDAO mdao;
 
 	@GetMapping("/main")
 	public String accommoMain(Model model, HttpSession session) {
@@ -700,7 +700,7 @@ public class AccommoController {
 	// 결제 진행
 	@PostMapping("/reservation")
 	public ModelAndView payok(String imp_uid, String merchant_uid, 
-			String paid_amount, String apply_num, ReservationVO r) {
+			String paid_amount, String apply_num, ReservationVO r, HttpSession session) {
 		ModelAndView mav = new ModelAndView("redirect:/accommo/main");
 		System.out.println("결제완료");
 //		System.out.println("고유 ID: "+imp_uid);
@@ -711,8 +711,8 @@ public class AccommoController {
 //		System.out.println("date_e: "+r.getDate_e());
 		
 		// ReservationVO(reserveNo=0, memberNo=0, accommoNo=0, totalPrice=0, 
-		// date_s=2023-02-15, date_e=2023-02-23, headCount=3, imp_uid=imp_620242687294)
-		r.setMemberNo(7);
+		// date_s=2023-02-15, date_e=2023-02-23, headCount=3, imp_uid=imp_620242687294
+		r.setMemberNo(mdao.findById((String)session.getAttribute("id")).getMemberno());
 		r.setTotalPrice(100);
 		
 //		System.out.println(r);
@@ -729,8 +729,8 @@ public class AccommoController {
 	// 결제 위한 로그인 멤버 정보 불러오기
 	@GetMapping("/getmember")
 	@ResponseBody
-	public String getMember() {
-		com.example.demo.admin.vo.MemberVO m = mdao.findByNo(7);
+	public String getMember(HttpSession session) {
+		MemberVO m = mdao.findById((String)session.getAttribute("id"));
 		ObjectMapper mapper = new ObjectMapper(); 
 		String jsonString = "";
 		try {

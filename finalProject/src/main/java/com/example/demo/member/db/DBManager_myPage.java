@@ -27,7 +27,7 @@ public static SqlSessionFactory sqlSessionFactory;
 	
 	static {
 		try {
-			String resource = "com/example/demo/db/SqlMapConfig.xml";
+			String resource = "com/example/demo/member/db/SqlMapConfig.xml";
 			InputStream inputStream = Resources.getResourceAsStream(resource);
 			sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 			
@@ -250,23 +250,23 @@ public static SqlSessionFactory sqlSessionFactory;
 	}
 	
 	
-	public static int reservTotalRecord() {
+	public static int reservTotalRecord(int memberno) {
 		SqlSession session = sqlSessionFactory.openSession(true);
-		int re = session.selectOne("mypage.reservTotalRecord");
+		int re = session.selectOne("mypage.reservTotalRecord", memberno);
 		session.close();
 		return re;
 	}
 	
-	public static int likeTotalRecord() {
+	public static int likeTotalRecord(int memberno) {
 		SqlSession session = sqlSessionFactory.openSession(true);
-		int re = session.selectOne("mypage.likeTotalRecord");
+		int re = session.selectOne("mypage.likeTotalRecord",memberno);
 		session.close();
 		return re;
 	}
 	
-	public static int inquiryTotalRecord() {
+	public static int inquiryTotalRecord(int memberno) {
 		SqlSession session = sqlSessionFactory.openSession(true);
-		int re = session.selectOne("mypage.inquiryTotalRecord");
+		int re = session.selectOne("mypage.inquiryTotalRecord", memberno);
 		session.close();
 		return re;
 	}

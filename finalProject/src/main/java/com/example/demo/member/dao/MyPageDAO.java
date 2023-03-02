@@ -90,16 +90,16 @@ public class MyPageDAO {
 		return DBManager_myPage.pointTotalRecord();
 	}
 	
-	public int reservTotalRecord() {
-		return DBManager_myPage.reservTotalRecord();
+	public int reservTotalRecord(int memberno) {
+		return DBManager_myPage.reservTotalRecord(memberno);
 	}
 	
-	public int likeTotalRecord() {
-		return DBManager_myPage.likeTotalRecord();
+	public int likeTotalRecord(int memberno) {
+		return DBManager_myPage.likeTotalRecord(memberno);
 	}
 	
-	public int inquiryTotalRecord() {
-		return DBManager_myPage.inquiryTotalRecord();
+	public int inquiryTotalRecord(int memberno) {
+		return DBManager_myPage.inquiryTotalRecord(memberno);
 	}
 	
 	
