@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src='https://code.jquery.com/jquery-3.6.3.min.js'></script>
+<script type="text/javascript">
+$(function(){
+	$("#btnUpdate").click(function(){
+		if($("#reply").text()== "아직 답변이 달리지 않은 문의입니다."){
+			location.href = "/myPage/updateInquiry?inquiryno="+$("#no").text();
+		}else{
+			alert("답변이 달린 질문은 수정하실 수 없습니다.")
+		}
+	});
+	
+	$("#btnDelete").click(function(){
+		if(confirm("정말로 삭제하겠습니까?")){
+			location.href = "/myPage/deleteInquiry?inquiryno="+$("#no").text();
+		}
+		
+	});
+});
+</script>
+</head>
+<body>
+<h1>질문</h1>
+<span th:text="${inquiryno}" id="no"></span>
+<div>
+<h3 th:text="'제목:'+${i_title}"></h3>
+<span th:text="'날짜:'+${i_inqdate}"></span><br>
+<textarea rows="30" cols="30" th:text="${i_content}" readonly="readonly"></textarea>
+</div>
+<button id="btnUpdate">수정</button>
+<button id="btnDelete">삭제</button>
+<h1>답변</h1>
+<div>
+<span th:text="'날짜:'+${r_repdate}"></span><br>
+<textarea rows="30" cols="30" th:text="${r_content}" readonly="readonly" id="reply"></textarea>
+</div>
+
+</body>
+</html>

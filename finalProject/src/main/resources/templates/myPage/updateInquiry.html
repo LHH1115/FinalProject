@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>질문수정</h1>
+<form action="/myPage/updateInquiry" method="post">
+<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+<input type="hidden" th:value="${i.inquiryNo}" name="inquiryNo">
+	제목:<input type="text" th:value="${i.title}" name="title"><br>
+	<span th:text="'날짜:'+${i.inqdate}"></span><br>
+	내용:<br>
+	<textarea rows="30" cols="30" th:text="${i.content}" name="content"></textarea><br>
+	<input type="submit" value="수정">
+	
+</form>
+
+
+</body>
+</html>
