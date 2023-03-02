@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mypage">
+  <select id="findById" resultType="memberVO">
+  	select * from tbl_member where id = #{id}
+  </select>	
+  
+  <select id="findNoById">
+  	select memberno from tbl_member where id = #{id}
+  </select>
+  
+  <update id="updateInfo" parameterType="memberVO">
+  	update tbl_member set name = #{name}, jumin = #{jumin}, addr = #{addr}, postcode = #{postcode}, email = #{email}, phone = #{phone} where id = #{id}
+  </update>
+  
+  
+  <select id="findMyPoint" resultType="EventVO">
+  	select * from (
+     select T.*, rownum rn
+     from  tbl_event T
+     where memberno = #{memberno}
+   )
+   where rn between #{start} and #{end}
+  </select>
+  
+  <select id="findMyReserv" resultType="ReservationVO">
+  	select * from (
+     select T.*, rownum rn
+     from  tbl_reservation T
+     where memberno = #{memberno}
+   )
+   where rn between #{start} and #{end}
+  </select>
+  
+  <select id="findAccommo" resultType="AccommodationVO">
+  	select * from tbl_accommodation where accommono = #{accommono}
+  </select>
+  
+  <insert id="insertReview" parameterType="ReviewVO">
+  	insert into tbl_review(reviewno, memberno, title, accommoNo, content, stars) values(seq_review.nextval,#{memberNo},#{title},#{accommoNo},#{content},#{stars})
+  </insert>		
+  
+  <select id="findReview" resultType="Integer">
+  	select count(*) from tbl_review where accommono = #{accommono} and memberno = #{memberno}
+  </select>
+  
+  <select id="findMyLike" resultType="likeVO">
+  	select * from (
+     select T.*, rownum rn
+     from  tbl_like T
+     where memberno = #{memberno} and category = #{category}
+   )
+   where rn between #{start} and #{end}
+  	
+  </select>
+  
+  <select id="findAccphoto" resultType="accommoPhotoVO">
+  	select * from tbl_accommophoto where accommono = #{accommono}
+  </select>
+  
+  <update id="useRcount" parameterType="memberVO" >
+  	update tbl_member set roulettecount = roulettecount-1 where memberno = #{memberno}
+  </update>
+  
+   <update id="updatePoint" parameterType="memberVO">
+  	update tbl_member set point = point+#{point} where memberno = #{memberno}
+  </update>
+  
+  <insert id="insertEvent" parameterType="eventVO">
+  	insert into tbl_event(eventno, memberno, eventdate, category, amount) values(seq_eventno.nextval,#{memberno},to_char(sysdate,'YYYY-MM-DD'),'룰렛보상',#{point})
+  </insert>
+  
+  <select id="findInquiry" resultType="inquiryVO">
+	<!-- select * from tbl_inquiry where memberno = #{memberno}   -->
+	select * from (
+     select T.*, rownum rn
+     from  tbl_inquiry T
+     where memberno = #{memberno}
+   )
+   where rn between #{start} and #{end}
+  </select>
+  
+  <select id="findInquiryByNo" resultType="inquiryVO">
+	select * from tbl_inquiry where inquiryno = #{inquiryno}  
+  </select>
+  
+  <select id="findReply" resultType="replyVO">
+	select * from tbl_reply where inquiryno = #{inquiryno}  
+  </select>
+  
+  <update id="updateInquiry" parameterType="inquiryVO">
+  	update tbl_inquiry set title = #{title} , content = #{content} where inquiryno = #{inquiryNo}  
+  </update>
+  
+  <delete id="deleteInquiry">
+  	delete tbl_inquiry where inquiryno = #{inquiryNo}
+  </delete>
+  
+  <select id="pointTotalRecord" resultType="java.lang.Integer" >
+  	select count(*) from tbl_event
+  </select>
+  
+  <select id="reservTotalRecord" resultType="java.lang.Integer" >
+  	select count(*) from tbl_reservation
+  </select>
+  
+  <select id="likeTotalRecord" resultType="java.lang.Integer" >
+  	select count(*) from tbl_like
+  </select>
+  
+  <select id="inquiryTotalRecord" resultType="java.lang.Integer" >
+  	select count(*) from tbl_inquiry
+  </select>
+  
+</mapper>
