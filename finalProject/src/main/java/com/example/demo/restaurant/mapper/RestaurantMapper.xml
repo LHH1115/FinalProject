@@ -47,7 +47,7 @@
 	  	SELECT T.*, ROWNUM RN
 	  	FROM TBL_RESTAURANT T
 	  	WHERE 
-	  	CATEGORY = #{dscategory}
+	  	CATEGORY LIKE '%${dscategory}%'
 	    OR ADDR LIKE '%${dskeyword}%'
 	    OR NAME LIKE '%${dskeyword}%'
 	)
@@ -58,7 +58,7 @@
   	SELECT COUNT(*)
 	FROM TBL_RESTAURANT
 	WHERE 
-	CATEGORY = #{dscategory}
+	CATEGORY LIKE '%${dscategory}%'
 	OR ADDR LIKE '%${dskeyword}%'
 	OR NAME LIKE '%${dskeyword}%'
   </select>
