@@ -35,6 +35,7 @@ public class RentcarController_manager {
 	
 	@PostMapping("/admin/rentcar/update")
 	public ModelAndView update(RentcarVO vo, HttpServletRequest request) {
+		System.out.println("vo:"+vo);
 		ModelAndView mav = new ModelAndView("redirect:/rentcar/Detail?carNo="+vo.getCarNo());
 		String fname=vo.getUploadFile().getOriginalFilename();
 		String old_realPath = vo.getRealPath();

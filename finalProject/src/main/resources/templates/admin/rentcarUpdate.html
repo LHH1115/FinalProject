@@ -44,6 +44,7 @@
 			<h3>차량 사진</h3>
 			<img th:src="${session.detail.realPath}">
 			<input type="file" name="uploadFile"><br>
+			<input type="hidden" name="photoPath" th:value="${session.detail.photoPath}" id="photoPath">
 			<input type="hidden" name="realPath" th:value="${session.detail.realPath}" id="realPath">
 			<h3>분류</h3>
 			<input type="text" name="category" th:value="${session.detail.category}" id="category">
