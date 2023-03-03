@@ -33,19 +33,26 @@
   	SELECT *FROM (
   	SELECT T.*, ROWNUM RN
   	FROM TBL_ATTRACTION T
-  	WHERE CATEGORY LIKE '%${keyword}%'
-    OR ADDR LIKE '%${keyword}%'
-    OR NAME LIKE '%${keyword}%'
+  	WHERE
+    (ADDR LIKE '%'||#{keyword}||'%'
+    OR NAME LIKE '%'||#{keyword}||'%')
+    <if test="category!=null and !category.equals('')">
+    	and category like '%'||#{category}||'%'
+    </if>
 	)
 	WHERE RN BETWEEN ${start} AND ${end}
   </select>
   
   <!-- 아무검색어로 카운트 검색 -->
   <select id="findCountByAny" resultType="java.lang.Integer" parameterType="java.lang.String">
-  	SELECT COUNT(*) FROM TBL_ATTRACTION WHERE CATEGORY LIKE '%${keyword}%' 
-  	OR ADDR LIKE '%${keyword}%'
-  	OR NAME LIKE '%${keyword}%'
+  	SELECT COUNT(*) FROM TBL_ATTRACTION WHERE 
+  	(ADDR LIKE '%'||#{keyword}||'%'
+  	OR NAME LIKE '%'||#{keyword}||'%')
+    <if test="category!=null and !category.equals('')">
+    	and category like '%'||#{category}||'%'
+    </if>
   </select>
+  
   
   <!-- 사진 순서(Orders)대로 가져오기  -->
   <select id="findAllPhotoById" resultType="attractVO" parameterType="java.lang.Integer">

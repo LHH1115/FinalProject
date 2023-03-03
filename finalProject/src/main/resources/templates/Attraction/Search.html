@@ -66,10 +66,12 @@
 	$(function(){
 		
 		$("#btn_search").click(function(e){
-			e.preventDefault();
-			$("#f").submit();
-		});
-		
+			var keyword=$("#keyword").val();
+			if(keyword == null || keyword == ""){
+				alert("검색어를 입력하세요");
+				e.preventDefault();
+			}
+		})
 		
 		$(document).on("click", "#tr", function(){
 			var attractNo = $(this).attr("attractNo");
@@ -89,19 +91,31 @@
 	<div id="page-wrapper">
 	  <!-- 사이드바 -->
 	  <div id="sidebar-wrapper">
-	  	<form action="#" id="f">
+  	<form action="/attract/main/search" id="form_search">
 	  	<input type="hidden" name="pageNum" value="1">
 	    <ul class="sidebar-nav">
 	      <li class="sidebar-brand">
 	        <a href="#">검색하기</a>
 	      </li>
-	      <li>검색어<input type="text"></li>
-	      <li>카테고리1<input type="text"></li>
-	      <li>카테고리2<input type="text"></li>
-	      <li><input type="button" value="검색" id="btn_search"></li>
+	      <li>검색어 : <input type="text" name="keyword" id="keyword"></li>
+	      	<li>
+	      	<select name="category">
+				<option value="">===카테고리===</option>
+				<option value="공원">공원</option>
+				<option value="박물관">박물관</option>
+				<option value="숲">숲</option>
+				<option value="오름">오름</option>
+				<option value="테마파크">테마파크</option>
+			</select>
+			</li>
+	      <li>
+	      <input type="submit" value="검색" id="btn_search" class="btn btn-primary">
+	      </li>
 	    </ul>
-	    </form>
-	  </div>
+	    <input type="hidden" name="check" value="check">
+    </form>
+  	</div>
+	  
 	  <!-- /사이드바 -->
 	
 	  <!-- 본문 -->

@@ -3,17 +3,22 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="like">
+	
+  <select id="maxno" resultType="Integer">
+  	select nvl(max(likeno),0)+1 from tbl_like
+  </select>	
+
   <!-- 찜 많은 순서로 정렬 -->
   <select id="findMostLike" resultType="likeVO" parameterType="java.lang.Integer">
-  	SELECT refNo FROM TBL_LIKE WHERE category = 'attract' GROUP BY refNo ORDER BY COUNT(*) DESC FETCH FIRST #{count} ROWS ONLY
+  	SELECT refNo FROM TBL_LIKE WHERE category = 'accommo' GROUP BY refNo ORDER BY COUNT(*) DESC FETCH FIRST #{count} ROWS ONLY
   </select>
   
   <!-- 로그인 유저 찜 확인하기 -->
   <select id="findLikeByM" resultType="likeVO">
-  	SELECT refNo FROM TBL_LIKE WHERE category = 'attract' AND memberNo = #{memberNo} AND refNo = #{attractNo}
+  	SELECT * FROM TBL_LIKE WHERE category = #{category} AND memberNo = #{memberNo} AND refNo = #{carNo}
   </select>
   
-  <!-- 찜하기 SEQ_LIKENO -->
+  <!-- 찜하기 -->
   <insert id="doLike" parameterType="likeVO">
   	INSERT INTO TBL_LIKE(LIKENO, MEMBERNO, CATEGORY, REFNO) VALUES(#{likeNo}, #{memberNo}, #{category}, #{refNo})
   </insert>

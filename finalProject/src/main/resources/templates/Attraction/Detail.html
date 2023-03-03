@@ -172,6 +172,7 @@
 		
 		// 찜하기
 		$("#btn_dolike").click(function(){
+			console.log(data);
 			$.ajax({
 				url:"/attract/dolike",
 				data:data,
@@ -186,6 +187,7 @@
 		
 		// 찜해제
 		$("#btn_unlike").click(function(){
+			console.log(data);
 			$.ajax({
 				url:"/attract/unlike",
 				data:data,
@@ -283,8 +285,6 @@
 		<h5 th:text="${infoList.parkingamount}"></h5>
 		<h4>편의시설</h4>
 		<h5 th:text="${infoList.facilities}"></h5>
-	
-	
 	
 </body>
 </html>

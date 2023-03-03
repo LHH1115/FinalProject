@@ -13,8 +13,11 @@
 	$(function(){
 		/* 검색 버튼 클릭 */
 		$("#btn_search").click(function(e){
-			e.preventDefault();
-			$("#form_search").submit();
+			var keyword=$("#keyword").val();
+			if(keyword == null || keyword == ""){
+				alert("검색어를 입력하세요");
+				e.preventDefault();
+			}
 		})
 		
 		$("#btn_rise").click(function(){
@@ -48,14 +51,9 @@
 	<div>
 		<form action="/attract/main/search" id="form_search" method="get">
 			<input type="hidden" name="pageNum" value="1">
-			검색어 : <input type="text" name="keyword">
-			<select name="category">
-				<option value="0">카테고리</option>
-				<option value="1">카테고리1</option>
-				<option value="2">카테고리2</option>
-				<option value="3">카테고리3</option>
-			</select>
-			<input type="button" id="btn_search" value="검색" class="btn btn-primary">
+			검색어 : <input type="text" name="keyword" id="keyword">
+			<input type="submit" id="btn_search" value="검색" class="btn btn-primary">
+			<input type="hidden" name="check" value="check">
 		</form>
 	</div>
 	<hr>

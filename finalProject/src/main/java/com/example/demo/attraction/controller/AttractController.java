@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.admin.dao.MemberDAO;
 import com.example.demo.admin.vo.MemberVO;
 import com.example.demo.attraction.dao.AttractionDAO;
 import com.example.demo.attraction.vo.AttractionInfoVO;
@@ -23,6 +24,7 @@ import com.example.demo.attraction.vo.AttractionPhotoVO;
 import com.example.demo.attraction.vo.AttractionVO;
 import com.example.demo.attraction.vo.InfoListVO;
 import com.example.demo.attraction.vo.LikeVO;
+import com.example.demo.like.dao.LikeDAO;
 
 import lombok.Setter;
 
@@ -38,7 +40,34 @@ public class AttractController {
 	
 	@Autowired
 	private AttractionDAO dao;
-
+	
+	@Autowired
+	private MemberDAO mdao;
+	
+	@Autowired
+	private LikeDAO ldao;
+	
+	public String render_category(String acategory) {
+		if(acategory.contains("공원")) {
+			acategory="공원";
+		}else if(acategory.contains("박물관")) {
+			acategory="박물관";
+		}else if(acategory.contains("숲")) {
+			acategory="숲";
+		}else if(acategory.contains("오름")) {
+			acategory="오름";
+		}else if(acategory.contains("테마파크")) {
+			acategory="테마파크";
+		}else {
+			Random r = new Random();
+			int re=r.nextInt(4);
+			String[] c = {"공원","박물관","숲","오름","테마파크"};
+			acategory = c[re];
+		}
+		return acategory;
+	}
+	
+	
 	@GetMapping("/main")
 	public String attractMain(Model model, HttpSession session) {
 		session.removeAttribute("keyword");		// 페이징 처리 세션 제거
@@ -65,10 +94,13 @@ public class AttractController {
 					AttractionVO forPhoto = new AttractionVO();
 					forPhoto = photo_list.get(0);
 					category = a.getCategory();
+					category = render_category(category);
 					name = forPhoto.getName();
 					path = forPhoto.getPath();
-					realPath = "photo/Attraction/"+name+"/"+path;
+					realPath = "photo/Attraction/"+category+"/"+name+"/"+path;
+					System.out.println("rp:"+realPath);
 					a.setRealPath(realPath);
+					
 				}
 			}else {
 				realPath = "photo/Attraction/공원/노리매/att1.jpg";
@@ -115,56 +147,59 @@ public class AttractController {
 			List<AttractionVO> photo_list = dao.findAllPhotoById(refNo);
 			String arealPath = "";
 			String acategory = list.get(i).getCategory();
+			acategory=render_category(acategory);
+			
 			String aname = list.get(i).getName();
 			String apath = "";
-			System.out.println(photo_list.size());
-			System.out.println("===================");
+//			System.out.println(photo_list.size());
+//			System.out.println("===================");
 			
 			if(photo_list.size() > 0) {
+				System.out.println("true");
 				for(int j=0;j<photo_list.size();j++) {
 					AttractionVO forPhoto = new AttractionVO();
 					forPhoto = photo_list.get(0);
 					apath = forPhoto.getPath();
 					arealPath = "photo/Attraction/"+acategory+"/"+aname+"/"+apath;
+//					System.out.println("arealPath:"+arealPath);
 					list.get(i).setRealPath(arealPath);
 				}
 			}else {
-				System.out.println("=====else===");
 				Random rand = new Random();
-				String parklList[] = {"노리매","동백포레스트","휴애리"};
+				String parklList[] = {"노리매","동백포레스트","휴애리 자연생활공원"};
 				String museumList[] = {"양금석 가옥","의귀리 김만일묘역"};
 				String forestList[] = {"마흐니 숲길","큰엉해안경승지"};
-				String riseList[] = {"물영아리 오름","사라오름"};
+				String riseList[] = {"물영아리오름","사라오름"};
 				String themeParkList[] = {"코코몽 에코파크"};
+				Random photo_random = new Random();
 					switch (acategory) {
 						case "공원":{
 							for(int j=0;j<5;j++) {
-								arealPath = "photo/Attraction/"+acategory+"/"+parklList[rand.nextInt(3)]+"/att"+(j+1)+".jpg";
+								arealPath = "photo/Attraction/"+acategory+"/"+parklList[rand.nextInt(3)]+"/att"+(photo_random.nextInt(5)+1)+".jpg";
 								list.get(i).setRealPath(arealPath);
-								System.out.println("사진Test");
 							}
 						}break;
 						case "박물관":{
 							for(int j=0;j<5;j++) {
-							arealPath = "photo/Attraction/"+acategory+"/"+museumList[rand.nextInt(2)]+"/att"+(j+1)+".jpg";
+							arealPath = "photo/Attraction/"+acategory+"/"+museumList[rand.nextInt(2)]+"/att"+(photo_random.nextInt(5)+1)+".jpg";
 							list.get(i).setRealPath(arealPath);
 							}
 						}break;
 						case "숲":{
 							for(int j=0;j<5;j++) {
-							arealPath = "photo/Attraction/"+acategory+"/"+forestList[rand.nextInt(2)]+"/att"+(j+1)+".jpg";
+							arealPath = "photo/Attraction/"+acategory+"/"+forestList[rand.nextInt(2)]+"/att"+(photo_random.nextInt(5)+1)+".jpg";
 							list.get(i).setRealPath(arealPath);
 							}
 						}break;
 						case "오름":{
 							for(int j=0;j<5;j++) {
-							arealPath = "photo/Attraction/"+acategory+"/"+riseList[rand.nextInt(2)]+"/att"+(j+1)+".jpg";
+							arealPath = "photo/Attraction/"+acategory+"/"+riseList[rand.nextInt(2)]+"/att"+(photo_random.nextInt(5)+1)+".jpg";
 							list.get(i).setRealPath(arealPath);
 							}
 						}break;
 						case "테마파크":{
 							for(int j=0;j<5;j++) {
-							arealPath = "photo/Attraction/"+acategory+"/"+themeParkList[rand.nextInt(1)]+"/att"+(j+1)+".jpg";
+							arealPath = "photo/Attraction/"+acategory+"/"+themeParkList[0]+"/att"+(photo_random.nextInt(5)+1)+".jpg";
 							list.get(i).setRealPath(arealPath);
 							}
 						}break;
@@ -190,10 +225,12 @@ public class AttractController {
 	
 	// 키워드 검색
 		@GetMapping("/main/search")
-		public ModelAndView search(String keyword, String category, int pageNum, HttpSession session) {
+		public ModelAndView search(String keyword, String category, int pageNum, String check, HttpSession session) {
 			ModelAndView mav = new ModelAndView("Attraction/Search");
-//			System.out.println("keyword:"+keyword);
-//			System.out.println("category:"+category);
+			if(check!=null && !check.equals("")) {
+				session.removeAttribute("keyword");
+				session.removeAttribute("category");
+			}
 			
 			if(session.getAttribute("keyword") != null) {
 				keyword = (String) session.getAttribute("keyword");
@@ -201,6 +238,9 @@ public class AttractController {
 			if(session.getAttribute("category") != null) {
 				category = (String) session.getAttribute("category");
 			}
+			System.out.println("keyword:"+keyword);
+			System.out.println("category:"+category);
+			System.out.println("num:"+pageNum);
 			
 			int start = 1;
 			int end = 1;
@@ -215,17 +255,21 @@ public class AttractController {
 			map.put("keyword", keyword);
 			map.put("start", start);
 			map.put("end", end);
+			map.put("category", category);
 			List<AttractionVO> list = dao.findByAny(map);
-			
+			System.out.println("list:"+list);
 			for(int i =0;i<list.size();i++) {
 				int refNo = list.get(i).getAttractNo();
 				List<AttractionVO> photo_list = dao.findAllPhotoById(refNo);
 				String arealPath = "";
 				String acategory = list.get(i).getCategory();
+				acategory=render_category(acategory);
+				
 				String aname = list.get(i).getName();
 				String apath = "";
 				
 				if(photo_list.size() > 0) {
+//					System.out.println("true");
 					for(int j=0;j<photo_list.size();j++) {
 						AttractionVO forPhoto = new AttractionVO();
 						forPhoto = photo_list.get(0);
@@ -233,42 +277,44 @@ public class AttractController {
 						arealPath = "photo/Attraction/"+acategory+"/"+aname+"/"+apath;
 						list.get(i).setRealPath(arealPath);
 					}
+//					System.out.println("true:"+arealPath);
 				}else {
 					Random rand = new Random();
-					String parklList[] = {"노리매","동백포레스트","휴애리"};
+					String parklList[] = {"노리매","동백포레스트","휴애리 자연생활공원"};
 					String museumList[] = {"양금석 가옥","의귀리 김만일묘역"};
 					String forestList[] = {"마흐니 숲길","큰엉해안경승지"};
-					String riseList[] = {"물영아리 오름","사라오름"};
+					String riseList[] = {"물영아리오름","사라오름"};
 					String themeParkList[] = {"코코몽 에코파크"};
+					Random photo_random = new Random();
 						switch (acategory) {
 							case "공원":{
 								for(int j=0;j<5;j++) {
-									arealPath = "photo/Attraction/"+acategory+"/"+parklList[rand.nextInt(3)]+"/att"+(j+1)+".jpg";
+									arealPath = "photo/Attraction/"+acategory+"/"+parklList[rand.nextInt(3)]+"/att"+(photo_random.nextInt(5)+1)+".jpg";
 									list.get(i).setRealPath(arealPath);
 								}
 							}break;
 							case "박물관":{
 								for(int j=0;j<5;j++) {
-								arealPath = "photo/Attraction/"+acategory+"/"+museumList[rand.nextInt(2)]+"/att"+(j+1)+".jpg";
+								arealPath = "photo/Attraction/"+acategory+"/"+museumList[rand.nextInt(2)]+"/att"+(photo_random.nextInt(5)+1)+".jpg";
 								list.get(i).setRealPath(arealPath);
 								}
 							}break;
 							case "숲":{
 								for(int j=0;j<5;j++) {
-								arealPath = "photo/Attraction/"+acategory+"/"+forestList[rand.nextInt(2)]+"/att"+(j+1)+".jpg";
+								arealPath = "photo/Attraction/"+acategory+"/"+forestList[rand.nextInt(2)]+"/att"+(photo_random.nextInt(5)+1)+".jpg";
 								list.get(i).setRealPath(arealPath);
 								}
 							}break;
 							case "오름":{
 								for(int j=0;j<5;j++) {
-								arealPath = "photo/Attraction/"+acategory+"/"+riseList[rand.nextInt(2)]+"/att"+(j+1)+".jpg";
+								arealPath = "photo/Attraction/"+acategory+"/"+riseList[rand.nextInt(2)]+"/att"+(photo_random.nextInt(5)+1)+".jpg";
 								list.get(i).setRealPath(arealPath);
-								System.out.println(arealPath);
+//								System.out.println(arealPath);
 								}
 							}break;
 							case "테마파크":{
 								for(int j=0;j<5;j++) {
-								arealPath = "photo/Attraction/"+acategory+"/"+themeParkList[rand.nextInt(1)]+"/att"+(j+1)+".jpg";
+								arealPath = "photo/Attraction/"+acategory+"/"+themeParkList[rand.nextInt(1)]+"/att"+(photo_random.nextInt(5)+1)+".jpg";
 								list.get(i).setRealPath(arealPath);
 								}
 							}break;
@@ -276,7 +322,6 @@ public class AttractController {
 				}
 				
 			}
-			
 			
 			totCnt = dao.findCountByAny(keyword);
 			totPage = (int) Math.ceil(totCnt/pageSize);
@@ -349,14 +394,17 @@ public class AttractController {
 	
 	// 관광지 상세페이지
 	@GetMapping("/detail")
-	public ModelAndView detail(int attractNo) {
+	public ModelAndView detail(int attractNo, HttpSession session) {
 		ModelAndView mav = new ModelAndView("Attraction/Detail");
 		
 		// 로그인한 멤버
-//			MemberVO m = mdao.findByNo(7);
-//			System.out.println(m);
+		MemberVO m = mdao.findByNo(7);
+		System.out.println(m);
+		session.setAttribute("loginM", m);
+		
 		List<InfoListVO> infoList = new ArrayList<>();
 		AttractionVO a = dao.findById(attractNo);
+		System.out.println("avo:"+a);
 		List<AttractionInfoVO> atin = dao.findInfoById(attractNo);
 //			atin.get(0).getOrders();
 		
@@ -375,10 +423,13 @@ public class AttractController {
 		List<String> photoList = new ArrayList<>();
 		String realPath = "";
 		String category = a.getCategory();
+		category=render_category(category);
+		
 		String name = "";
 		String path = "";
 		
 		if(list.size() > 0) {
+			System.out.println("true");
 			for(int i=0;i<list.size();i++) {
 				a = list.get(i);
 				name = a.getName();
@@ -387,46 +438,49 @@ public class AttractController {
 				photoList.add(realPath);
 			}
 		}else {
+			System.out.println("nophoto");
+			System.out.println(category);
 			// 이미지 없을때 랜덤이미지
 			Random rand = new Random();
-			String parklList[] = {"노리매","동백포레스트","휴애리"};
+			String parklList[] = {"노리매","동백포레스트","휴애리 자연생활공원"};
 			String museumList[] = {"양금석 가옥","의귀리 김만일묘역"};
 			String forestList[] = {"마흐니 숲길","큰엉해안경승지"};
-			String riseList[] = {"물영아리 오름","사라오름"};
+			String riseList[] = {"물영아리오름","사라오름"};
 			String themeParkList[] = {"코코몽 에코파크"};
+			Random photo_random = new Random();
 				switch (category) {
 					case "숲":{						
-						String k = forestList[rand.nextInt(3)];
+						String k = forestList[rand.nextInt(2)];
 						for(int i=0;i<5;i++) {
-							realPath = "photo/Attraction/"+category+"/"+k+"/"+"att"+(i+1)+".jpg";
+							realPath = "photo/Attraction/"+category+"/"+k+"/"+"att"+(photo_random.nextInt(5)+1)+".jpg";
 							photoList.add(realPath);
 						}
 					}break;
 					case "오름":{
 						String k = riseList[rand.nextInt(2)];
 						for(int i=0;i<5;i++) {
-							realPath = "photo/Attraction/"+category+"/"+k+"/"+"att"+(i+1)+".jpg";
+							realPath = "photo/Attraction/"+category+"/"+k+"/"+"att"+(photo_random.nextInt(5)+1)+".jpg";
 						photoList.add(realPath);
 						}
 					}break;
 					case "테마파크":{
-						String k = themeParkList[rand.nextInt(2)];
+						String k = themeParkList[rand.nextInt(1)];
 						for(int i=0;i<5;i++) {
-							realPath = "photo/Attraction/"+category+"/"+k+"/"+"att"+(i+1)+".jpg";
+							realPath = "photo/Attraction/"+category+"/"+k+"/"+"att"+(photo_random.nextInt(5)+1)+".jpg";
 						photoList.add(realPath);
 						}
 					}break;
 					case "공원":{
-						String k = parklList[rand.nextInt(2)];
+						String k = parklList[rand.nextInt(3)];
 						for(int i=0;i<5;i++) {
-							realPath = "photo/Attraction/"+category+"/"+k+"/"+"att"+(i+1)+".jpg";
+							realPath = "photo/Attraction/"+category+"/"+k+"/"+"att"+(photo_random.nextInt(5)+1)+".jpg";
 						photoList.add(realPath);
 						}
 					}break;
 					case "박물관":{
-						String k = museumList[rand.nextInt(1)];
+						String k = museumList[rand.nextInt(2)];
 						for(int i=0;i<5;i++) {
-							realPath = "photo/Attraction/"+category+"/"+k+"/"+"att"+(i+1)+".jpg";
+							realPath = "photo/Attraction/"+category+"/"+k+"/"+"att"+(photo_random.nextInt(5)+1)+".jpg";
 						photoList.add(realPath);
 						}
 					}break;
@@ -434,7 +488,7 @@ public class AttractController {
 			
 //				System.out.println("대체 이미지: "+photoList);
 		}
-//			System.out.println(photoList);
+			System.out.println(photoList);
 		mav.addObject("infoList", invo);
 		mav.addObject("a", a);
 		mav.addObject("photoList", photoList);
@@ -446,7 +500,8 @@ public class AttractController {
 	@ResponseBody
 	public int findLike(HttpServletRequest request, HttpSession session) {
 		int re = 0;	//찜 x
-		MemberVO m = (MemberVO) session.getAttribute("loginM");
+//		MemberVO m = (MemberVO) session.getAttribute("loginM");
+		MemberVO m = mdao.findByNo(7);
 		int attractNo = Integer.parseInt(request.getParameter("attractNo"));
 		int memberNo = m.getMemberNo();
 		HashMap<String, Object> map = new HashMap<>();
@@ -475,9 +530,11 @@ public class AttractController {
 		System.out.println(attractNo);
 		LikeVO l = new LikeVO();
 		l.setCategory("attract");
-		MemberVO m = (MemberVO) session.getAttribute("loginM");
+//		MemberVO m = (MemberVO) session.getAttribute("loginM");
+		MemberVO m = mdao.findByNo(7);
 		l.setMemberNo(m.getMemberNo());
 		l.setRefNo(attractNo);
+		l.setLikeNo(ldao.getMaxNo());
 		
 		dao.doLike(l);
 		return "찜완료";
@@ -491,7 +548,8 @@ public class AttractController {
 		System.out.println(attractNo);
 		LikeVO l = new LikeVO();
 		l.setCategory("attract");
-		MemberVO m = (MemberVO) session.getAttribute("loginM");
+//		MemberVO m = (MemberVO) session.getAttribute("loginM");
+		MemberVO m = mdao.findByNo(7);
 		l.setMemberNo(m.getMemberNo());
 		l.setRefNo(attractNo);
 		
