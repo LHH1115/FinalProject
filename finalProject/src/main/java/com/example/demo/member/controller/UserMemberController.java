@@ -102,10 +102,6 @@ public class UserMemberController {
 		
 	}
 	
-	
-	
-	
-	
 	@GetMapping("/member/findId")
 	public void findIdForm() {}
 	
@@ -119,8 +115,6 @@ public class UserMemberController {
 		
 		return mav;
 	}
-	
-	
 	
 	@GetMapping("/member/loginMember")
 	public void loginForm(HttpServletRequest request, HttpSession session) {

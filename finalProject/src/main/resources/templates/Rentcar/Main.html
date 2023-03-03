@@ -36,6 +36,7 @@
 		
 	})
 </script>
+<link href="/rentcar/mainpage.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	
@@ -65,13 +66,6 @@
 	</div>
 	<hr>
 	
-	<!-- Test -->
-	<!-- <th:block th:if="${realPath != null}">
-		<img th:src="|/${realPath}|" width="600">
-	</th:block> -->
-	
-	<!-- 카테고리별 검색 버튼 -->
-	<hr>
 	<div>
 		<h3>렌트카 종류</h3>
 		<button class="btn_cat">경차</button>
@@ -82,23 +76,28 @@
 	</div>
 	<hr>
 	
-	<!-- 현재 인기 숙소 -->
-	<hr>
-	
 		<h3>인기 차량</h3>
 		
+	
 		<div class="card-group">
 			<th:block th:each="c: ${car_list}">
-				<div class="card text-bg-white" id="img_mostLike" th:carNo="${c.carNo}">
-				  <img th:src="|${c.realPath}|" th:class="card-img" height="350">
-				  <div class="card-img-overlay">
+				<div class="card border-success mb-3" style="max-width: 18rem;">
+				  <div class="card-body text-success">
 				    <h5 class="card-title" th:text="${c.modelName}"></h5>
 				    <p class="card-text" th:text="${c.category}"></p>
 				  </div>
-				</div>
+				  <div class="card-footer bg-transparent border-success">
+				  	<img th:src="|${c.realPath}|" th:class="card-img" height="350">
+				  </div>
+				</div>  
 			</th:block>
 		</div>
 	
-	<hr>
+	
+
+	
+	
+	
+	
 </body>
 </html>

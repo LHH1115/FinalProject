@@ -16,7 +16,7 @@
     width: 250px;
     height: 100%;
     margin-left: -250px;
-    background: #000;
+    background:white;
     overflow-x: hidden;
     overflow-y: auto;
   }
@@ -69,6 +69,10 @@
 			}
 		});
 		
+		$("#btn_reset").click(function(e){
+			$("#keyword_search").val("");
+		})
+		
 		//상세페이지 이동
 		$(document).on("click", ".tr", function(){
 			var carNo = $(this).attr("carNo");
@@ -97,9 +101,6 @@
 		        <a href="#">검색하기</a>
 		      </li>
 		      <li>
-		      	검색어<input type="text" id="keyword_search" name="keyword">
-		      </li>
-		      <li>
 		      	<select name="category">
 					<option value="">===카테고리===</option>
 					<option value="경차">경차</option>
@@ -110,10 +111,17 @@
 				</select>
 		      </li>
 		      <li>
+		      	검색어<input type="text" id="keyword_search" name="keyword">
+		      </li>
+		    
+		      <li>
 		      	<input type="hidden" value="session" name="flag"/>
 		      </li>
 		      <li>
-		     	<input type="submit" value="검색" id="btn_search">
+		     	<input type="submit" value="검색하기" id="btn_search">
+		      </li>
+		      <li>
+		     	<input type="button" value="검색어 초기화" id="btn_reset">
 		      </li>
 		    </ul>
 	    </form>
