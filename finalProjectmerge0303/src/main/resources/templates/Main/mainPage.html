@@ -53,6 +53,38 @@ $(function(){
 			return $(this).attr("data-slick-index") < currentSlide;
 		}).addClass("prev");;
 	}
+	
+	$("input[name='best_goods']").change(function(){
+		// 식당
+		if($("input[name=best_goods]:checked").val() =='radio_rest'){
+			$(".grid-container_rest").css("display","");
+			$(".grid-container_rest").css("visibility","visible");
+			$(".grid-container_attr").css("display","none");
+			$(".grid-container_attr").css("visibility","hidden");
+			$(".grid-container_rent").css("display","none");
+			$(".grid-container_rent").css("visibility","hidden");
+			
+		}
+		// 관광지
+		if($("input[name=best_goods]:checked").val() =='radio_attr'){
+			$(".grid-container_attr").css("display","");
+			$(".grid-container_attr").css("visibility","visible");
+			$(".grid-container_rent").css("display","none");
+			$(".grid-container_rent").css("visibility","hidden");
+			$(".grid-container_rest").css("display","none");
+			$(".grid-container_rest").css("visibility","hidden");
+			
+		}
+		// 렌트카
+		if($("input[name=best_goods]:checked").val() =='radio_rent'){
+			$(".grid-container_rent").css("display","");
+			$(".grid-container_rent").css("visibility","visible");
+			$(".grid-container_rest").css("display","none");
+			$(".grid-container_rest").css("visibility","hidden");
+			$(".grid-container_attr").css("display","none");
+			$(".grid-container_attr").css("visibility","hidden");
+		}
+	}); 
 });
 
 </script>
@@ -60,6 +92,154 @@ $(function(){
 
 .container{border:0px solid black;}
 .container-fluid{text-align: center;}
+
+.grid-container_attr{display:none;visibility: hidden;}
+.grid-container_rent{display:none;visibility: hidden;}
+
+/* Best 인기상품 css 시작 */
+
+:root {
+  --PrimaryFontFamily: "Poppins", sans-serif;
+  --BackgroundColor: #1e1e1e;
+  --HoverBoxShadow: 0 4px 10px #000;
+}
+
+
+.sub {
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.grid-container_rest{
+  display: grid;
+  width: 100%;
+  max-width: 1200px;
+  gap: 20px;
+  grid-template-areas:
+    "block1 block1"
+    "block2 block3"
+    "block4 block5";
+}
+
+.grid-container_attr{
+  display: grid;
+  width: 100%;
+  max-width: 1200px;
+  gap: 20px;
+  grid-template-areas:
+    "block1 block1"
+    "block2 block3"
+    "block4 block5";
+}
+
+.grid-container_rent{
+  display: grid;
+  width: 100%;
+  max-width: 1200px;
+  gap: 20px;
+  grid-template-areas:
+    "block1 block1"
+    "block2 block3"
+    "block4 block5";
+}
+
+.block {
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: relative; 
+  background-size: cover;
+}
+
+.block:hover {
+  cursor: pointer;
+}
+
+.block .image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  background-size: cover;
+}
+
+.block .image img:hover {
+  transform: scale(1.05);
+  transition: all 0.2s ease-in-out;
+  box-shadow: var(--HoverBoxShadow);
+  filter: brightness(80%);
+}
+
+.block .title {
+  position: absolute;
+  bottom: 0;
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.block .title_rent {
+  position: absolute;
+  bottom: -20;
+  color: black;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.block .title .sub {
+  font-size: 14px;
+}
+
+.block .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-size: cover;
+  border-radius: 10px;
+  filter: brightness(50%);
+}
+
+.block-1 {
+  grid-column: block1;
+}
+
+@media (min-width: 768px) {
+  .grid-container_rest {
+    grid-template-areas:
+      "block1 block1 block2 block3"
+      "block1 block1 block4 block5";
+  }
+}
+@media (min-width: 768px) {
+  .grid-container_attr {
+    grid-template-areas:
+      "block1 block1 block2 block3"
+      "block1 block1 block4 block5";
+  }
+ } 
+@media (min-width: 768px) {
+  .grid-container_rent {
+    grid-template-areas:
+      "block1 block1 block2 block3"
+      "block1 block1 block4 block5";
+  }
+
+
+  .block-1 {
+    grid-row: 1 / span 2;
+  }
+
+  .block .title .sub {
+    font-size: 20px;
+  }
+}
+/* Best 인기상품 css 끝 */
 
 /* Best 인기상품 Radio버튼 끝 */
 :root{
@@ -113,87 +293,6 @@ $(function(){
 }
 
 /* Best 인기상품 Radio버튼 끝 */
-
-/* Best 인기상품 시작 */
-
-
-#ranking-slide {
-  position: relative;
-  width: 1200px;
-  height: 338px;
-  margin: 30px auto;
-}
-
-#ranking-slide li {
-  display: inline-block;
-  margin: 0 16px 0 0;
-}
-
-#ranking-slide li,
-#ranking-slide li > a {
-  width: 300px;
-  height: 200px;
-}
-
-#ranking-slide li > a {
-	cursor: pointer;
-	position: relative;
-	display: block;
-	background: #efefef;
-	border-radius: 5px;
-	transition: all 0.2s 0s ease;
-}
-
-#ranking-slide li > a:hover {
-	background: #ffa500;
-}
-
-#ranking-slide li:nth-child(n+2):nth-child(-n+3) {
-	top: -115px;
-}
-#ranking-slide li:nth-child(n+4) {
-	left: 472px;
-	top: -201px;
-}
-#ranking-slide li:nth-child(n+5) {
-	left: 472px;
-	top: -201px;
-}
-
-#ranking-slide li:first-child,
-#ranking-slide li:first-child > a
- {
-  width: 450px;
-  height: 430px;
-  margin: 0 16px 0 0;
-}
-
-#ranking-slide  {
-  counter-reset: number;
-}
-
-#ranking-slide li {
-  position: relative;
-}
-
-#ranking-slide li:before {
-  content: counter(number);
-  counter-increment: number;
-  position: absolute;
-  top: 7px;
-  left: 7px;
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  color: red;
-  font-size: 2rem;
-  text-align: center;
-  z-index: 1;
-}
-
-
-
-/* Best 인기상품 끝 */
 
 /* Best 숙소 시작 */
 .slide {
@@ -288,8 +387,8 @@ $(function(){
   width: .8rem;
   height: .8rem;
   border-radius: 50%;
-  text-indent: 770px;
-  padding: 200 200;
+  text-indent: 9999px;
+  padding: 0
 }
 
 .slider .slick-dots .slick-active button {
@@ -305,6 +404,7 @@ $(function(){
   z-index: 5;
   -webkit-transition: all .2s ease 0s;
   transition: all .2s ease 0s;
+  -webkit-transform: translateY(0);
   transform: translateY(0)
 }
 
@@ -403,221 +503,205 @@ $(function(){
 <body>
 
 <!-- =============================================================================================================  -->
-	<div class="container">
+<div class="container">
 	<div th:insert="/main/header.html" id="headers"></div>
 	<br>
 		
-	<div class="container">
-	<br>
+		<div class="container">
+		<br>
 	
-	<!-- best 숙소 시작 -->
-	<div style="text-align: center"><h2>Best 숙소</h2></div>
-	<div class="slider">
-        <div class="slide">
-        	<figure>
-              <img src="photo/Accommodation/가족호텔업/그림리조트/acc1.jpeg"/>
-			</figure>
-            <div class="text">
-            	<div class="category">호텔</div>
-                <h1 class="title">그림리조트</h1>
-                <p class="summary">내용~~</p>
-			</div>
-        </div>
-        <div class="slide">
-            <figure>
-                <img src="photo/Accommodation/가족호텔업/그림리조트/acc2.jpeg"/>
-			</figure>
-            <div class="text">
-            	<div class="category">호텔</div>
-                <h1 class="title">그림리조트</h1>
-                <p class="summary">내용~~</p>
-			</div>
-        </div>
-        <div class="slide">
-            <figure>
-                <img src="photo/Accommodation/가족호텔업/그림리조트/acc3.jpeg"/>
-			</figure>
-            <div class="text">
-            	<div class="category">호텔</div>
-                <h1 class="title">그림리조트</h1>
-                <p class="summary">내용~~</p>
-			</div>
-        </div>
-        <div class="slide">
-            <figure>
-                <img src="photo/Accommodation/가족호텔업/그림리조트/acc4.jpeg"/>
-			</figure>
-            <div class="text">
-            	<div class="category">호텔</div>
-                <h1 class="title">그림리조트</h1>
-                <p class="summary">내용~~</p>
-			</div>
-        </div>   
-    </div>
-    <!-- best 숙소 끝 -->
-    <!-- best 인기상품 시작 -->
-    
-    <div style="text-align: center"><h2>Best 인기상품</h2></div>
-    <div class="selector">
+<!-- best 숙소 시작 -->
+			<div style="text-align: center"><h2>Best 숙소</h2></div>
+			<div class="slider">
+       			<div class="slide">
+       				<figure>
+    	   				<img src="photo/Accommodation/가족호텔업/그림리조트/acc1.jpeg"/>
+					</figure>
+           			<div class="text">
+           				<div class="category">호텔</div>
+                			<h1 class="title">그림리조트</h1>
+                			<p class="summary">내용~~</p>
+						</div>
+       				</div>
+			        <div class="slide">
+			            <figure>
+			                <img src="photo/Accommodation/가족호텔업/그림리조트/acc2.jpeg"/>
+						</figure>
+			            <div class="text">
+			            	<div class="category">호텔</div>
+			               	<h1 class="title">그림리조트</h1>
+			                <p class="summary">내용~~</p>
+						</div>
+			        </div>
+			        <div class="slide">
+			            <figure>
+			                <img src="photo/Accommodation/가족호텔업/그림리조트/acc3.jpeg"/>
+						</figure>
+			            <div class="text">
+			            	<div class="category">호텔</div>
+			                <h1 class="title">그림리조트</h1>
+			                <p class="summary">내용~~</p>
+						</div>
+			        </div>
+			        <div class="slide">
+			            <figure>
+			                <img src="photo/Accommodation/가족호텔업/그림리조트/acc4.jpeg"/>
+						</figure>
+			            <div class="text">
+			            	<div class="category">호텔</div>
+			                <h1 class="title">그림리조트</h1>
+			                <p class="summary">내용~~</p>
+						</div>
+			        </div>   
+			    </div>
+			   <div style="text-align: center"><h2>Best 인기상품</h2></div> 
+			    <div class="selector">
         <div class="selecotr-item">
-            <input type="radio" id="radio1" name="best_goods" class="selector-item_radio" checked>
+            <input type="radio" id="radio1" name="best_goods" value="radio_rest" class="selector-item_radio" checked>
             <label for="radio1" class="selector-item_label">식당</label>
         </div>
         <div class="selecotr-item">
-            <input type="radio" id="radio2" name="best_goods" class="selector-item_radio">
+            <input type="radio" id="radio2" name="best_goods" value="radio_attr" class="selector-item_radio">
             <label for="radio2" class="selector-item_label">관광지</label>
         </div>
         <div class="selecotr-item">
-            <input type="radio" id="radio3" name="best_goods" class="selector-item_radio">
+            <input type="radio" id="radio3" name="best_goods" value="radio_rent" class="selector-item_radio">
             <label for="radio3" class="selector-item_label">렌트카</label>
         </div>
-    </div><br>
-
-
-	<div id="ranking-slide">
- 		<ol>
-    		<li><a href="#"><img src="photo/Restaurant/한식/명가천지연무태장어/rest1.jpg" style="width:450px ;height:430px ;"/></a></li>
-    		<li><a href="#"><img src="photo/Restaurant/한식/명가천지연무태장어/rest2.jpg" style="width:300px ;height:200px ;"/></a></li>
-    		<li><a href="#"><img src="photo/Restaurant/한식/명가천지연무태장어/rest3.jpg" style="width:300px ;height:200px ;"/></a></li>
-    		<li><a href="#"><img src="photo/Restaurant/한식/명가천지연무태장어/rest4.jpg" style="width:300px ;height:200px ;"/></a></li>
-    		<li><a href="#"><img src="photo/Restaurant/한식/명가천지연무태장어/rest5.jpg" style="width:300px ;height:200px ;"/></a></li>
-  		</ol>
+    </div><br> 
+    
+    <div class="grid-container_rest">
+  		<a href="#" class="block block-1">
+    		<div class="image">
+      			<img src="photo/Restaurant/서양식/카우보이스테이크하우스/rest1.jpg">
+    		</div>
+    		<div class="title">
+      			<h2>카우보이스테이크하우스</h2>
+    		</div>
+  		</a>
+  		<a href="#" class="block block-2">
+    		<div class="image">
+      			<img src="photo/Restaurant/서양식/카우보이스테이크하우스/rest2.jpg">
+    		</div>
+    		<div class="title">
+      			<h2 class="sub">카우보이스테이크하우스</h2>
+    		</div>
+  		</a>
+  		<a href="#" class="block block-3">
+    		<div class="image">
+      			<img src="photo/Restaurant/서양식/카우보이스테이크하우스/rest3.jpg">
+   			</div>
+    		<div class="title">
+      			<h2 class="sub">카우보이스테이크하우스</h2>
+    		</div>
+  		</a>
+  		<a href="#" class="block block-4">
+    		<div class="image">
+      			<img src="photo/Restaurant/서양식/카우보이스테이크하우스/rest4.jpg">
+    		</div>
+    		<div class="title">
+      			<h2 class="sub">카우보이스테이크하우스</h2>
+    		</div>
+  		</a>
+  		<a href="#" class="block block-5">
+    		<div class="image">
+      			<img src="photo/Restaurant/서양식/카우보이스테이크하우스/rest5.jpg">
+    		</div>
+    		<div class="title">
+      			<h2 class="sub">카우보이스테이크하우스</h2>
+    		</div>
+  		</a>
+	</div>
+	<div class="grid-container_attr">
+  		<a href="#" class="block block-1">
+    		<div class="image">
+      			<img src="photo/Attraction/숲/큰엉해안경승지/att1.jpg">
+    		</div>
+    		<div class="title">
+      			<h2>큰엉해안경승지</h2>
+    		</div>
+  		</a>
+  		<a href="#" class="block block-2">
+    		<div class="image">
+      			<img src="photo/Attraction/숲/큰엉해안경승지/att2.jpg">
+    		</div>
+    		<div class="title">
+      			<h2 class="sub">큰엉해안경승지</h2>
+    		</div>
+  		</a>
+  		<a href="#" class="block block-3">
+    		<div class="image">
+      			<img src="photo/Attraction/숲/큰엉해안경승지/att3.jpg">
+   			</div>
+    		<div class="title">
+      			<h2 class="sub">큰엉해안경승지</h2>
+    		</div>
+  		</a>
+  		<a href="#" class="block block-4">
+    		<div class="image">
+      			<img src="photo/Attraction/숲/큰엉해안경승지/att4.jpg">
+    		</div>
+    		<div class="title">
+      			<h2 class="sub">큰엉해안경승지</h2>
+    		</div>
+  		</a>
+  		<a href="#" class="block block-5">
+    		<div class="image">
+      			<img src="photo/Attraction/숲/큰엉해안경승지/att5.jpg">
+    		</div>
+    		<div class="title">
+      			<h2 class="sub">큰엉해안경승지</h2>
+    		</div>
+  		</a>
 	</div>
 	
-
-	
-	
-
-    <!-- best 인기상품 끝 --> 
-	
-
-
-		<br><br><br>
-			<div class="container">
-				<h2>인기 렌터카</h2>
-				
-				<div class="row">
-				
-					<div class="card col-md-6 align-self-center">
-					  <img src="photo/RentCar/경차/모닝 어반.png" class="card-img-top">
-					  <div class="card-body">
-					    <h5 class="card-title">Card title</h5>
-					    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					    <a href="#" class="btn btn-primary">Go somewhere</a>
-					  </div>
-					</div>
-					
-					<div class="col-md-6">
-						<div class="row">
-							<div class="card">
-							  <img src="photo/RentCar/경차/스파크.png" class="card-img-top">
-							  <div class="card-body">
-							    <h5 class="card-title">Card title</h5>
-							    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-							    <a href="#" class="btn btn-primary">Go somewhere</a>
-							  </div>
-							</div>
-						</div>
-					
-						<div class="row">
-							<div class="card col-md-6">
-							  <img src="photo/RentCar/소형/ALL NEW 아반테.png" class="card-img-top">
-							  <div class="card-body">
-							    <h5 class="card-title">Card title</h5>
-							    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-							    <a href="#" class="btn btn-primary">Go somewhere</a>
-							  </div>
-							</div>
-							
-							<div class="card col-md-6">
-							  <img src="photo/RentCar/소형/쏘울 부스터.png" class="card-img-top">
-							  <div class="card-body">
-							    <h5 class="card-title">Card title</h5>
-							    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-							    <a href="#" class="btn btn-primary">Go somewhere</a>
-							  </div>
-							</div>
-						</div>
-					</div>
-					
-				</div>	
-				
-			</div>
-			
-			<div class="container">
-				<div class="row">
-					<div class="col-md-6">
-					  <h2>인기 관광지</h2>
-					  	<div class="row row-cols-1 row-cols-md-3 g-4">
-						  <div class="col">
-						    <div class="card">
-						      <img src="photo/Attraction/물영아리 오름/물영아리 오름_1.jpg" class="card-img-top" alt="...">
-						      <div class="card-body">
-						        <h5 class="card-title">Card title</h5>
-						        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-						      </div>
-						    </div>
-						  </div>
-						  <div class="col">
-						    <div class="card">
-						      <img src="photo/Attraction/물영아리 오름/물영아리 오름_2.jpg" class="card-img-top" alt="...">
-						      <div class="card-body">
-						        <h5 class="card-title">Card title</h5>
-						        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-						      </div>
-						    </div>
-						  </div>
-						  <div class="col">
-						    <div class="card">
-						      <img src="photo/Attraction/물영아리 오름/물영아리 오름_3.jpg" class="card-img-top" alt="...">
-						      <div class="card-body">
-						        <h5 class="card-title">Card title</h5>
-						        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-						      </div>
-						    </div>
-						  </div>
-						</div>
-					</div>
-					
-					<div class="col-md-6">
-					  <h2>식당 추천</h2>
-					  <div class="row row-cols-1 row-cols-md-3 g-4">
-						  <div class="col">
-						    <div class="card">
-						      <img src="photo/Restaurant/서양식/라라코스트서귀포점/라라코스트_1.jpg" class="card-img-top" alt="...">
-						      <div class="card-body">
-						        <h5 class="card-title">Card title</h5>
-						        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-						      </div>
-						    </div>
-						  </div>
-						  <div class="col">
-						    <div class="card">
-						      <img src="photo/Restaurant/서양식/라라코스트서귀포점/라라코스트_2.jpg" class="card-img-top" alt="...">
-						      <div class="card-body">
-						        <h5 class="card-title">Card title</h5>
-						        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-						      </div>
-						    </div>
-						  </div>
-						  <div class="col">
-						    <div class="card">
-						      <img src="photo/Restaurant/서양식/라라코스트서귀포점/라라코스트_3.jpg" class="card-img-top" alt="...">
-						      <div class="card-body">
-						        <h5 class="card-title">Card title</h5>
-						        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-						      </div>
-						    </div>
-						  </div>
-						</div>
-					  
-					  
-					</div>
-				</div>
-			</div>
-		</div>
-		 <div th:insert="/main/Footer.html" class="header"></div>
+	<div class="grid-container_rent">
+  		<a href="#" class="block block-1">
+    		<div class="image">
+      			<img src="photo/RentCar/경차/모닝 어반.png">
+    		</div>
+    		<div class="title_rent">
+      			<h2>모닝</h2>
+    		</div>
+  		</a>
+  		<a href="#" class="block block-2">
+    		<div class="image">
+      			<img src="photo/RentCar/소형/ALL NEW K3.png">
+    		</div>
+    		<div class="title_rent">
+      			<h2 class="sub">ALL NEW K3</h2>
+    		</div>
+  		</a>
+  		<a href="#" class="block block-3">
+    		<div class="image">
+      			<img src="photo/RentCar/승합/더 뉴 카니발 (11인승).png">
+   			</div>
+    		<div class="title_rent">
+      			<h2 class="sub">더 뉴 카니발</h2>
+    		</div>
+  		</a>
+  		<a href="#" class="block block-4">
+    		<div class="image">
+      			<img src="photo/RentCar/전기차/GV70 (EV).png">
+    		</div>
+    		<div class="title_rent">
+      			<h2 class="sub">제네시스 GV70</h2>
+    		</div>
+  		</a>
+  		<a href="#" class="block block-5">
+    		<div class="image">
+      			<img src="photo/RentCar/중형/G70 2.0 터보.png">
+    		</div>
+    		<div class="title_rent">
+      			<h2 class="sub">제네시스 G70</h2>
+    		</div>
+  		</a>
 	</div>
+    
+    
+</div>
+	<div th:insert="/main/Footer.html" class="header"></div>
+</div>
 </body>
 
 </html>
