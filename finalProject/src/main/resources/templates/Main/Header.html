@@ -22,6 +22,7 @@
 		var url = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst"+
 					"?dataType=JSON&serviceKey="+serviceKey+"&numOfRows=10&pageNo=1"+
 					"&base_date="+tmFc+"&base_time=0500&nx="+x+"&ny="+y;
+		console.log(url)
 		$.ajax({
 			url:url,
 			success:function(data){

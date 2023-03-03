@@ -8,7 +8,7 @@
   #page-wrapper {
     padding-left: 250px;
   }
-  
+   
   #sidebar-wrapper {
     position: fixed;
     width: 250px;
@@ -100,119 +100,122 @@
 </script>
 </head>
 <body>
-
-	<!-- 헤더 -->
-    <div th:insert="/main/Header.html"></div>
-
-
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
-
-	
-	<div id="page-wrapper">
-	  <!-- 사이드바 -->
-	  <div id="sidebar-wrapper">
-	  	<form action="/accommo/detailSearch" method="get" id="f">
-		  	<input type="hidden" name="pageNum" value="1">
-		    <ul class="sidebar-nav">
-		      
-		      <li>
-		      	카테고리1
-		      	<select name="category" id="category">
-		      		<option value="all">전체</option>
-		      		<option value="게스트">게하</option>
-		      		<option value="호텔">호텔</option>
-		      		<option value="콘도">콘도</option>
-		      	</select>
-		      </li>
-		      <li>
-		      	가격<br>
-		      	최소<input type="number" name="minPrice"><br>
-		      	최대<input type="number" name="maxPrice">
-		      </li>
-		      <li class="sidebar-brand">
-		        <a href="#" id="btn_search">검색하기</a>
-		      </li>
-		      <li class="sidebar-brand">
-		        <a href="#" id="btn_reset">검색어 초기화</a>
-		      </li>
-		    </ul>
-	    </form>
-	  </div>
-	  <!-- /사이드바 -->
-	
-	  <!-- 본문 -->
-	  <div id="page-content-wrapper">
-	    <div class="container-fluid">
-	    <h2>검색 결과</h2>
-	    <hr>
-				<div class="row">
-					<div class="col">
-					  	<div class="row row-cols-1 row-cols-md-3 g-4">
-						  <div class="col" th:each="a: ${list}">
-						    <div class="card" id="accom_info">
-						      <img th:src="@{|/${a.realPath}|}" class="card-img-top" >
-						      <div class="card-body">
-						      <h2 style="font-size: 35px;" class="card-title" th:text="${a.name}"></h2>
-						      <p style="font-size:28px" class="card-text" th:text="${a.price+'원'}"></p>
-						       <p class="card-text" th:text="${a.addr}"></p>
-								<button th:accommoNo="${a.accommoNo}" id="tr" class="btn btn-primary">자세히 보기</button>
-						      </div>
-						    </div>
-						  </div>					
+	<div class="container">
+		<!-- 헤더 -->
+	    <div th:insert="/main/Header.html" class="header"></div>
+	    <br>
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
+	</div>	
+		<div id="page-wrapper">
+		  <!-- 사이드바 -->
+		  <div id="sidebar-wrapper">
+		  	<form action="/accommo/detailSearch" method="get" id="f">
+			  	<input type="hidden" name="pageNum" value="1">
+			    <ul class="sidebar-nav">
+			      
+			      <li>
+			      	가격으로 검색하기<br>
+			      	&nbsp;&nbsp; 숙소 종류
+			      	<select name="category" id="category">
+			      		<option value="all">전체</option>
+			      		<option value="게스트">게하</option>
+			      		<option value="호텔">호텔</option>
+			      		<option value="콘도">콘도</option>
+			      	</select>
+			      </li>
+			      <li>
+			      	가격<br>
+			      	&nbsp;&nbsp; <input type="number" name="minPrice" placeholder="최소금액"><br>
+			      	&nbsp;&nbsp; <input type="number" name="maxPrice" placeholder="최대금액">
+			      </li>
+			      <li class="sidebar-brand">
+			        <a href="#" id="btn_search">검색하기</a>
+			      </li>
+			      <li class="sidebar-brand">
+			        <a href="#" id="btn_reset">검색어 초기화</a>
+			      </li>
+			    </ul>
+		    </form>
+		  </div>
+		  <!-- /사이드바 -->
+		
+		  <!-- 본문 -->
+		  <div id="page-content-wrapper">
+		    <div class="container-fluid">
+		    <h2>검색 결과</h2>
+		    <hr>
+					<div class="row">
+						<div class="col">
+						  	<div class="row row-cols-1 row-cols-md-3 g-4">
+							  <div class="col" th:each="a: ${list}">
+							    <div class="card" id="accom_info">
+							      <img th:src="@{|/${a.realPath}|}" class="card-img-top" >
+							      <div class="card-body">
+							      <h2 style="font-size: 35px;" class="card-title" th:text="${a.name}"></h2>
+							      <p style="font-size:28px" class="card-text" th:text="${a.price+'원'}"></p>
+							       <p class="card-text" th:text="${a.addr}"></p>
+									<button th:accommoNo="${a.accommoNo}" id="tr" class="btn btn-primary">자세히 보기</button>
+							      </div>
+							    </div>
+							  </div>					
+							</div>
 						</div>
-					</div>
-			 	</div>
-		 
-	      	<!-- 페이징 -->
-			<hr>
-			<th:block th:if="${session.minPrice == null}">
-				<th:block th:if="${1 < startPage}">
-					<span th:text="이전" 
-					th:onclick="|location.href='/accommo/main/search?pageNum=${startPage-1}'|"></span>
-				</th:block>
-					<th:block th:if="${totPage <= 1}">
-						<span th:text="1" 
-						th:onclick="|location.href='/accommo/main/search?pageNum=1'|"></span>
+				 	</div>
+			 
+		      	<!-- 페이징 -->
+				<hr>
+				<th:block th:if="${session.minPrice == null}">
+					<th:block th:if="${1 < startPage}">
+						<span th:text="이전" 
+						th:onclick="|location.href='/accommo/main/search?pageNum=${startPage-1}'|"></span>
 					</th:block>
-				<th:block th:each="num : ${#numbers.sequence(startPage,endPage)}">
-					<th:block th:unless="${totPage < 1}">
-						<span th:text="${num}" 
-						th:onclick="|location.href='/accommo/main/search?pageNum=${num}'|"></span>
+						<th:block th:if="${totPage <= 1}">
+							<span th:text="1" 
+							th:onclick="|location.href='/accommo/main/search?pageNum=1'|"></span>
+						</th:block>
+					<th:block th:each="num : ${#numbers.sequence(startPage,endPage)}">
+						<th:block th:unless="${totPage < 1}">
+							<span th:text="${num}" 
+							th:onclick="|location.href='/accommo/main/search?pageNum=${num}'|"></span>
+						</th:block>
 					</th:block>
-				</th:block>
-				
-				<th:block th:if="${endPage != totPage}">
-					<span th:text="다음" 
-					th:onclick="|location.href='/accommo/main/search?pageNum=${endPage+1}'|"></span>
-				</th:block>
-			</th:block>
-			
-			<th:block th:if="${session.minPrice != null}">
-			<span th:value="${session.minPrice}"></span>
-				<th:block th:if="${1 < startPage}">
-					<span th:text="이전" 
-					th:onclick="|location.href='/accommo/detailSearch?pageNum=${startPage-1}'|"></span>
-				</th:block>
-					<th:block th:if="${totPage <= 1}">
-						<span th:text="1" 
-						th:onclick="|location.href='/accommo/detailSearch?pageNum=1'|"></span>
-					</th:block>
-				<th:block th:each="num : ${#numbers.sequence(startPage,endPage)}">
-					<th:block th:unless="${totPage < 1}">
-						<span th:text="${num}" 
-						th:onclick="|location.href='/accommo/detailSearch?pageNum=${num}'|"></span>
+					
+					<th:block th:if="${endPage != totPage}">
+						<span th:text="다음" 
+						th:onclick="|location.href='/accommo/main/search?pageNum=${endPage+1}'|"></span>
 					</th:block>
 				</th:block>
 				
-				<th:block th:if="${endPage != totPage}">
-					<span th:text="다음" 
-					th:onclick="|location.href='/accommo/detailSearch?pageNum=${endPage+1}'|"></span>
+				<th:block th:if="${session.minPrice != null}">
+				<span th:value="${session.minPrice}"></span>
+					<th:block th:if="${1 < startPage}">
+						<span th:text="이전" 
+						th:onclick="|location.href='/accommo/detailSearch?pageNum=${startPage-1}'|"></span>
+					</th:block>
+						<th:block th:if="${totPage <= 1}">
+							<span th:text="1" 
+							th:onclick="|location.href='/accommo/detailSearch?pageNum=1'|"></span>
+						</th:block>
+					<th:block th:each="num : ${#numbers.sequence(startPage,endPage)}">
+						<th:block th:unless="${totPage < 1}">
+							<span th:text="${num}" 
+							th:onclick="|location.href='/accommo/detailSearch?pageNum=${num}'|"></span>
+						</th:block>
+					</th:block>
+					
+					<th:block th:if="${endPage != totPage}">
+						<span th:text="다음" 
+						th:onclick="|location.href='/accommo/detailSearch?pageNum=${endPage+1}'|"></span>
+					</th:block>
 				</th:block>
-			</th:block>
-			<hr>
-	    </div>
-	  </div>
-	  <!-- /본문 -->
-	</div>
+				<hr>
+		    </div>
+		  </div>
+		  <!-- /본문 -->
+		</div>
+	<div class="container">
+		<!-- 헤더 -->
+	    <div th:insert="/main/Footer.html" class="header"></div>
+	</div>	
 </body>
 </html>

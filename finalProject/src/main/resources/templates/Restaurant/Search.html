@@ -18,7 +18,7 @@
     overflow-x: hidden;
     overflow-y: auto;
   }
-  
+   
   #page-content-wrapper {
     width: 100%;
     padding: 20px;
@@ -77,7 +77,6 @@
 				}
 			})
 			$("#f").submit();
-			alert("ok");
 		});
 		
 		$("#btn_reset").click(function(){
@@ -85,7 +84,6 @@
 			$.ajax({
 				url:"/restau/resetSearch",
 				success:function(data){
-					alert(data);
 					location.href="/restau/main/search?pageNum=1&keyword=&category=0";
 				}
 			})

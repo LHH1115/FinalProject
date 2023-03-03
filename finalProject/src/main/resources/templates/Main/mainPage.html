@@ -288,8 +288,8 @@ $(function(){
   width: .8rem;
   height: .8rem;
   border-radius: 50%;
-  text-indent: 9999px;
-  padding: 0
+  text-indent: 770px;
+  padding: 200 200;
 }
 
 .slider .slick-dots .slick-active button {
@@ -305,7 +305,6 @@ $(function(){
   z-index: 5;
   -webkit-transition: all .2s ease 0s;
   transition: all .2s ease 0s;
-  -webkit-transform: translateY(0);
   transform: translateY(0)
 }
 
@@ -399,14 +398,15 @@ $(function(){
   /* Best 숙소 css 끝*/
 }
 
-
 </style>
 </head>
 <body>
-<div th:insert="/main/header.html" id="headers"></div>
-<!-- =============================================================================================================  -->
-	<div>
 
+<!-- =============================================================================================================  -->
+	<div class="container">
+	<div th:insert="/main/header.html" id="headers"></div>
+	<br>
+		
 	<div class="container">
 	<br>
 	
@@ -615,18 +615,9 @@ $(function(){
 					</div>
 				</div>
 			</div>
-			
-		<!-- test -->
-		
-		 
-		
-		<!-- test -->
-		
+		</div>
+		 <div th:insert="/main/Footer.html" class="header"></div>
 	</div>
-	</div>
-
-<!-- =============================================================================================================  -->
-<div id="footers"></div>
 </body>
 
 </html>

@@ -102,6 +102,10 @@ public class UserMemberController {
 		
 	}
 	
+	
+	
+	
+	
 	@GetMapping("/member/findId")
 	public void findIdForm() {}
 	
@@ -116,6 +120,8 @@ public class UserMemberController {
 		return mav;
 	}
 	
+	
+	
 	@GetMapping("/member/loginMember")
 	public void loginForm(HttpServletRequest request, HttpSession session) {
 		String referer = request.getHeader("Referer");
@@ -126,7 +132,7 @@ public class UserMemberController {
 	
 	@RequestMapping("/myPage/loginok")
 	public String getLoginSession(HttpSession session) {
-		
+		System.out.println(1);
 		//인증된 회원의 정보를 갖고오기 위해서 먼저 시큐리티의 인증객체가 필요
 		Authentication authentication = 
 							SecurityContextHolder.getContext().getAuthentication();
@@ -141,7 +147,6 @@ public class UserMemberController {
 		session.setAttribute("loginM", m);
 		System.out.println("동작");
 	    return "redirect:"+ session.getAttribute("preUrl");
-		
 	}
 	
 	@GetMapping("/member/insertMember")

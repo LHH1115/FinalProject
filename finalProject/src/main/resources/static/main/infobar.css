@@ -32,18 +32,17 @@ a:hover{
 }
 
 .menubar{
-    width:1700px;
+    width:1600px;
     margin: -40px;
     border:none;
     background: white;
     overflow: hidden;
     float:left;
 }
-
 .menuLogo{	
 	padding-top:35px;
 	margin:10px;
-    width:50px;
+    width:200px;
     float:left;
 }
  
@@ -54,6 +53,7 @@ a:hover{
 	font-weight:600;
 	float:left;
 	padding: 10px 120px;
+	padding: 0;
 	margin-top: 90px;
 }
   

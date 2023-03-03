@@ -14,14 +14,18 @@
 		/* 검색 버튼 클릭 */
 		$("#btn_search").click(function(e){
 			e.preventDefault();
-			$("#form_search").submit();
+			$.ajax({
+				url:"/restau/resetSearch",
+				success:function(data){
+					$("#form_search").submit();
+				}
+			}) 
 		})
 		
 		$("#btn_korean").click(function(){
 				$.ajax({
 					url:"/restau/resetSearch",
 					success:function(data){
-						alert(data);
 						location.href="/restau/searchC?pageNum=1&keyword=한식";
 					}
 				})
@@ -30,7 +34,6 @@
 			$.ajax({
 				url:"/restau/resetSearch",
 				success:function(data){
-					alert(data);
 					location.href="/restau/searchC?pageNum=1&keyword=서양식";
 				}
 			})
@@ -39,7 +42,6 @@
 			$.ajax({
 				url:"/restau/resetSearch",
 				success:function(data){
-					alert(data);
 					location.href="/restau/searchC?pageNum=1&keyword=일식";
 				}
 			})
@@ -48,7 +50,6 @@
 			$.ajax({
 				url:"/restau/resetSearch",
 				success:function(data){
-					alert(data);
 					location.href="/restau/searchC?pageNum=1&keyword=중식";
 				}
 			})

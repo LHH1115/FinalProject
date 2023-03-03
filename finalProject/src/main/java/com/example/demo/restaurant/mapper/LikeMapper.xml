@@ -5,7 +5,7 @@
 <mapper namespace="like">
   <!-- 찜 많은 순서로 정렬 -->
   <select id="findMostLike" resultType="likeVO" parameterType="java.lang.Integer">
-  	SELECT refNo FROM TBL_LIKE WHERE category = 'restaurant' GROUP BY refNo ORDER BY COUNT(*) DESC FETCH FIRST #{count} ROWS ONLY
+  	SELECT refNo FROM TBL_LIKE WHERE category = 'restau' GROUP BY refNo ORDER BY COUNT(*) DESC FETCH FIRST #{count} ROWS ONLY
   </select>
   
   <!-- 로그인 유저 찜 확인하기 -->

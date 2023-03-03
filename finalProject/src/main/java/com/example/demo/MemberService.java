@@ -23,10 +23,9 @@ public class MemberService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		System.out.println("사용자 로그인 처리");
-		System.out.println("username:"+username);
 		MemberVO m = dao.findById(username);
 		if(m == null) {
+			System.out.println("error");
 			throw new UsernameNotFoundException(username);
 		}
 		
@@ -34,6 +33,7 @@ public class MemberService implements UserDetailsService{
 							.username(username)
 							.password(m.getPwd())
 							.roles(m.getRole()).build();
+		System.out.println(user);
 		return user;
 	}
 

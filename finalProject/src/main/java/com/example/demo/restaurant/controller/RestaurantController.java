@@ -79,14 +79,11 @@ public class RestaurantController {
 					a.setRealPath(realPath);
 				}
 			}else {
-				realPath = "photo/Restaurant/명가천지연무태장어/rest1.jpg";
+				realPath = "photo/Restaurant/서양식/루마카/rest1.jpg";
 				a.setRealPath(realPath);
 			}
 			restau_list.add(a);
 		}
-		// 관리자 여부 확인
-		int role = 1;
-		session.setAttribute("role", role);
 		model.addAttribute("restau_list", restau_list);
 		return "Restaurant/Main";
 	}
