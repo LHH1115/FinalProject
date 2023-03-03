@@ -123,14 +123,16 @@ public class UserMemberController {
 	
 	
 	@GetMapping("/member/loginMember")
-	public void loginForm() {
-	
+	public void loginForm(HttpServletRequest request, HttpSession session) {
+		String referer = request.getHeader("Referer");
+		if(!referer.equals("http://localhost:8088/member/loginMember")){
+			session.setAttribute("preUrl", referer);
+		}
 	}
 	
 	@RequestMapping("/myPage/loginok")
-	public ModelAndView getLoginSession(HttpSession session) {
+	public String getLoginSession(HttpSession session) {
 		
-		ModelAndView mav = new ModelAndView("redirect:/myPage/updateMyInfo");
 		//인증된 회원의 정보를 갖고오기 위해서 먼저 시큐리티의 인증객체가 필요
 		Authentication authentication = 
 							SecurityContextHolder.getContext().getAuthentication();
@@ -144,7 +146,7 @@ public class UserMemberController {
 		MemberVO m = dao.findById(id);
 		session.setAttribute("loginM", m);
 		System.out.println("동작");
-		return mav;
+	    return "redirect:"+ session.getAttribute("preUrl");
 		
 	}
 	
