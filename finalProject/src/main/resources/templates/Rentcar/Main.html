@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<!-- BootStrap -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RentCar</title>
+<!-- BootStrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<!-- JQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		/* 검색 버튼 클릭 */
+		$("#btn_search").click(function(e){
+			var keyword=$("#keyword").val();
+			if(keyword==null || keyword=="" || keyword=="undefined"){
+				alert("차량명을 입력하세요");
+				e.preventDefault();
+			}
+		})
+		
+	
+		
+		/* 인기 차량 상세이동 */
+		$(document).on("click",".text-bg-white",function(){
+			var carNo = $(this).attr("carNo");
+			location.href="/rentcar/Detail?carNo="+carNo;
+		});
+		
+		$(".btn_cat").click(function(){
+			var cat=$(this).html();
+			$(location).attr("href","/rentcar/Search?category="+cat);
+		})
+		
+		
+	})
+</script>
+</head>
+<body>
+	
+ 	<!-- 헤더 -->
+    <div th:insert="/main/Header.html"></div>
+    
+	<!-- BootStrap -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+	<br>
+	
+	<!-- 검색기능 -->
+	<hr>
+	<div>
+		<form action="/rentcar/SearchCatAndName" id="form_search">
+			<select name="category">
+				<option value="">===카테고리===</option>
+				<option value="경차">경차</option>
+				<option value="소형">소형</option>
+				<option value="중형">중형</option>
+				<option value="전기차">전기차</option>
+				<option value="승합">승합</option>
+			</select>
+			&nbsp;
+			차량 이름 : <input type="text" name="keyword" id="keyword">
+			<input type="submit" value="검색" class="btn btn-primary" id="btn_search">
+		</form>
+	</div>
+	<hr>
+	
+	<!-- Test -->
+	<!-- <th:block th:if="${realPath != null}">
+		<img th:src="|/${realPath}|" width="600">
+	</th:block> -->
+	
+	<!-- 카테고리별 검색 버튼 -->
+	<hr>
+	<div>
+		<h3>렌트카 종류</h3>
+		<button class="btn_cat">경차</button>
+		<button class="btn_cat">소형</button>
+		<button class="btn_cat">중형</button>
+		<button class="btn_cat">전기차</button>
+		<button class="btn_cat">승합</button>
+	</div>
+	<hr>
+	
+	<!-- 현재 인기 숙소 -->
+	<hr>
+	
+		<h3>인기 차량</h3>
+		
+		<div class="card-group">
+			<th:block th:each="c: ${car_list}">
+				<div class="card text-bg-white" id="img_mostLike" th:carNo="${c.carNo}">
+				  <img th:src="|${c.realPath}|" th:class="card-img" height="350">
+				  <div class="card-img-overlay">
+				    <h5 class="card-title" th:text="${c.modelName}"></h5>
+				    <p class="card-text" th:text="${c.category}"></p>
+				  </div>
+				</div>
+			</th:block>
+		</div>
+	
+	<hr>
+</body>
+</html>

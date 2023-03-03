@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>리뷰남기기</h1>
+<form action="/myPage/reviewInsert" method="post">
+<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+<input type="text" name="id" th:value="${id}">
+<input type="text" name="accommoNo" th:value="${accommoNo}">
+별점
+<input type="radio" name="stars" value="1">1
+<input type="radio" name="stars" value="2" checked="checked">2
+<input type="radio" name="stars" value="3">3
+<input type="radio" name="stars" value="4">4
+<input type="radio" name="stars" value="5">5
+<br>
+제목:<input type="text" name="title"><br>
+내용:<br>
+<textarea rows="30" cols="60" name="content"></textarea><br>
+<input type="submit" value="등록">
+</form>						
+</body>
+</html>

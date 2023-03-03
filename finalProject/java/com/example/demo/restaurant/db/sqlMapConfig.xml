@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <properties resource="com/example/demo/restaurant/db/db.properties"/>
+  <typeAliases>
+  	<typeAlias type="com.example.demo.restaurant.vo.RestaurantVO" alias="restaurantVO"/>
+  	<typeAlias type="com.example.demo.restaurant.vo.RestaurantPhotoVO" alias="restaurantPhotoVO"/>
+  	<typeAlias type="com.example.demo.restaurant.vo.LikeVO" alias="likeVO"/>
+  </typeAliases>
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <mappers>
+    <mapper resource="com/example/demo/restaurant/mapper/RestaurantMapper.xml"/>
+    <mapper resource="com/example/demo/restaurant/mapper/RestaurantPhotoMapper.xml"/>
+    <mapper resource="com/example/demo/restaurant/mapper/LikeMapper.xml"/>
+  </mappers>
+</configuration>

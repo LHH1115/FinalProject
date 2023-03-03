@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src='https://code.jquery.com/jquery-3.6.3.min.js'></script>
+<script type="text/javascript">
+$(function(){
+	sessionStorage.setItem("MyId",$("#id").val());
+})
+</script>
+</head>
+<body>
+<span  th:text="${session.id}+'님이 로그인 하였습니다.'"></span>
+<a href="/">메인</a>
+<a href="/logout">로그아웃</a>
+<input type="hidden" th:value="${session.id}" readonly="readonly" id="id">
+<a th:href="'/myPage/updateMyInfo?id='+${session.id}">회원정보수정</a>
+<a href="../member/changePwd">비밀번호수정</a>
+<a href="/myPage/myPoint?pageNUM=1">포인트</a>
+<a href="/myPage/myReservation?pageNUM=1">예약</a>
+<a href="/myPage/myLike?pageNUM=1&category=accommodation">찜</a>
+<a href="/myPage/myInquiry?pageNUM=1">내문의</a>
+</body>
+</html>

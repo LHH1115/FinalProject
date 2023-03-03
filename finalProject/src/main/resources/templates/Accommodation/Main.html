@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<!-- BootStrap -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accommodation</title>
+<!-- BootStrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<!-- JQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		 
+		$.noConflict();	// 충돌방지 코드
+		/* 검색 버튼 클릭 */
+		$("#btn_search").click(function(e){
+			e.preventDefault();
+			$("#form_search").submit();
+		})
+		
+		$("#btn_hotel").click(function(){
+			location.href="/accommo/searchC?pageNum=1&keyword=호텔";
+		})
+		$("#btn_guest").click(function(){
+			location.href="/accommo/searchC?pageNum=1&keyword=게스트";
+		})
+		$("#btn_condo").click(function(){
+			location.href="/accommo/searchC?pageNum=1&keyword=콘도";
+		})
+		
+		/* 인기 숙소 상세이동 */
+		$(document).on("click",".card",function(){
+			var accommoNo = $(this).attr("accommoNo");
+			location.href="/accommo/detail?accommoNo="+accommoNo;
+		});
+	})
+</script>
+<style type="text/css">
+/* 검색창 css 시작 */
+:root {
+  --main-color: #ff8c00;
+  --secondary-color: #cc6600;
+  --text-color: rgba(255,255,255,0.87);
+}
+
+#form_search_1 {
+  background:url('/photo/Accommodation/Main/header.jpg') no-repeat ;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-size: cover;
+  width:100%;
+  height: 700px;
+  background-position : 0px 0px ;
+  
+}
+
+#form_search_1:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.100);
+}
+
+#form_search_1 * {
+  z-index: 1;
+}
+
+#form_search_1 h1 {
+  margin: 0 0 2rem;
+  color: rgba(255,255,255,0.95);
+  font-size: 45px;
+
+}
+
+.searchAccomo_form {
+  position: relative;
+  width: 30rem;
+  height:3rem;
+  max-width: 100%;
+}
+
+.searchAccomo_text {
+  border: 0;
+  border-radius: 50px;
+  font-size: 1rem;
+  padding: 1rem 2rem;
+  width: 100%;
+}
+
+.searchAccomo_btn {
+  background-color: var(--main-color);
+  color: rgba(255,255,255,0.95);
+  position: absolute;
+  top: 0.13rem;
+  right: 0.20rem;
+  border: 0;
+  border-radius: 50px;
+  font-size: 1rem;
+  padding: 0.875rem 2rem;
+  width: 120px;
+}
+
+.searchAccomo_btn {
+  cursor: pointer;
+}
+
+.searchAccomo_btn:hover {
+  background-color: var(--secondary-color);
+}
+
+.searchAccomo_btn:active {
+  transform: scale(0.95);
+}
+/* 검색창 css 끝 */
+/* 인기숙소 css 시작 */
+.like_accommo {
+  border-radius: 5%;
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  overflow: hidden;
+  aspect-ratio: 5 / 6;
+}
+
+.carousel {
+  display: flex;
+  margin-left:30px;
+  margin: 10px 0 0 0;
+  padding: 10px 0 20px 0;
+}
+
+.carousel .card {
+  display: flex;
+  padding: 5px 10px 10px 10px;
+  flex-direction: column;
+  width: 350px;
+  margin: 0 7px;
+  background-color: white;
+  border-radius: 5%;
+  overflow: hidden;
+  box-shadow: 2px 4px 12px rgba(0,0,0,.08);
+  transition: all .3s cubic-bezier(0,0,.5,1)
+}
+
+.card:hover {
+  box-shadow: 2px 4px 16px rgba(0,0,0,.16);
+  transform: scale3d(1.01,1.01,1.01)
+}
+
+.carousel .card .content{
+  padding: 10px 5px 0 15px;
+}
+/* 인기숙소 css 끝 */
+</style>
+</head>
+<body>
+	<div class="container">
+	 	<!-- 헤더 -->
+	    <div th:insert="/main/Header.html"></div>
+    <br>
+    
+	<!-- BootStrap -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+	
+	<!-- 검색기능 -->
+		<div id="form_search_1">
+			<h1>설렘 가득한 제주의 어떤 숙소를 찾으세요?</h1><br>
+			<form class="searchAccomo_form" action="/accommo/main/search" id="form_search" method="get">
+				<input type="hidden" name="pageNum" value="1">
+				<input type="text" name="keyword" placeholder="숙소명을 입력하세요" class="searchAccomo_text"/>
+				<input type="button" id="btn_search" value="검색" class="searchAccomo_btn">
+			</form>
+		</div><br><br><br>
+		
+		
+			
+		<!-- 카테고리별 검색 버튼 -->
+		<div class="container">
+		<h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			🛌숙소 종류</h1><br>
+			<button type="button" class="btn_image" id="btn_hotel" style="border:0;width:200px;height:200px;margin-left: 200px">
+				<img  src="/photo/Accommodation/Main/hotel.png" width="100px"><h2>호텔</h2>
+			</button>
+			<button type="button" class="btn_image" id="btn_guest" style="border:0;width:200px;height:200px;margin-left: 100px;">
+				<img  src="/photo/Accommodation/Main/guest.png" width="100px"><h2>게스트하우스</h2>
+			</button>
+			<button type="button" class="btn_image" id="btn_condo" style="border:0;width:200px;height:200px;margin-left: 100px;">
+				<img  src="/photo/Accommodation/Main/condo.png" width="100px"><h2>리조트</h2>
+			</button>
+		<br><br><br><br><br>
+		
+		<!-- 현재 인기 숙소 -->
+		<h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			👍인기 숙소</h1>
+		</div>	
+		<div class="carousel" style="text-align: center;justify-content: center;">
+			<th:block th:each="a: ${accommo_list}">
+	  			<div class="card" id="img_mostLike" th:accommoNo="${a.accommoNo}">
+	    			<div class="content">
+	      				<h2 style="font-size: 25px" th:text="${a.name}"></h2>
+	      				<p th:text="${a.addr}"></p>
+	      				<p th:text="${a.phone}"></p>
+	    			</div>
+	    				<img class="like_accommo" th:src="|/${a.realPath}|">
+	  				</div>
+	  		</th:block>
+		</div>
+		<!-- 푸터 -->
+    	<div th:insert="/main/Footer.html"></div>
+	</div>
+</body>
+</html>

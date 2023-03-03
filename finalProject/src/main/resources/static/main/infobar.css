@@ -1,0 +1,131 @@
+@charset "EUC-KR";
+body{
+	margin: 0px;
+	color: black;
+	font-family: 'Jua', sans-serif;
+	font-size:18px; 
+}
+nav{
+	height: 100px;
+	background-color: white;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+
+
+a{
+	color: black;
+	text-decoration: none;
+}
+
+a:hover{
+	color: orange;
+}
+
+.wrap{
+    width:100%;
+    font-weight:700px;
+    margin-bottom: 16px;
+
+}
+
+.menubar{
+    width:1600px;
+    margin: -40px;
+    border:none;
+    background: white;
+    overflow: hidden;
+    float:left;
+}
+.menuLogo{	
+	padding-top:35px;
+	margin:10px;
+    width:200px;
+    float:left;
+}
+ 
+.menuItem{
+	padding-bottom: 15px;
+	padding-top: 15px;
+	font-size: 20px;
+	font-weight:600;
+	float:left;
+	padding: 10px 120px;
+	padding: 0;
+	margin-top: 90px;
+}
+  
+.menubar ul{
+	background: transparent;
+	height:50px;
+	list-style:none;
+    
+}
+
+.menubar li{
+	float:left;
+    margin: 10px;
+}
+
+.menubar a{
+    color:black;
+    display:block;
+    font-weight: 700;
+    line-height:49px;
+    padding:1px 30px;
+    text-align:center;
+    text-decoration: none;
+}
+
+.menubar li:hover ul{
+	display:block;
+}
+
+.menubar li:hover li a{
+	background:none;
+    text-decoration: none;
+    color:black;
+    text-align: left;
+}
+
+.menubar li ul{
+	background-color: white;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	display:none;
+	height:auto;
+	position:absolute;
+	z-index:999;
+}
+
+.menubar li li a ,
+.menubar li li{
+	background: white;
+	display:block;
+	float:none;
+	min-width:100px;
+	text-decoration: none;
+}
+
+.menubar li ul a{
+	display:block;
+	height:50px;
+	font-weight: 400px;
+	font-size:15px;
+	padding:0px 15px 0px 15px;
+	text-align:center;
+	text-decoration: none;
+}
+
+.menubar li a:hover {
+	background: white;
+	color:orange;
+}
+
+.menubar li ul a:hover,
+.menubar li ul li:hover a{
+	background: white;
+	border:0px;
+	color:#9400d3;
+ }

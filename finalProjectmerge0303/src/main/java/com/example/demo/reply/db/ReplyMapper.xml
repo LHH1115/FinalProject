@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reply">
+
+   	<insert id="insertReply" parameterType="ReplyVO">
+  		insert into tbl_reply(replyNo,inquiryNo,content,repdate) values(#{replyNo},#{inquiryNo},#{content},sysdate)	
+	</insert>
+	
+	<update id="updateReply" parameterType="replyVO">
+		update tbl_reply set content=#{content} where inquiryNo=#{inquiryNo}
+	</update>
+	
+	<delete id="deleteReply">
+		delete tbl_reply where inquiryNo=#{inquiryNo}
+	</delete>
+	   
+	<select id="getNextNo" resultType="Integer">
+		select nvl(max(replyNo),0)+1 from tbl_reply
+	</select>
+	
+	<select id="findByInquiryNo" resultType="ReplyVO">
+		select * from tbl_reply where inquiryNo=#{inquiryNo}
+	</select>
+	
+	<select id="countAll" resultType="Integer">
+		select count(*) from tbl_reply where inquiryNo=#{inquiryNo}
+	</select>
+	
+	
+</mapper>

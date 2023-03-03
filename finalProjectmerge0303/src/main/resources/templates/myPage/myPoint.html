@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src='https://code.jquery.com/jquery-3.6.3.min.js'></script>
+<script type="text/javascript">
+$(function(){
+	$("#spinbtn").click(function(){
+		var id = $("#myid").text();
+		window.open("/myPage/roulette?id="+id,"룰렛돌리기","width= 500, height =500")
+	})
+})
+</script>
+</head>
+<body>
+<span th:text="${id}" th:id="myid"></span>님의 보유 포인트<span th:text="${point}"></span>
+<button id="spinbtn">룰렛돌리기</button>
+<table>
+<thead>
+	<th>내용</th>
+	<th>날짜</th>
+	<th>포인트양</th>
+</thead>
+<tbody>
+	<tr th:each="p:${list}" class="list">
+		<td th:text=${p.category}></td>
+		<td th:text=${p.eventdate}></td>
+		<td th:text=${p.amount}></td>
+	</tr>
+</tbody>
+</table>
+<th:block th:each="i:${#numbers.sequence(1,totalPage)}">
+		<a th:text="${i}" th:href="'/myPage/myPoint?pageNUM='+${i}"></a>
+</th:block>
+</body>
+</html>

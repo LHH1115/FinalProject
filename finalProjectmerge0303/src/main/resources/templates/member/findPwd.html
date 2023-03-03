@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src='https://code.jquery.com/jquery-3.6.3.min.js'></script>
+<script type="text/javascript">
+$(function(){
+	var validcode = null;
+	
+	$("#send_btn").click(function(event){
+		$.ajax({
+		url:"/member/sendCode",
+		data:{"email":$("#email").val()},
+		success:function(data){
+			alert("인증코드 발송")
+			validcode = data
+		}
+		
+		});
+	
+	});
+	
+	$("#submit_btn").click(function(event){
+		$.ajax({
+			url:"/member/findPwdOK",
+			data:{"id":$("#id").val()},
+			success:function(data){
+				if (validcode == $("#valid_num").val()){
+					if(data == $("#email").val()){
+						sessionStorage.setItem("MyId",$("#id").val());
+						location.href="/member/changePwd";
+					}else{
+						alert("개인정보가 일치하지않습니다.");
+					}
+				}else{
+					alert("인증번호를 확인하세요");
+				}
+			}
+			
+		})
+	});
+});
+
+</script>
+</head>
+<body>
+<h1>비밀번호찾기</h1>
+<form action="/member/findPwd" method="post">
+<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+아이디:<input type="text" name='id', id="id"><br>
+이메일:<input type="text" name='email' id ='email'>
+<button type="button" id="send_btn">인증번호 발송</button><br>
+인증번호:<input type="text" name='valid_num' id="valid_num"><br>
+<button type="button" id="submit_btn">찾기</button>
+</form>
+</body>
+</html>
