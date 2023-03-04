@@ -102,7 +102,10 @@ public class MyPageDAO {
 		return DBManager_myPage.inquiryTotalRecord(memberno);
 	}
 	
-	
+	// 모든 리뷰 검색
+	public List<ReviewVO> findAllReview(int accommoNo) {
+		return DBManager_myPage.findAllReview(accommoNo);
+	}
 	
 
 }

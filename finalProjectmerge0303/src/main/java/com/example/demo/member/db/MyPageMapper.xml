@@ -114,4 +114,8 @@
   	select count(*) from tbl_inquiry where memberno = #{memberno}
   </select>
   
+  <select id="findAllReview" resultType="ReviewVO">
+  	SELECT * FROM TBL_REVIEW WHERE ACCOMMONO = #{accommoNo}
+  </select>
+  
 </mapper>

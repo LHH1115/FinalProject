@@ -502,61 +502,37 @@ $(function(){
 </head>
 <body>
 
-<!-- =============================================================================================================  -->
 <div class="container">
+	<!-- 헤더 -->
 	<div th:insert="/main/header.html" id="headers"></div>
 	<br>
 		
-		<div class="container">
-		<br>
-	
-<!-- best 숙소 시작 -->
-			<div style="text-align: center"><h2>Best 숙소</h2></div>
-			<div class="slider">
-       			<div class="slide">
-       				<figure>
-    	   				<img src="photo/Accommodation/가족호텔업/그림리조트/acc1.jpeg"/>
+	<div class="container">
+	<br>
+
+	<!-- best 숙소 시작 -->
+	<div style="text-align: center"><h2>Best 숙소</h2></div>
+	<div class="slider">
+		<th:block th:each="a : ${accommo_list}">
+	        <div class="slide">
+	        	<a th:href="|/accommo/detail?accommoNo=${a.accommoNo}|">
+		        	<figure>
+		              <img th:src="@{|/${a.realPath}|}">
 					</figure>
-           			<div class="text">
-           				<div class="category">호텔</div>
-                			<h1 class="title">그림리조트</h1>
-                			<p class="summary">내용~~</p>
-						</div>
-       				</div>
-			        <div class="slide">
-			            <figure>
-			                <img src="photo/Accommodation/가족호텔업/그림리조트/acc2.jpeg"/>
-						</figure>
-			            <div class="text">
-			            	<div class="category">호텔</div>
-			               	<h1 class="title">그림리조트</h1>
-			                <p class="summary">내용~~</p>
-						</div>
-			        </div>
-			        <div class="slide">
-			            <figure>
-			                <img src="photo/Accommodation/가족호텔업/그림리조트/acc3.jpeg"/>
-						</figure>
-			            <div class="text">
-			            	<div class="category">호텔</div>
-			                <h1 class="title">그림리조트</h1>
-			                <p class="summary">내용~~</p>
-						</div>
-			        </div>
-			        <div class="slide">
-			            <figure>
-			                <img src="photo/Accommodation/가족호텔업/그림리조트/acc4.jpeg"/>
-						</figure>
-			            <div class="text">
-			            	<div class="category">호텔</div>
-			                <h1 class="title">그림리조트</h1>
-			                <p class="summary">내용~~</p>
-						</div>
-			        </div>   
-			    </div>
-			   <div style="text-align: center"><h2>Best 인기상품</h2></div> 
-			    <div class="selector">
-        <div class="selecotr-item">
+				</a>
+	            <div class="text">
+	            	<div class="category"><span th:text="${a.category}"></span></div>
+	                <h1 class="title"><span th:text="${a.name}"></span></h1>
+	                <p class="summary"><span th:text="${a.addr}"></span></p>
+				</div>
+	        </div>
+        </th:block>
+    </div>
+    <!-- best 숙소 끝 -->
+	
+	<div style="text-align: center"><h2>Best 인기상품</h2></div> 
+	<div class="selector">
+		<div class="selecotr-item">
             <input type="radio" id="radio1" name="best_goods" value="radio_rest" class="selector-item_radio" checked>
             <label for="radio1" class="selector-item_label">식당</label>
         </div>
@@ -568,50 +544,23 @@ $(function(){
             <input type="radio" id="radio3" name="best_goods" value="radio_rent" class="selector-item_radio">
             <label for="radio3" class="selector-item_label">렌트카</label>
         </div>
-    </div><br> 
+   	</div><br> 
     
+    <!-- 식당 시작-->
     <div class="grid-container_rest">
-  		<a href="#" class="block block-1">
-    		<div class="image">
-      			<img src="photo/Restaurant/서양식/카우보이스테이크하우스/rest1.jpg">
-    		</div>
-    		<div class="title">
-      			<h2>카우보이스테이크하우스</h2>
-    		</div>
-  		</a>
-  		<a href="#" class="block block-2">
-    		<div class="image">
-      			<img src="photo/Restaurant/서양식/카우보이스테이크하우스/rest2.jpg">
-    		</div>
-    		<div class="title">
-      			<h2 class="sub">카우보이스테이크하우스</h2>
-    		</div>
-  		</a>
-  		<a href="#" class="block block-3">
-    		<div class="image">
-      			<img src="photo/Restaurant/서양식/카우보이스테이크하우스/rest3.jpg">
-   			</div>
-    		<div class="title">
-      			<h2 class="sub">카우보이스테이크하우스</h2>
-    		</div>
-  		</a>
-  		<a href="#" class="block block-4">
-    		<div class="image">
-      			<img src="photo/Restaurant/서양식/카우보이스테이크하우스/rest4.jpg">
-    		</div>
-    		<div class="title">
-      			<h2 class="sub">카우보이스테이크하우스</h2>
-    		</div>
-  		</a>
-  		<a href="#" class="block block-5">
-    		<div class="image">
-      			<img src="photo/Restaurant/서양식/카우보이스테이크하우스/rest5.jpg">
-    		</div>
-    		<div class="title">
-      			<h2 class="sub">카우보이스테이크하우스</h2>
-    		</div>
-  		</a>
+    	<th:block th:each="r, i : ${restau_list}">
+		  <a th:href="|/restau/detail?restauNo=${r.restauNo}|" th:class="|block block-${i.index}|">
+		    <div class="image">
+		      <img th:src="@{|/${r.realPath}|}">
+		    </div>
+		    <div class="title">
+		      <h2><span th:text="${r.name}"></span></h2>
+		    </div>
+		  </a>
+		</th:block>
 	</div>
+	<!-- 식당 끝-->
+	
 	<div class="grid-container_attr">
   		<a href="#" class="block block-1">
     		<div class="image">
@@ -700,6 +649,7 @@ $(function(){
     
     
 </div>
+	<!-- 푸터  -->
 	<div th:insert="/main/Footer.html" class="header"></div>
 </div>
 </body>

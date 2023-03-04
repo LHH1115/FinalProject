@@ -122,15 +122,4 @@ public class MemberController {
 		System.out.println("각회원 예약 리스트 : "+jsonString);
 		return jsonString;
 	}
-	
-		
-	// 메인 페이지
-		@GetMapping("/")
-		public ModelAndView main(HttpSession session) {
-			ModelAndView mav = new ModelAndView("main/mainPage.html");
-			System.out.println(session.getAttribute("id"));
-			return mav;
-		}
-
-
 }
