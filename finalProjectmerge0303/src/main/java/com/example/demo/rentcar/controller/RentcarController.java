@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.like.dao.LikeDAO;
 import com.example.demo.like.vo.LikeVO;
+import com.example.demo.member.vo.MemberVO;
 import com.example.demo.rentcar.dao.RentcarDAO;
 import com.example.demo.rentcar.vo.RentcarVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -47,7 +48,8 @@ public class RentcarController {
 	
 	
 	@GetMapping("/rentcar/main")
-	public void mainPage(Model model) {
+	public void mainPage(Model model,HttpSession session) {
+		System.out.println("loginM:"+session.getAttribute("loginM"));
 		List<Integer> list=rentcarDAO.findPopularCar();
 		int no5=list.get(4);
 		list.remove(4);
@@ -177,19 +179,23 @@ public class RentcarController {
 		
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("category","RentCar");
-		map.put("memberNo",1);
-//		member에서 번호 받아와야한다.
-		map.put("carNo",carNo);
-		LikeVO lvo=likeDAO.findLikeByM(map);
-		System.out.println("detail : "+vo);
-		if(lvo !=null) {
-			model.addAttribute("status","ok");
+		MemberVO loginM=(MemberVO)session.getAttribute("loginM");
+		if(loginM!=null) {
+			map.put("memberNo",loginM.getMemberno());
+			map.put("carNo",carNo);
+			LikeVO lvo=likeDAO.findLikeByM(map);
+			if(lvo !=null) {
+				model.addAttribute("status","ok");
+			}
+			model.addAttribute("role",loginM.getRole());
+			if(loginM.getRole().equals("admin")) {
+				session.setAttribute("detail",vo);
+				session.setAttribute("rentstore", list2);
+			}
 		}
-		model.addAttribute("memberNo",1);
+		System.out.println("detail : "+vo);
 		model.addAttribute("detail",vo);
 		model.addAttribute("rentstore",list2);
-		session.setAttribute("detail",vo);
-		session.setAttribute("rentstore", list2);
 	}
 	
 	@GetMapping("/rentcar/storename")

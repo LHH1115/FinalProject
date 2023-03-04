@@ -59,19 +59,19 @@
 	<!-- 정보 -->
 	<div>
 		<h2>차량 정보</h2>
-		
-		<th:block th:if="${memberNo}!=1">
-			<th:block th:if="${status}=='ok'">
-				<button id="unlike" th:onclick="|location.href='@{/rentcar/unlike(carNo=${detail.carNo})}'|">찜해제</button>
+		<th:block th:if="${session.loginM !=null}">
+			<th:block th:if="${role}!='admin'">
+				<th:block th:if="${status}=='ok'">
+					<button id="unlike" th:onclick="|location.href='@{/rentcar/unlike(carNo=${detail.carNo})}'|">찜해제</button>
+				</th:block>
+				<th:block th:unless="${status}=='ok'">
+					<button id="like" th:onclick="|location.href='@{/rentcar/like(carNo=${detail.carNo})}'|">찜하기</button>
+				</th:block>
 			</th:block>
-			<th:block th:unless="${status}=='ok'">
-				<button id="like" th:onclick="|location.href='@{/rentcar/like(carNo=${detail.carNo})}'|">찜하기</button>
+			<th:block th:unless="${role}!='admin'">
+				<button th:onclick="|location.href='@{/admin/rentcar/update(carNo=${detail.carNo})}'|">렌트카 수정</button>
 			</th:block>
 		</th:block>
-		<th:block th:unless="${memberNo}!=1">
-			<button th:onclick="|location.href='@{/admin/rentcar/update(carNo=${detail.carNo})}'|">렌트카 수정</button>
-		</th:block>
-		
 		<hr>
 		<input type="hidden" th:value="${detail.carNo}" id="carNo">
 		<h3>차량명</h3>
