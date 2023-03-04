@@ -1,5 +1,4 @@
-# Final Project
-## Jeju DaCome
+# Final Project_Jeju DaCome 🏝️
 
 ## 🖥️프로젝트 소개
 제주도 관련 숙소/식당 등 통합 여행 정보 제공 플랫폼
