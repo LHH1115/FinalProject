@@ -98,12 +98,49 @@ public class AttractController {
 					name = forPhoto.getName();
 					path = forPhoto.getPath();
 					realPath = "photo/Attraction/"+category+"/"+name+"/"+path;
-					System.out.println("rp:"+realPath);
+					System.out.println("realphoto:"+realPath);
 					a.setRealPath(realPath);
 					
 				}
 			}else {
-				realPath = "photo/Attraction/공원/노리매/att1.jpg";
+				AttractionVO vo=dao.findById(refNo);
+				category = vo.getCategory();
+				category = render_category(category);
+				Random r = new Random();
+				int num = r.nextInt(5)+1;
+//				refno를 이용해서 tbl_attraction의 name, category, tbl_attractionphoto의 path를 가져와서
+//				랜덤으로 랜더링하자.
+				
+				switch(category) {
+				case "공원":
+					String parkList[] = {"노리매","동백포레스트","휴애리 자연생활공원"};
+					int n1 = r.nextInt(parkList.length-1);
+					name = parkList[n1];
+					break;
+				case "박물관":
+					String museumList[] = {"양금석 가옥","의귀리 김만일묘역"};
+					int n2 = r.nextInt(museumList.length-1);
+					name = museumList[n2];
+					break;
+				case "숲":
+					String forestList[] = {"마흐니 숲길","큰엉해안경승지"};
+					int n3 = r.nextInt(forestList.length-1);
+					name = forestList[n3];
+					break;
+				case "오름":
+					String riseList[] = {"물영아리오름","사라오름"};
+					int n4 = r.nextInt(riseList.length-1);
+					name = riseList[n4];
+					break;
+				case "테마파크":
+					String themeParkList[] = {"코코몽 에코파크"};
+					int n5 = r.nextInt(themeParkList.length-1);
+					name = themeParkList[n5];
+				}
+				
+//				realPath = "photo/Attraction/공원/노리매/att1.jpg";
+				realPath = "photo/Attraction/"+category+"/"+name+"/att"+num+".jpg";
+				System.out.println("fakephoto:"+realPath);
 				a.setRealPath(realPath);
 			}
 			attract_list.add(a);
@@ -396,11 +433,6 @@ public class AttractController {
 	@GetMapping("/detail")
 	public ModelAndView detail(int attractNo, HttpSession session) {
 		ModelAndView mav = new ModelAndView("Attraction/Detail");
-		
-		// 로그인한 멤버
-		MemberVO m = mdao.findByNo(7);
-		System.out.println(m);
-		session.setAttribute("loginM", m);
 		
 		List<InfoListVO> infoList = new ArrayList<>();
 		AttractionVO a = dao.findById(attractNo);
