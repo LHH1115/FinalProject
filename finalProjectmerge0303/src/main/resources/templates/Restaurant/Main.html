@@ -11,6 +11,8 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 <script type="text/javascript">
 	$(function(){
+		
+		$.noConflict();	// 충돌방지 코드
 		/* 검색 버튼 클릭 */
 		$("#btn_search").click(function(e){
 			e.preventDefault();
@@ -56,67 +58,191 @@
 		})
 		
 		/* 인기 관광지 상세이동 */
-		$(document).on("click",".text-bg-white",function(){
+		$(document).on("click",".card",function(){
 			var restauNo = $(this).attr("restauNo");
 			location.href="/restau/detail?restauNo="+restauNo;
 		});
 	})
 </script>
+<style type="text/css">
+/* 검색창 css 시작 */
+:root {
+  --main-color: #ff8c00;
+  --secondary-color: #cc6600;
+  --text-color: rgba(255,255,255,0.87);
+}
+
+#form_search_1 {
+  background:url('/photo/Restaurant/Main/restHeader.jpg') no-repeat ;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-size: cover;
+  width:100%;
+  height: 700px;
+  background-position : 0px 0px ;
+  
+}
+
+#form_search_1:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.100);
+}
+
+#form_search_1 * {
+  z-index: 1;
+}
+
+#form_search_1 h1 {
+  margin: 0 0 2rem;
+  color: rgba(255,255,255,0.95);
+  font-size: 45px;
+
+}
+
+.searchAccomo_form {
+  position: relative;
+  width: 30rem;
+  height:3rem;
+  max-width: 100%;
+}
+
+.searchAccomo_text {
+  border: 0;
+  border-radius: 50px;
+  font-size: 1rem;
+  padding: 1rem 2rem;
+  width: 100%;
+}
+
+.searchAccomo_btn {
+  background-color: var(--main-color);
+  color: rgba(255,255,255,0.95);
+  position: absolute;
+  top: 0.13rem;
+  right: 0.20rem;
+  border: 0;
+  border-radius: 50px;
+  font-size: 1rem;
+  padding: 0.875rem 2rem;
+  width: 120px;
+}
+
+.searchAccomo_btn {
+  cursor: pointer;
+}
+
+.searchAccomo_btn:hover {
+  background-color: var(--secondary-color);
+}
+
+.searchAccomo_btn:active {
+  transform: scale(0.95);
+}
+/* 검색창 css 끝 */
+/* 인기숙소 css 시작 */
+.like_accommo {
+  border-radius: 5%;
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  overflow: hidden;
+  aspect-ratio: 5 / 6;
+}
+
+.carousel {
+  display: flex;
+  margin-left:30px;
+  margin: 10px 0 0 0;
+  padding: 10px 0 20px 0;
+}
+
+.carousel .card {
+  display: flex;
+  padding: 5px 10px 10px 10px;
+  flex-direction: column;
+  width: 350px;
+  margin: 0 7px;
+  background-color: white;
+  border-radius: 5%;
+  overflow: hidden;
+  box-shadow: 2px 4px 12px rgba(0,0,0,.08);
+  transition: all .3s cubic-bezier(0,0,.5,1)
+}
+
+.card:hover {
+  box-shadow: 2px 4px 16px rgba(0,0,0,.16);
+  transform: scale3d(1.01,1.01,1.01)
+}
+
+.carousel .card .content{
+  padding: 10px 5px 0 15px;
+}
+/* 인기숙소 css 끝 */
+</style>
 </head>
 <body>
-
-	<!-- 헤더 -->
-    <div th:insert="/main/Header.html"></div>
+	<div class="container">
+	 	<!-- 헤더 -->
+	    <div th:insert="/main/Header.html"></div>
+    <br>
     
 	<!-- BootStrap -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-	<br>
 	
 	<!-- 검색기능 -->
-	<hr>
-	<div>
-		<form action="/restau/main/search" id="form_search" method="get">
-			<input type="hidden" name="pageNum" value="1">
-			검색어 : <input type="text" name="keyword">
-			<input type="button" id="btn_search" value="검색" class="btn btn-primary">
-		</form>
-	</div>
-	<hr>
-	
-	<!-- Test -->
-	<!-- <th:block th:if="${realPath != null}">
-		<img th:src="|/${realPath}|" width="600">
-	</th:block> -->
-	
-	<!-- 카테고리별 검색 버튼 -->
-	<hr>
-	<div>
-		<h3>식당 종류</h3>
-		<button type="button" class="btn_image" id="btn_korean" style="width: 530px;height: 55px;"><img  src="/photo/Restaurant/Main/korean.jpg" width="60px" height="50px"></button>
-		<button type="button" class="btn_image" id="btn_western" style="width: 530px;height: 55px;"><img  src="/photo/Restaurant/Main/western.jpg" width="90px"></button>
-		<button type="button" class="btn_image" id="btn_japanese" style="width: 530px;height: 55px;"><img  src="/photo/Restaurant/Main/japanese.jpg" width="90px"height="50px"></button>
-		<button type="button" class="btn_image" id="btn_china" style="width: 530px;height: 55px;"><img  src="/photo/Restaurant/Main/china.jpg" width="90px"height="50px"></button>
-	</div>
-	<hr>
-	
-	<!-- 현재 인기 숙소 -->
-	<hr>
-	
-		<h3>인기 식당</h3>
+		<div id="form_search_1">
+			<h1>설렘 가득한 제주의 어떤 식당을 찾으세요?</h1><br>
+			<form class="searchAccomo_form" action="/restau/main/search" id="form_search" method="get">
+				<input type="hidden" name="pageNum" value="1">
+				<input type="text" name="keyword" placeholder="식당명을 입력하세요" class="searchAccomo_text"/>
+				<input type="button" id="btn_search" value="검색" class="searchAccomo_btn">
+			</form>
+		</div><br><br><br>
 		
-		<div class="card-group">
-			<th:block th:each="r: ${restau_list}">
-				<div class="card text-bg-white" id="img_mostLike" th:restauNo="${r.restauNo}">
-				  <img th:src="|/${r.realPath}|" th:class="card-img" height="350">
-				  <div class="card-img-overlay">
-				    <h5 class="card-title" th:text="${r.name}"></h5>
-				    <p class="card-text" th:text="${r.addr}"></p>
-				    <p class="card-text"><small th:text="${r.phone}"></small></p>
-				  </div>
-				</div>
-			</th:block>
-		</div>
+	<!-- 카테고리별 검색 버튼 -->
+	<div class="container">
+		<h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			🛌식당 종류</h1><br>
+			<button type="button" class="btn_image" id="btn_korean" style="border:0;width:200px;height:200px;margin-left: 70px;">
+				<img  src="/photo/Restaurant/Main/korean2.png" width="100px"><h2>한식</h2>
+			</button>
+			<button type="button" class="btn_image" id="btn_western" style="border:0;width:200px;height:200px;margin-left: 100px;">
+				<img  src="/photo/Restaurant/Main/western1.png" width="100px"><h2>양식</h2>
+			</button>
+			<button type="button" class="btn_image" id="btn_japanese" style="border:0;width:200px;height:200px;margin-left: 100px;">
+				<img  src="/photo/Restaurant/Main/japanese1.png" width="100px"><h2>일식</h2>
+			</button>
+			<button type="button" class="btn_image" id="btn_china" style="border:0;width:200px;height:200px;margin-left: 100px;">
+				<img  src="/photo/Restaurant/Main/china1.png" width="100px"><h2>중식</h2>
+			</button>
+		<br><br><br><br><br>	
 	
-	<hr>
+<!-- 현재 인기 식당 -->
+		<h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			👍인기 식당</h1>
+		</div>	
+		<div class="carousel" style="text-align: center;justify-content: center;">
+			<th:block th:each="a: ${restau_list}">
+	  			<div class="card" id="img_mostLike" th:restauNo="${a.restauNo}">
+	    			<div class="content">
+	      				<h2 style="font-size: 25px" th:text="${a.name}"></h2>
+	      				<p th:text="${a.addr}"></p>
+	      				<p th:text="${a.phone}"></p>
+	    			</div>
+	    				<img class="like_accommo" th:src="|/${a.realPath}|">
+	  				</div>
+	  		</th:block>
+		</div>
+		<!-- 푸터 -->
+    	<div th:insert="/main/Footer.html"></div>
+	</div>	
 </body>
 </html>

@@ -11,6 +11,8 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 <script type="text/javascript">
 	$(function(){
+		
+		$.noConflict();	// 충돌방지 코드
 		/* 검색 버튼 클릭 */
 		$("#btn_search").click(function(e){
 			var keyword=$("#keyword").val();
