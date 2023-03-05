@@ -56,6 +56,10 @@
 .hidden-input {
   display: none;
 }
+
+#id{
+	display: none;
+}
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -136,9 +140,8 @@ const rReset = (ele) => {
        	url:"/myPage/roulette_winning",
        	data:{"id":$("#id").text(),"point": winnings},
        	success:function(data){
-       		if(data != 0){
-       			alert("포인트가 적립되었습니다.")
-       		}
+       		opener.parent.location.reload();
+       		window.close()
        	}
       
        });

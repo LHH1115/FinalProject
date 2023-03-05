@@ -49,6 +49,11 @@ public class MyPageController {
 		this.mp_dao = mp_dao;
 	}
 	
+	@GetMapping("/myPage/myPageMenu")
+	public void teset() {
+		
+	}
+	
 	@GetMapping("/myPage/updateMyInfo")
 	public void updateMyInfoForm(Model model,HttpSession session) {
 		String id = (String) session.getAttribute("id");

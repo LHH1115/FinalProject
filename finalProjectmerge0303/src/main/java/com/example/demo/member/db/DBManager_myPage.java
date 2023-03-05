@@ -270,6 +270,15 @@ public static SqlSessionFactory sqlSessionFactory;
 		session.close();
 		return re;
 	}
+
+	// 숙소 리뷰 모두 검색
+	public static List<ReviewVO> findAllReview(int accommoNo) {
+		List<ReviewVO> list = null;
+		SqlSession session = sqlSessionFactory.openSession();
+		list = session.selectList("mypage.findAllReview", accommoNo);
+		session.close();
+		return list;
+	}
 	
 	
 }
