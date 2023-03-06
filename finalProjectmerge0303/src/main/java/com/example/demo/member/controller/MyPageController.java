@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.member.dao.UserMemberDAO;
+import com.example.demo.attraction.dao.AttractionDAO;
+import com.example.demo.attraction.vo.AttractionVO;
 import com.example.demo.member.dao.MyPageDAO;
 import com.example.demo.member.vo.AccommodationVO;
 import com.example.demo.member.vo.EventVO;
@@ -25,6 +27,10 @@ import com.example.demo.member.vo.MyLikeVO;
 import com.example.demo.member.vo.ReplyVO;
 import com.example.demo.member.vo.ReservationVO;
 import com.example.demo.member.vo.ReviewVO;
+import com.example.demo.rentcar.dao.RentcarDAO;
+import com.example.demo.rentcar.vo.RentcarVO;
+import com.example.demo.restaurant.dao.RestaurantDAO;
+import com.example.demo.restaurant.vo.RestaurantVO;
 
 @Controller
 public class MyPageController {
@@ -37,6 +43,16 @@ public class MyPageController {
 	
 	@Autowired
 	private UserMemberDAO m_dao;
+	
+	
+	@Autowired
+	private AttractionDAO att_dao;
+	
+	@Autowired
+	private RestaurantDAO res_dao;
+	
+	@Autowired
+	private RentcarDAO rent_dao;
 	
 	public void setmDao(UserMemberDAO m_dao) {
 		this.m_dao = m_dao;
@@ -133,6 +149,10 @@ public class MyPageController {
 		for(ReservationVO r : list) {
 			String name = mp_dao.findAcc(r.getAccommoNo()).getName();
 			r.setName(name);
+			r.setDate_s(r.getDate_s().split(" ")[0]);
+			r.setDate_e(r.getDate_e().split(" ")[0]);
+			
+			
 		}
 		
 		model.addAttribute("totalPage", totalPage);
@@ -197,33 +217,25 @@ public class MyPageController {
 				mylist.add(m);
 				
 			}
-		}else if(category == "attract") {
+		}else if(category.equals("attract")) {
 			for(LikeVO l : list) {
 				MyLikeVO m = new MyLikeVO();
-				AccommodationVO acc =  mp_dao.findAcc(l.getRefno());
-				m.setName(acc.getName());
-				m.setPhotopath(mp_dao.findaccphoto(acc.getAccommoNo()));
-				m.setLink("/accommo/detail?accommoNo="+l.getRefno());
+				AttractionVO att = att_dao.findById(l.getRefno());
+				m.setName(att.getName());
+				String realPath ="/photo/Attraction/"+att.getCategory()+"/"+att.getName()+"/att1.jpg";
+				m.setPhotopath(realPath);
+				m.setLink("/attract/detail?attractNo="+l.getRefno());
 				mylist.add(m);
 				
 			}
-		}else if(category == "restau") {
+		}else if(category.equals("restau")) {
 			for(LikeVO l : list) {
 				MyLikeVO m = new MyLikeVO();
-				AccommodationVO acc =  mp_dao.findAcc(l.getRefno());
-				m.setName(acc.getName());
-				m.setPhotopath(mp_dao.findaccphoto(acc.getAccommoNo()));
-				m.setLink("/accommo/detail?accommoNo="+l.getRefno());
-				mylist.add(m);
-				
-			}
-		}else {
-			for(LikeVO l : list) {
-				MyLikeVO m = new MyLikeVO();
-				AccommodationVO acc =  mp_dao.findAcc(l.getRefno());
-				m.setName(acc.getName());
-				m.setPhotopath(mp_dao.findaccphoto(acc.getAccommoNo()));
-				m.setLink("/accommo/detail?accommoNo="+l.getRefno());
+				RestaurantVO res = res_dao.findById(l.getRefno());
+				m.setName(res.getName());
+				String realPath ="/photo/Restaurant/"+res.getCategory()+"/"+res.getName()+"/rest1.jpg";
+				m.setPhotopath(realPath);
+				m.setLink("/restau/detail?restauNo="+l.getRefno());
 				mylist.add(m);
 				
 			}

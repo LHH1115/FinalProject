@@ -9,10 +9,34 @@
  	
  	#mylike{
  		float:right;
- 		width:80%
+ 		width:80%;
  		
  	}
+ 	.list{
+ 		border-radius: 30px;
+ 		width: 300px;
+ 		height: 300px;
+ 		padding : 10px;
+ 		margin : 10px;
+ 		text-align: center;
+ 		display: inline-block;
+ 		padding-right: 1px;
+ 		padding-left: 1px;
 
+ 	}
+ 	
+ 	#likeimg{
+ 		border-radius:30px;
+ 		width:280px;
+ 		height:250px;
+ 	}
+
+	#footer{
+ 		display:flex;
+    	bottom:0;
+    	width:100%;
+    	height:50px;   
+ 	}
 </style>
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -22,23 +46,36 @@
 <div th:insert="/main/header.html" id="headers"></div>
 <div>
 	<div th:insert="/myPage/myPageMenu.html" id="mypageMenu"></div>
-	<div style="margin-top:100px">
+	<div style="margin-top:100px" id="mylike">
 		<h1>찜목록</h1>
-		<a href="/myPage/myLike?pageNUM=1&category=accommodation">숙박</a>
-		<a href="/myPage/myLike?pageNUM=1&category=accommodation">음식점</a>
-		<a href="/myPage/myLike?pageNUM=1&category=accommodation">관광지</a>
-		<a href="/myPage/myLike?pageNUM=1&category=accommodation">렌트카</a>
-		<div id="mylike">
+		<a href="/myPage/myLike?pageNUM=1&category=accommo">숙박</a>
+		<a href="/myPage/myLike?pageNUM=1&category=attract">관광지</a>
+		<a href="/myPage/myLike?pageNUM=1&category=restau">음식점</a>
+		<a href="/myPage/myLike?pageNUM=1&category=rentcar">렌트카</a>
+		<div >
 		<div th:each="l:${list}" class="list" >
-			<a th:href=${l.link}><img th:src="${l.photopath}" width=500 height= 500 class="likes"></a><br>
-			<span th:text=${l.name}></span>
+			<span th:text=${l.name} class="likes"></span><br>
+			<a th:href=${l.link} class="likes"><img th:src="${l.photopath}" id="likeimg"></a><br>
+			
 		</div>
 		
-		<th:block th:each="i:${#numbers.sequence(1,totalPage)}">
+		<div>
+		<th:block th:if="${totalPage == 0}">
+				<a th:text="1" th:href="'/myPage/myLike?pageNUM=1&category='+${category}"></a>
+		</th:block>
+		
+		
+		<th:block th:if="${totalPage == 1} and ${totalPage != 0}">
+				<a th:text="1" th:href="'/myPage/myLike?pageNUM=1&category='+${category}"></a>
+		</th:block>
+		
+		<th:block th:unless="${totalPage == 1} or ${totalPage == 0}" th:each="i:${#numbers.sequence(1,totalPage)}">
 				<a th:text="${i}" th:href="'/myPage/myLike?pageNUM='+${i}+'&category='+${category}"></a>
 		</th:block>
 		</div>
+		</div>
 	</div>
 </div>
+<div th:insert="/main/Footer.html" id="footer"></div>
 </body>
 </html>
