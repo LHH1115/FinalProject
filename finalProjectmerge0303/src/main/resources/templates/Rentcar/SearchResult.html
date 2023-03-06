@@ -13,18 +13,26 @@
   
   #sidebar-wrapper {
     position: fixed;
-    width: 250px;
-    height: 100%;
-    margin-left: -250px;
-    background: #000;
-    overflow-x: hidden;
-    overflow-y: auto;
+	width: 250px;
+	height: 430px;
+	margin-left: -220px;
+	margin-top: 110px;
+	background: white;
+	overflow-x: hidden;
+	overflow-y: auto;
+	border: 5px solid orange;
+	border-radius: 50px;
   }
   
   #page-content-wrapper {
     width: 100%;
     padding: 20px;
   }
+  
+  .sidebar {
+	margin: 15px;
+	margin-top: 40px;
+}
   /* 사이드바 스타일 */
   
   .sidebar-nav {
@@ -54,6 +62,18 @@
     font-size: 1.3em;
     line-height: 3em;
   }
+  .row {
+	margin: 10px;
+}
+
+.card-img-top {
+	width: 526px;
+	height: 400px;
+}
+
+.col {
+	padding: 10px;
+}
 
 </style>
 <!-- JQuery -->
@@ -81,70 +101,73 @@
 <body>
 
 	<!-- 헤더 -->
-    <div th:insert="/main/Header.html"></div>
+	<div th:insert="/main/Header.html"></div>
 
 
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
-
-	
-	<div id="page-wrapper">
-	  <!-- 사이드바 -->
-	  <div id="sidebar-wrapper">
-	  	<form action="/rentcar/SearchCatAndName" id="f">
-	  	<input type="hidden" name="pageNum" value="1">
-	    <ul class="sidebar-nav">
-	      <li class="sidebar-brand">
-		        <a href="#">검색하기</a>
-		      </li>
-		      <li>
-		      	검색어<input type="text" id="keyword_search" name="keyword">
-		      </li>
-   		      <li>
-		      	<input type="hidden" value="session" name="flag"/>
-		      </li>
-		      <li>
-		      	<select name="category">
-					<option value="">===카테고리===</option>
-					<option value="경차">경차</option>
-					<option value="소형">소형</option>
-					<option value="중형">중형</option>
-					<option value="전기차">전기차</option>
-					<option value="승합">승합</option>
-				</select>
-		      	
-		      </li>
-		      <li>
-		     	<input type="submit" value="검색" id="btn_search">
-		      </li>
-	    </ul>
-	    </form>
-	  </div>
+	<script
+		src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
+	  
+	  <div id="page-wrapper">
+		<!-- 사이드바 -->
+		<div id="sidebar-wrapper">
+			<div class="sidebar">
+				<div class="widget user_widget_search">
+					<form id="f" class="user_wiget_search_form"
+						action="/rentcar/SearchCatAndName" method="GET">
+						<input type="hidden" value="session" name="flag"/>
+						<div class="form-group">
+							<label for="category">차 종류</label> <select
+								class="form-control custom-select" id="category" name="category">
+								<option value="">===카테고리===</option>
+								<option value="경차">경차</option>
+								<option value="소형">소형</option>
+								<option value="중형">중형</option>
+								<option value="전기차">전기차</option>
+								<option value="승합">승합</option>
+							</select>	
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control" name="keyword" id="keyword_search" placeholder="차종">
+						</div>
+						<div class="form-group">
+							<button type="submit" id="btn_search" class="btn btn-block btn-warning">검색</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 	  <!-- /사이드바 -->
 	
 	  <!-- 본문 -->
-	  <div id="page-content-wrapper">
-	    <div class="container-fluid">
-	    <h2 th:text="결과"></h2>
-	    <button onclick="location.href='/rentcar/main'">전체목록</button>
-	    	<table border="1" width="50%">
-				<tr>
-					<th>이름</th>
-					<th>분류</th>
-					<th>가격</th>
-				</tr>
-				<th:block th:each="a:${list}">
-					<tr class="tr" th:carNo="${a.carNo}">
-						<td th:text="${a.modelName}"></td>
-						<td th:text="${a.category}"></td>
-						<td th:text="${a.price}"></td>
-					</tr>
-				</th:block>
-			</table>
+			<div id="page-content-wrapper">
+			<div class="container-fluid">
+				<h2>검색 결과</h2>
+				<hr>
+				<div class="row">
+					<div class="col">
+						<div class="row row-cols-1 row-cols-md-3 g-4">
+							<div class="col" th:each="a: ${list}">
+								<div class="card" id="attr_info">
+									<img th:src="@{|/${a.realPath}|}" class="card-img-top">
+									<div class="card-body">
+										<h2 style="font-size: 35px;" class="card-title"
+											th:text="${a.modelName}"></h2>
+										<p style="font-size: 28px" class="card-text"
+											th:text="${a.category}"></p>
+										<button th:carNo="${a.carNo}" id="tr"
+											class="btn btn-primary">자세히 보기</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			
 	      	<!-- 페이징 -->
 			<th:block th:if="${total_page>0}">
 				<hr>
 					<th:block th:each="p:${#numbers.sequence(1,total_page)}">
-						<a th:href="@{/rentcar/SearchCatAndName(pageNo=${p})}" th:text="${p}"></a>
+						<a th:href="@{/rentcar/Search(pageNo=${p})}" th:text="${p}"></a>
 					</th:block>
 				<hr>
 			</th:block>
@@ -152,5 +175,7 @@
 	  </div>
 	  <!-- /본문 -->
 	</div>
+	<!-- 푸터 -->
+    	<div th:insert="/main/Footer.html"></div>
 </body>
 </html>

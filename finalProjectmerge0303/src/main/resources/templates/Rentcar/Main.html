@@ -25,82 +25,210 @@
 	
 		
 		/* 인기 차량 상세이동 */
-		$(document).on("click",".text-bg-white",function(){
+		$(document).on("click",".card",function(){
 			var carNo = $(this).attr("carNo");
 			location.href="/rentcar/Detail?carNo="+carNo;
 		});
 		
-		$(".btn_cat").click(function(){
-			var cat=$(this).html();
+		$(".btn_image").click(function(){
+			var cat=$(this).val();
+			console.log(cat);
 			$(location).attr("href","/rentcar/Search?category="+cat);
 		})
 		
 		
 	})
 </script>
+<style type="text/css">
+/* 검색창 css 시작 */
+:root {
+  --main-color: #ff8c00;
+  --secondary-color: #cc6600;
+  --text-color: rgba(255,255,255,0.87);
+}
+
+#form_search_1 {
+  background:url('/photo/RentCar/Main/carHeader.jpg') no-repeat ;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-size: cover;
+  width:100%;
+  height: 700px;
+  background-position : 0px 0px ;
+  
+}
+
+#form_search_1:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.100);
+}
+
+#form_search_1 * {
+  z-index: 1;
+}
+
+#form_search_1 h1 {
+  margin: 0 0 2rem;
+  color: rgba(255,255,255,0.95);
+  font-size: 45px;
+
+}
+
+.searchAccomo_form {
+  position: relative;
+  width: 30rem;
+  height:3rem;
+  max-width: 100%;
+}
+
+.searchAccomo_text {
+  border: 0;
+  border-radius: 50px;
+  font-size: 1rem;
+  padding: 1rem 2rem;
+  width: 100%;
+}
+
+.searchAccomo_btn {
+  background-color: var(--main-color);
+  color: rgba(255,255,255,0.95);
+  position: absolute;
+  top: 0.13rem;
+  right: 0.20rem;
+  border: 0;
+  border-radius: 50px;
+  font-size: 1rem;
+  padding: 0.875rem 2rem;
+  width: 120px;
+}
+
+.searchAccomo_btn {
+  cursor: pointer;
+}
+
+.searchAccomo_btn:hover {
+  background-color: var(--secondary-color);
+}
+
+.searchAccomo_btn:active {
+  transform: scale(0.95);
+}
+/* 검색창 css 끝 */
+/* 인기숙소 css 시작 */
+.like_accommo {
+  border-radius: 5%;
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  overflow: hidden;
+  aspect-ratio: 5 / 6;
+}
+
+.carousel {
+  display: flex;
+  margin-left:30px;
+  margin: 10px 0 0 0;
+  padding: 10px 0 20px 0;
+}
+
+.carousel .card {
+  display: flex;
+  padding: 5px 10px 10px 10px;
+  flex-direction: column;
+  width: 350px;
+  margin: 0 7px;
+  background-color: white;
+  border-radius: 5%;
+  overflow: hidden;
+  box-shadow: 2px 4px 12px rgba(0,0,0,.08);
+  transition: all .3s cubic-bezier(0,0,.5,1)
+}
+
+.card:hover {
+  box-shadow: 2px 4px 16px rgba(0,0,0,.16);
+  transform: scale3d(1.01,1.01,1.01)
+}
+
+.carousel .card .content{
+  padding: 10px 5px 0 15px;
+}
+/* 인기숙소 css 끝 */
+</style>
 </head>
 <body>
-	
- 	<!-- 헤더 -->
-    <div th:insert="/main/Header.html"></div>
-    
-	<!-- BootStrap -->
+	<div class="container">
+	 	<!-- 헤더 -->
+	    <div th:insert="/main/Header.html"></div>
+    <br>
+ 	
+    <!-- BootStrap -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-	<br>
 	
 	<!-- 검색기능 -->
-	<hr>
-	<div>
-		<form action="/rentcar/SearchCatAndName" id="form_search">
-			<select name="category">
-				<option value="">===카테고리===</option>
-				<option value="경차">경차</option>
-				<option value="소형">소형</option>
-				<option value="중형">중형</option>
-				<option value="전기차">전기차</option>
-				<option value="승합">승합</option>
+		<div id="form_search_1">
+			<h1>설렘 가득한 제주의 어떤 차를 찾으세요?</h1><br>
+			<form class="searchAccomo_form" action="/rentcar/SearchCatAndName" id="form_search" method="get">
+				<input type="hidden" name="pageNum" value="1">
+				<input type="text" name="keyword" id="keyword" placeholder="차종을 입력하세요" class="searchAccomo_text"/>
+				<input type="button" id="btn_search" value="검색" class="searchAccomo_btn">
+				<select name="category">
+					<option value="">===카테고리===</option>
+					<option value="경차">경차</option>
+					<option value="소형">소형</option>
+					<option value="중형">중형</option>
+					<option value="전기차">전기차</option>
+					<option value="승합">승합</option>
 			</select>
-			&nbsp;
-			차량 이름 : <input type="text" name="keyword" id="keyword">
-			<input type="submit" value="검색" class="btn btn-primary" id="btn_search">
-		</form>
-	</div>
-	<hr>
+			</form>
+		</div><br><br><br>
 	
-	<!-- Test -->
-	<!-- <th:block th:if="${realPath != null}">
-		<img th:src="|/${realPath}|" width="600">
-	</th:block> -->
+	<div class="container">
+		<h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			🚗렌트카 종류</h1><br>
+			<button value="경차" type="button" class="btn_image" id="btn_cat" style="border:0;width:200px;height:200px;margin-left: 0px">
+				<img src="/photo/RentCar/Main/small.png" width="100px"><h2>경차</h2>
+			</button>
+			<button value="소형" type="button" class="btn_image" id="btn_cat" style="border:0;width:200px;height:200px;margin-left: 50px;">
+				<img src="/photo/RentCar/Main/middle.png" width="120px"><h2>소형</h2>
+			</button>
+			<button value="중형" type="button" class="btn_image" id="btn_cat" style="border:0;width:200px;height:200px;margin-left: 50px;">
+				<img src="/photo/RentCar/Main/middle1.png" width="150px"><h2>중형</h2>
+			</button>
+			<button value="전기차" type="button" class="btn_image" id="btn_cat" style="border:0;width:200px;height:200px;margin-left: 50px;">
+				<img src="/photo/RentCar/Main/ele.png" width="100px"><h2>전기차</h2>
+			</button>
+			<button value="승합" type="button" class="btn_image" id="btn_cat" style="border:0;width:200px;height:200px;margin-left: 50px;">
+				<img src="/photo/RentCar/Main/big.png" width="100px"><h2>승합</h2>
+			</button>
+		<br><br><br><br><br>
 	
-	<!-- 카테고리별 검색 버튼 -->
-	<hr>
-	<div>
-		<h3>렌트카 종류</h3>
-		<button class="btn_cat">경차</button>
-		<button class="btn_cat">소형</button>
-		<button class="btn_cat">중형</button>
-		<button class="btn_cat">전기차</button>
-		<button class="btn_cat">승합</button>
-	</div>
-	<hr>
-	
-	<!-- 현재 인기 숙소 -->
-	<hr>
-	
-		<h3>인기 차량</h3>
-		
-		<div class="card-group">
+			<!-- 현재 인기 차량 -->
+		<h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			👍인기 차량</h1>
+		</div>	
+		<div class="carousel" style="text-align: center;justify-content: center;">
 			<th:block th:each="c: ${car_list}">
-				<div class="card text-bg-white" id="img_mostLike" th:carNo="${c.carNo}">
-				  <img th:src="|${c.realPath}|" th:class="card-img" height="350">
-				  <div class="card-img-overlay">
-				    <h5 class="card-title" th:text="${c.modelName}"></h5>
-				    <p class="card-text" th:text="${c.category}"></p>
-				  </div>
-				</div>
-			</th:block>
-		</div>
-	
-	<hr>
+	  			<div class="card" id="img_mostLike" th:carNo="${c.carNo}">
+	    			<div class="content">
+	      				<h2 style="font-size: 25px" th:text="${c.name}"></h2>
+	      				<p th:text="${c.modelName}"></p>
+	      				<p th:text="${c.category}"></p>
+	    			</div>
+	    				<img class="like_accommo" th:src="|${c.realPath}|">
+	  				</div>
+	  		</th:block>
+	  		
+		</div><br>
+	</div>
+	<!-- 푸터 -->
+    	<div th:insert="/main/Footer.html"></div>
 </body>
 </html>
