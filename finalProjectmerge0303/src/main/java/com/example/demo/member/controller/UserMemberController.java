@@ -55,6 +55,8 @@ public class UserMemberController {
 	public ModelAndView chagePwdSubmit(String id, String pwd) {
 		ModelAndView mav = new ModelAndView("redirect:/member/loginMember");
 		String pwd_enc = passwordEncoder.encode(pwd);
+		System.out.println("id="+id);
+		System.out.println("pwd="+pwd);
 		
 		dao.chagePwd(id, pwd_enc);
 		
@@ -126,6 +128,11 @@ public class UserMemberController {
 	public void loginForm(HttpServletRequest request, HttpSession session) {
 		String referer = request.getHeader("Referer");
 		if(!referer.equals("http://localhost:8088/member/loginMember")){
+			if(referer.equals("http://localhost:8088/member/changePwd")||
+				referer.equals("http://localhost:8088/member/changePwd?id="+session.getAttribute("id"))) {
+				referer = "http://localhost:8088/";
+			}
+			
 			session.setAttribute("preUrl", referer);
 		}
 	}
