@@ -374,6 +374,7 @@ var data =  {"accommoNo" : $("#accommoNo").val()};
     	
 		<h1 th:text="${a.name}" id="name"></h1>
 		<br>
+		
 		<div id="sidebarleft">
 			<div class="items-slider-container js-items-slider-container">
 			       <div class="slider slider-for">
@@ -388,6 +389,7 @@ var data =  {"accommoNo" : $("#accommoNo").val()};
 		        </div>     
 		    </div>
 		</div>
+			
 		<!-- 옆으로 나열 예정 -->
 		<div id="sidebarright">
 			<div>
@@ -465,5 +467,7 @@ var data =  {"accommoNo" : $("#accommoNo").val()};
 			</th:block>
 		</div>
 	</div>
+		<!-- 헤더 -->
+	<div th:insert="/main/Footer.html" class="header"></div>
 </body>
 </html>

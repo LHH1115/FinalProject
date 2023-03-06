@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.example.demo.accommodation.dao.AccommoDAO;
 import com.example.demo.accommodation.vo.AccommodationVO;
 import com.example.demo.accommodation.vo.LikeVO;
+import com.example.demo.attraction.dao.AttractionDAO;
+import com.example.demo.attraction.vo.AttractionVO;
 import com.example.demo.restaurant.dao.RestaurantDAO;
 import com.example.demo.restaurant.vo.RestaurantVO;
 
@@ -26,6 +28,9 @@ public class MainController {
 	
 	@Autowired
 	private RestaurantDAO restaudao;
+	
+	@Autowired
+	private AttractionDAO attractionDAO;
 
 	@GetMapping("/")
 	public String main(Model model) {
@@ -157,6 +162,74 @@ public class MainController {
 			restau_list.add(r);
 		}
 		model.addAttribute("restau_list", restau_list);
+		
+		// 인기관광지
+		List<com.example.demo.attraction.vo.LikeVO> attractlike_list = attractionDAO.findMostLike(5);
+		com.example.demo.attraction.vo.LikeVO lrr = new com.example.demo.attraction.vo.LikeVO();
+		List<AttractionVO> attract_list = new ArrayList<>();
+		AttractionVO aa = new AttractionVO();
+		for(int i=0;i<attractlike_list.size();i++){
+			lrr = attractlike_list.get(i);
+			int refNo = lrr.getRefNo();
+			aa = attractionDAO.findById(refNo);
+			
+			List<AttractionVO> photo_list = attractionDAO.findAllPhotoById(refNo);
+			String realPath = "";
+			String category = aa.getCategory();
+			String name = "";
+			String path = "";
+			if(photo_list.size() > 0) {
+				for(int j=0;j<photo_list.size();j++) {
+					AttractionVO forPhoto = new AttractionVO();
+					forPhoto = photo_list.get(0);
+					name = forPhoto.getName();
+					path = forPhoto.getPath();
+					realPath = "photo/Attraction/"+category+"/"+name+"/"+path;
+					aa.setRealPath(realPath);
+				}
+			}else {
+				Random rand = new Random();
+				String parklList[] = {"노리매","동백포레스트","휴애리 자연생활공원"};
+				String museumList[] = {"양금석 가옥","의귀리 김만일묘역"};
+				String forestList[] = {"마흐니 숲길","큰엉해안경승지"};
+				String riseList[] = {"물영아리오름","사라오름"};
+				String themeParkList[] = {"코코몽 에코파크"};
+				switch (category) {
+					case "공원":{
+						for(int j=0;j<5;j++) {
+							realPath = "photo/Attraction/"+category+"/"+parklList[rand.nextInt(3)]+"/att"+(j+1)+".jpg";
+							aa.setRealPath(realPath);
+						}
+					}break;
+					case "박물관":{
+						for(int j=0;j<5;j++) {
+							realPath = "photo/Attraction/"+category+"/"+museumList[rand.nextInt(2)]+"/att"+(j+1)+".jpg";
+							aa.setRealPath(realPath);
+						}
+					}break;
+					case "숲":{
+						for(int j=0;j<5;j++) {
+							realPath = "photo/Attraction/"+category+"/"+forestList[rand.nextInt(2)]+"/att"+(j+1)+".jpg";
+							aa.setRealPath(realPath);
+						}
+					}break;
+					case "오름":{
+						for(int j=0;j<5;j++) {
+							realPath = "photo/Attraction/"+category+"/"+riseList[rand.nextInt(2)]+"/att"+(j+1)+".jpg";
+							aa.setRealPath(realPath);
+						}
+					}break;
+					case "테마파크":{
+						for(int j=0;j<5;j++) {
+							realPath = "photo/Attraction/"+category+"/"+themeParkList[rand.nextInt(1)]+"/att"+(j+1)+".jpg";
+							aa.setRealPath(realPath);
+						}
+					}break;
+				}
+			}
+			attract_list.add(aa);
+		}
+		model.addAttribute("attract_list", attract_list);
 		
 		return "Main/mainpage";
 	}
