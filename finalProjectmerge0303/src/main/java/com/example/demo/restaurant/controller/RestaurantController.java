@@ -533,7 +533,7 @@ public class RestaurantController {
 					}
 				}break;
 				case "서양식":{
-					String name = westernList[rand.nextInt(4)];
+					String name = westernList[rand.nextInt(3)];
 					for(int i=0;i<5;i++) {
 						PhotoListVO p = new PhotoListVO();
 						try {
