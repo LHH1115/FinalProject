@@ -148,7 +148,7 @@
 						<div class="row row-cols-1 row-cols-md-3 g-4">
 							<div class="col" th:each="a: ${list}">
 								<div class="card" id="attr_info">
-									<img th:src="@{|/${a.realPath}|}" class="card-img-top">
+									<img th:src="@{|${a.realPath}|}" class="card-img-top">
 									<div class="card-body">
 										<h2 style="font-size: 35px;" class="card-title"
 											th:text="${a.modelName}"></h2>

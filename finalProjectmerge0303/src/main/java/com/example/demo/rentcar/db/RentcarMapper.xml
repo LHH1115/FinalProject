@@ -37,7 +37,7 @@
 	</delete>
 	
 	<select id="searchC" resultType="rentcarVO">
-		select carno,modelname,category,price from (
+		select carno,modelname,photopath,category,price from (
 		select a.*, rownum n from (select * from tbl_car where category=#{category})a)
 		 where n between #{start} and #{end}
 	</select>
@@ -57,7 +57,7 @@
 	</select>
 	
 	<select id="searchCatAndName" resultType="rentcarVO">
-		select carno,modelname,category,price from(
+		select carno,modelname,photopath,category,price from(
 		select a.*, rownum n from (select * from tbl_car where lower(modelname) like '%'||#{keyword}||'%' 
 		<if test="category !=null and !category.equals('') ">
 			and category=#{category}

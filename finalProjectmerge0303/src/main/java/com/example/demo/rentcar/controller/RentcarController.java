@@ -95,7 +95,13 @@ public class RentcarController {
 		map.put("category", category);
 		
 		List<RentcarVO> list = rentcarDAO.searchC(map);
-		model.addAttribute("list",list);
+		   ArrayList<RentcarVO> al = new ArrayList<>();
+		      for(RentcarVO vo:list) {
+		         RentcarVO v=setRealPath(vo.getCarNo());
+		         al.add(v);
+		      }
+		      
+		      model.addAttribute("list",al);
 		System.out.println(list);
 		
 		total_page=(int)Math.ceil((double)total_record/page_size);
@@ -153,7 +159,13 @@ public class RentcarController {
 		
 		
 		List<RentcarVO> list = rentcarDAO.searchCatAndName(map);
-		mav.addObject("list", list);
+		   ArrayList<RentcarVO> al = new ArrayList<>();
+		      for(RentcarVO vo:list) {
+		         RentcarVO v=setRealPath(vo.getCarNo());
+		         al.add(v);
+		      }
+		      
+		      mav.addObject("list",al);
 		System.out.println(list);
 		
 		total_page=(int)Math.ceil((double)total_record/page_size);
