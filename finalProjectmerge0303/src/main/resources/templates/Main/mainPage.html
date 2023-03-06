@@ -57,7 +57,7 @@ $(function(){
 	$("input[name='best_goods']").change(function(){
 		// 식당
 		if($("input[name=best_goods]:checked").val() =='radio_rest'){
-			$(".grid-container_rest").css("display","");
+			$(".grid-container_rest").css("display","grid");
 			$(".grid-container_rest").css("visibility","visible");
 			$(".grid-container_attr").css("display","none");
 			$(".grid-container_attr").css("visibility","hidden");
@@ -67,7 +67,7 @@ $(function(){
 		}
 		// 관광지
 		if($("input[name=best_goods]:checked").val() =='radio_attr'){
-			$(".grid-container_attr").css("display","");
+			$(".grid-container_attr").css("display","grid");
 			$(".grid-container_attr").css("visibility","visible");
 			$(".grid-container_rent").css("display","none");
 			$(".grid-container_rent").css("visibility","hidden");
@@ -77,7 +77,7 @@ $(function(){
 		}
 		// 렌트카
 		if($("input[name=best_goods]:checked").val() =='radio_rent'){
-			$(".grid-container_rent").css("display","");
+			$(".grid-container_rent").css("display","grid");
 			$(".grid-container_rent").css("visibility","visible");
 			$(".grid-container_rest").css("display","none");
 			$(".grid-container_rest").css("visibility","hidden");
@@ -89,6 +89,7 @@ $(function(){
 
 </script>
 <style type="text/css">
+
 
 .container{border:0px solid black;}
 .container-fluid{text-align: center;}
@@ -113,6 +114,7 @@ $(function(){
 .grid-container_rest{
   display: grid;
   width: 100%;
+  height:600px;
   max-width: 1200px;
   gap: 20px;
   grid-template-areas:
@@ -122,8 +124,9 @@ $(function(){
 }
 
 .grid-container_attr{
-  display: grid;
+  display: none;
   width: 100%;
+  height:600px;
   max-width: 1200px;
   gap: 20px;
   grid-template-areas:
@@ -133,8 +136,9 @@ $(function(){
 }
 
 .grid-container_rent{
-  display: grid;
+  display: none;
   width: 100%;
+  height:600px;
   max-width: 1200px;
   gap: 20px;
   grid-template-areas:
@@ -159,8 +163,7 @@ $(function(){
 .block .image {
   height: 100%;
   width: 100%;
-  object-fit: cover;
-  background-size: cover;
+
 }
 
 .block .image img:hover {
@@ -562,50 +565,20 @@ $(function(){
 	<!-- 식당 끝-->
 	
 	<div class="grid-container_attr">
-  		<a href="#" class="block block-1">
-    		<div class="image">
-      			<img src="photo/Attraction/숲/큰엉해안경승지/att1.jpg">
-    		</div>
-    		<div class="title">
-      			<h2>큰엉해안경승지</h2>
-    		</div>
-  		</a>
-  		<a href="#" class="block block-2">
-    		<div class="image">
-      			<img src="photo/Attraction/숲/큰엉해안경승지/att2.jpg">
-    		</div>
-    		<div class="title">
-      			<h2 class="sub">큰엉해안경승지</h2>
-    		</div>
-  		</a>
-  		<a href="#" class="block block-3">
-    		<div class="image">
-      			<img src="photo/Attraction/숲/큰엉해안경승지/att3.jpg">
-   			</div>
-    		<div class="title">
-      			<h2 class="sub">큰엉해안경승지</h2>
-    		</div>
-  		</a>
-  		<a href="#" class="block block-4">
-    		<div class="image">
-      			<img src="photo/Attraction/숲/큰엉해안경승지/att4.jpg">
-    		</div>
-    		<div class="title">
-      			<h2 class="sub">큰엉해안경승지</h2>
-    		</div>
-  		</a>
-  		<a href="#" class="block block-5">
-    		<div class="image">
-      			<img src="photo/Attraction/숲/큰엉해안경승지/att5.jpg">
-    		</div>
-    		<div class="title">
-      			<h2 class="sub">큰엉해안경승지</h2>
-    		</div>
-  		</a>
+    	<th:block th:each="r, i : ${attract_list}">
+		  <a th:href="|/attract/detail?attractNo=${r.attractNo}|" th:class="|block block-${i.index}|">
+		    <div class="image">
+		      <img th:src="@{|/${r.realPath}|}">
+		    </div>
+		    <div class="title">
+		      <h2><span th:text="${r.name}"></span></h2>
+		    </div>
+		  </a>
+		</th:block>
 	</div>
 	
 	<div class="grid-container_rent">
-  		<a href="#" class="block block-1">
+  		<a href="/rentcar/Detail?carNo=1" class="block block-1">
     		<div class="image">
       			<img src="photo/RentCar/경차/모닝 어반.png">
     		</div>
@@ -613,7 +586,7 @@ $(function(){
       			<h2>모닝</h2>
     		</div>
   		</a>
-  		<a href="#" class="block block-2">
+  		<a href="/rentcar/Detail?carNo=3" class="block block-2">
     		<div class="image">
       			<img src="photo/RentCar/소형/ALL NEW K3.png">
     		</div>
@@ -621,7 +594,7 @@ $(function(){
       			<h2 class="sub">ALL NEW K3</h2>
     		</div>
   		</a>
-  		<a href="#" class="block block-3">
+  		<a href="/rentcar/Detail?carNo=12" class="block block-3">
     		<div class="image">
       			<img src="photo/RentCar/승합/더 뉴 카니발 (11인승).png">
    			</div>
@@ -629,7 +602,7 @@ $(function(){
       			<h2 class="sub">더 뉴 카니발</h2>
     		</div>
   		</a>
-  		<a href="#" class="block block-4">
+  		<a href="/rentcar/Detail?carNo=11" class="block block-4">
     		<div class="image">
       			<img src="photo/RentCar/전기차/GV70 (EV).png">
     		</div>
@@ -637,7 +610,7 @@ $(function(){
       			<h2 class="sub">제네시스 GV70</h2>
     		</div>
   		</a>
-  		<a href="#" class="block block-5">
+  		<a href="/rentcar/Detail?carNo=8" class="block block-5">
     		<div class="image">
       			<img src="photo/RentCar/중형/G70 2.0 터보.png">
     		</div>
@@ -646,12 +619,13 @@ $(function(){
     		</div>
   		</a>
 	</div>
+    <br><br><br>
     
-    
+</div>
+
 </div>
 	<!-- 푸터  -->
 	<div th:insert="/main/Footer.html" class="header"></div>
-</div>
 </body>
 
 </html>
