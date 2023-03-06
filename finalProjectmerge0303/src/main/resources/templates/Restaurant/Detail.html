@@ -99,18 +99,24 @@
 }
 /* 사진 슬라이더 css 끝 */
 
+#sidebarright {
+    float: right;
+    display:inline;
+    width: 25%;
+}
+
+#sidebarleft {
+    float: left;
+    display:inline;
+    width: 25%;
+}
 </style>
 
-	<!-- jQuery -->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
-  <!-- iamport.payment.js -->
-  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-  
-
+<!-- jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
-
 <script type="text/javascript">
 $(function(){
 	
@@ -211,67 +217,73 @@ $(function(){
 	})
 	
 });
-
 </script>
-
 </head>
 <body>
-
-<!-- 헤더 -->
-    <div th:insert="/main/Header.html"></div>
-<!-- ====================================================================================== -->
-
-
-<div class="container">
-<!-- 정보 -->
-	<h1 th:text="${r.name}" id="name"></h1>
-	<input type="hidden" th:value="${r.restauNo}" id="restauNo">
-	<br>
-	<div>
-		<span style="font-size: 1.3em; font-weight: normal;">[식당유형] &nbsp;</span>
-		<span style="font-size: 1.2em; font-weight: lighter;" th:text="${r.category}"></span>
-		<span style="font-size: 1.3em; font-weight: normal;">&nbsp;&nbsp;[주소] &nbsp;</span>
-		<span style="font-size: 1.2em; font-weight: lighter;" th:text="${r.addr}"></span>
-		<span style="font-size: 1.3em; font-weight: normal;">&nbsp;&nbsp;[전화번호] &nbsp;</span>
-		<span style="font-size: 1.2em; font-weight: lighter;" th:text="${r.phone}"></span>
+	<div class="container">
+		<!-- 헤더 -->
+	    <div th:insert="/main/Header.html"></div>
+	    <br>
+	    <h1 th:text="${r.name}" id="name"></h1>
+	    <br>
+	    
+		<div class="items-slider-container js-items-slider-container" id="sidebarleft" 
+			style="width: 950px;">
+		       <div class="slider slider-for">
+	            <div th:each="p: ${photoList}">
+	                <img th:src="|/${p.RealPath}|">
+	            </div>
+	        </div>        
+	        <div class="slider slider-nav" style="width: 950px;height: 110px;">           
+	            <div th:each="p: ${photoList}">
+	                <img th:src="|/${p.RealPath}|">
+	            </div>
+	        </div>     
+	    </div>
+	    
+	    <!-- 옆으로 나열 예정 -->
+		<div id="sidebarright">
+		    <!-- 정보 -->
+			<div>
+				<span style="font-size: 1.3em; font-weight: normal;">[식당유형]</span><br>
+				&nbsp;<span style="font-size: 1.2em; font-weight: lighter;" th:text="${r.category}"></span><br>
+				<span style="font-size: 1.3em; font-weight: normal;"> [주소]</span><br>
+				&nbsp;<span style="font-size: 1.2em; font-weight: lighter; white-space: nowrap;" th:text="${r.addr}"></span><br>
+				<span style="font-size: 1.3em; font-weight: normal;">[전화번호]</span><br>
+				&nbsp;<span style="font-size: 1.2em; font-weight: lighter;" th:text="${r.phone}"></span><br>
+				<input type="hidden" th:value="${r.restauNo}" id="restauNo">
+				<br>
+			</div>
+			
+			<br>
+		    
+		    <!-- 찜기능 -->
+			<th:block th:if="${session.loginM != null and session.loginM.role != 'admin'}">
+				<div id="div_dolike" class="unshow">
+					<input type="image" src="/main/unlike.png" id="btn_dolike" width="40">
+					<br>
+					<span>찜하기</span>
+				</div>
+				<div id="div_unlike" class="unshow">
+					<input type="image" src="/main/like.png" id="btn_unlike" width="40">
+					<br>
+					<span>찜해제</span>
+				</div>
+				
+			</th:block>
+		
+			<!-- 관리자 기능 -->
+			<th:block th:if="${session.loginM != null and session.loginM.role != 'user'}">
+				<div>
+					<span th:text="${session.loginM.role}"></span><br>
+					<input type="button" id="btn_update" value="식당 정보 수정"
+					th:onclick="|location.href='@{'/admin/restau/update/'+${r.restauNo}}'|">
+				</div>
+			</th:block>
+		</div>
+		<!-- 푸터 -->
+		<div th:insert="/main/Footer.html" class="header" style="clear: left;"></div>
 	</div>
-	
-	<div class="items-slider-container js-items-slider-container">
-	       <div class="slider slider-for">
-            <div th:each="p: ${photoList}">
-                <img th:src="|/${p.RealPath}|">
-            </div>
-        </div>        
-        <div class="slider slider-nav" style="width: 1005px;height: 110px;">           
-            <div th:each="p: ${photoList}">
-                <img th:src="|/${p.RealPath}|">
-            </div>
-        </div>     
-    </div>
-    </div>
-    
-    <!-- 찜기능 -->
-	<th:block th:if="${session.loginM != null and session.loginM.role != 'admin'}">
-		<span th:text="${session.loginM.role}"></span><br>
-		<span th:text="${session.loginM.name}"></span><br>
-		<div id="div_dolike" class="unshow">
-				<input type="image" src="/main/unlike.png" id="btn_dolike" width="40">
-		</div>
-		<div id="div_unlike" class="unshow">
-				<input type="image" src="/main/like.png" id="btn_unlike" width="40">
-		</div>
-	</th:block>
-	
-	<!-- 관리자 기능 -->
-	
-	<th:block th:if="${session.loginM != null and session.loginM.role != 'user'}">
-		<div>
-			<span th:text="${session.loginM.role}"></span><br>
-			<input type="button" id="btn_update" value="식당 정보 수정"
-			th:onclick="|location.href='@{'/admin/restau/update/'+${r.restauNo}}'|">
-		</div>
-	</th:block>
-	
 
 </body>
 </html>
