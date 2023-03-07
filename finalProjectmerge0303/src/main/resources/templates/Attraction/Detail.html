@@ -5,6 +5,13 @@
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<!-- jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<!-- iamport.payment.js -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
 <style type="text/css">
 	.unshow{
 		display: none;
@@ -98,19 +105,19 @@
   cursor: pointer;
 }
 /* 사진 슬라이더 css 끝 */
+#sidebarright {
+    float: right;
+    display:inline;
+    width: 25%;
+}
+
+#sidebarleft {
+    float: left;
+    display:inline;
+    width: 25%;
+}
 
 </style>
-
-<!-- jQuery -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
-<!-- iamport.payment.js -->
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-  
-
-<script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
-
 <script type="text/javascript">
   $(function(){
 		
@@ -216,40 +223,61 @@
 </script>
 </head>
 <body>
-<!-- 헤더 -->
-    <div th:insert="/main/Header.html"></div>
-<!-- ====================================================================================== -->
-
-
-	<div class="container">
-		<!-- 정보 -->
+<div class="container">
+		<!-- 헤더 -->
+    	<div th:insert="/main/Header.html"></div>
+    	<br>
+    	
 		<h1 th:text="${a.name}" id="name"></h1>
+		<br>
+
 		<input type="hidden" th:value="${a.attractNo}" id="attractNo">
 		<br>
-		<div>
-			<span style="font-size: 1.3em; font-weight: normal;">[관광지유형] &nbsp;</span>
-			<span style="font-size: 1.2em; font-weight: lighter;" th:text="${a.category}"></span>
-			<span style="font-size: 1.3em; font-weight: normal;">&nbsp;&nbsp;[주소] &nbsp;</span>
-			<span style="font-size: 1.2em; font-weight: lighter;" th:text="${a.addr}"></span>
-			<span style="font-size: 1.3em; font-weight: normal;">&nbsp;&nbsp;[전화번호] &nbsp;</span>
-			<span style="font-size: 1.2em; font-weight: lighter;" th:text="${a.phone}"></span>
-		</div>
 		
-		<div class="items-slider-container js-items-slider-container">
+		<div class="items-slider-container js-items-slider-container" id="sidebarleft"
+				style="width: 950px">
 		    <div class="slider slider-for">
 	            <div th:each="path: ${photoList}">
 	                <img th:src="|/${path}|">
 	            </div>
 	        </div>        
-	        <div class="slider slider-nav" style="width: 1005px;height: 110px;">           
+	        <div class="slider slider-nav" style="width: 950px;height: 110px;">           
 	            <div th:each="path: ${photoList}">
 	                <img th:src="|/${path}|">
 	            </div>
 	        </div>     
 	    </div>
-    </div>
+		
+		<!-- 옆으로 나열 예정 -->
+		<div id="sidebarright">
+			<div>
+				<span style="font-size: 1.3em; font-weight: normal;">[숙박유형]</span><br>
+				&nbsp;<span style="font-size: 1.2em; font-weight: lighter;" th:text="${a.category}"></span><br>
+				<span style="font-size: 1.3em; font-weight: normal;">[주소]</span><br>
+				&nbsp;<span style="font-size: 1.2em; font-weight: lighter; white-space: nowrap;" th:text="${a.addr}"></span><br>
+				<span style="font-size: 1.3em; font-weight: normal;">[전화번호]</span><br>
+				&nbsp;<span style="font-size: 1.2em; font-weight: lighter;" th:text="${a.phone}"></span><br>
+				<span style="font-size: 1.3em; font-weight: normal;">[소개글]</span><br>
+				&nbsp;<span style="font-size: 1.2em; font-weight: lighter;" th:text="${infoList.introduction}"></span><br>
+				<span style="font-size: 1.3em; font-weight: normal;">[휴무일]</span><br>
+				&nbsp;<span style="font-size: 1.2em; font-weight: lighter;" th:text="${infoList.closeddays}"></span><br>
+				<span style="font-size: 1.3em; font-weight: normal;">[운영시간]</span><br>
+				&nbsp;<span style="font-size: 1.2em; font-weight: lighter;" th:text="${infoList.operatingtime}"></span><br>
+				<span style="font-size: 1.3em; font-weight: normal;">[요금정보]</span><br>
+				&nbsp;<span style="font-size: 1.2em; font-weight: lighter;" th:text="${infoList.rateinformation}"></span><br>
+				<span style="font-size: 1.3em; font-weight: normal;">[주요목적]</span><br>
+				&nbsp;<span style="font-size: 1.2em; font-weight: lighter;" th:text="${infoList.mainpurpose}"></span><br>
+				<span style="font-size: 1.3em; font-weight: normal;">[주차가능수]</span><br>
+				&nbsp;<span style="font-size: 1.2em; font-weight: lighter;" th:text="${infoList.parkingamount}"></span><br>
+				<span style="font-size: 1.3em; font-weight: normal;">[편의시설]</span><br>
+				&nbsp;<span style="font-size: 1.2em; font-weight: lighter;" th:text="${infoList.facilities}"></span><br>				
+			</div>
+		
+			<br>
+		
     
     <!-- 찜기능 -->
+    <div>
 	<th:block th:if="${session.loginM != null and session.loginM.role != 'admin'}">
 		<span th:text="${session.loginM.role}"></span><br>
 		<span th:text="${session.loginM.name}"></span><br>
@@ -260,9 +288,9 @@
 				<input type="image" src="/main/like.png" id="btn_unlike" width="40">
 		</div>
 	</th:block>
-	
+	</div>
 	<!-- 관리자 기능 -->
-	<div>
+	
 		<th:block th:if="${session.loginM != null and session.loginM.role != 'user'}">
 			<span th:text="${session.loginM.role}"></span><br>
 			<input type="button" id="btn_update" value="관광지 정보 수정"
@@ -270,21 +298,10 @@
 		</th:block>
 	</div>
 	
-	
-		<h4>소개글</h4>
-		<h5 th:text="${infoList.introduction}"></h5>
-		<h4>휴무일</h4>
-		<h5 th:text="${infoList.closeddays}"></h5>
-		<h4>운영시간</h4>
-		<h5 th:text="${infoList.operatingtime}"></h5>
-		<h4>요금정보</h4>
-		<h5 th:text="${infoList.rateinformation}"></h5>
-		<h4>주요목적</h4>
-		<h5 th:text="${infoList.mainpurpose}"></h5>
-		<h4>주차가능수</h4>
-		<h5 th:text="${infoList.parkingamount}"></h5>
-		<h4>편의시설</h4>
-		<h5 th:text="${infoList.facilities}"></h5>
+	</div><br><br>
+<!-- 푸터 -->
+		<!-- <div th:insert="/main/Footer.html" class="header"></div> -->
+		
 	
 </body>
 </html>
