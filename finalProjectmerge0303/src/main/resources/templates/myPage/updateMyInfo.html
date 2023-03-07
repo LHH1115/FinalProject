@@ -75,6 +75,7 @@
 <script type="text/javascript" src='https://code.jquery.com/jquery-3.6.3.min.js'></script>
 <script type="text/javascript">
 $(function(){
+	
 	$("#btn_submit").click(function(event){
 		if(confirm("정말로수정하시겠습니까?")){
 			return true;
@@ -86,7 +87,8 @@ $(function(){
 	});
 	
 	$("#changePwd").click(function(event){
-		location.href="../member/changePwd?id="+$("#user_id").val()
+		sessionStorage.setItem("Myid",$("#user_id").val());
+		location.href="../member/changePwd";
 
 	});
 });

@@ -48,7 +48,7 @@ public class UserMemberController {
 
 	@GetMapping("/member/changePwd")
 	public void chagePwdForm(){
-
+		
 	}
 	
 	@PostMapping("/member/changePwd")
