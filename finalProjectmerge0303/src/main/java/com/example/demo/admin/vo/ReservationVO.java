@@ -16,10 +16,8 @@ public class ReservationVO {
 	private int memberNo;
 	private int accommoNo;
 	private int totalPrice;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "YYYY-MM-DD")
-	private Date date_s;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "YYYY-MM-DD")
-	private Date date_e;
+	private String date_s;
+	private String date_e;
 	private int headcount;
 	
 }

@@ -46,7 +46,7 @@
 	
 	<!-- 각 회원마다 에약 조회기능 -->
 	<select id="memberReservationList" resultType="ReservationVO">
-		select imp_uid,accommono,totalprice,date_s,date_e from tbl_reservation where memberNo=#{memberNo} 
+		select imp_uid,accommono,totalprice,to_char(date_s, 'yyyy-mm-dd') date_s,to_char(date_e, 'yyyy-mm-dd') date_e from tbl_reservation where memberNo=#{memberNo} 
 		order by accommono
 	</select>
 	

@@ -112,6 +112,7 @@ public class MemberController {
 	public String memberResrvationList(HttpServletRequest request) {
 		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
 		List<ReservationVO> reservationVO = memberDAO.memberReservationList(memberNo);
+		System.out.println(reservationVO);
 		String jsonString = "";
 		try {
 			ObjectMapper mapper = new ObjectMapper();
