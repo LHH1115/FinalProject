@@ -14,6 +14,8 @@ import com.example.demo.accommodation.vo.AccommodationVO;
 import com.example.demo.accommodation.vo.LikeVO;
 import com.example.demo.attraction.dao.AttractionDAO;
 import com.example.demo.attraction.vo.AttractionVO;
+import com.example.demo.rentcar.dao.RentcarDAO;
+import com.example.demo.rentcar.vo.RentcarVO;
 import com.example.demo.restaurant.dao.RestaurantDAO;
 import com.example.demo.restaurant.vo.RestaurantVO;
 
@@ -30,8 +32,41 @@ public class MainController {
 	private RestaurantDAO restaudao;
 	
 	@Autowired
-	private AttractionDAO attractionDAO;
+	private AttractionDAO attractdao;
 
+	@Autowired
+	private RentcarDAO rentcardao;
+	
+	public RentcarVO setRealPath(int no) {
+		RentcarVO vo=rentcardao.findByCarno(no);
+		String category = vo.getCategory();
+		String photopath=vo.getPhotoPath();
+		vo.setRealPath("/photo/RentCar/"+category+"/"+photopath);
+		System.out.println(vo.getRealPath());
+		return vo;
+	}
+	
+	public String render_category(String acategory) {
+		if(acategory.contains("공원")) {
+			acategory="공원";
+		}else if(acategory.contains("박물관")) {
+			acategory="박물관";
+		}else if(acategory.contains("숲")) {
+			acategory="숲";
+		}else if(acategory.contains("오름")) {
+			acategory="오름";
+		}else if(acategory.contains("테마파크")) {
+			acategory="테마파크";
+		}else {
+			Random r = new Random();
+			int re=r.nextInt(4);
+			String[] c = {"공원","박물관","숲","오름","테마파크"};
+			acategory = c[re];
+		}
+		return acategory;
+	}
+	
+	
 	@GetMapping("/")
 	public String main(Model model) {
 		// 인기숙소
@@ -164,72 +199,96 @@ public class MainController {
 		model.addAttribute("restau_list", restau_list);
 		
 		// 인기관광지
-		List<com.example.demo.attraction.vo.LikeVO> attractlike_list = attractionDAO.findMostLike(5);
-		com.example.demo.attraction.vo.LikeVO lrr = new com.example.demo.attraction.vo.LikeVO();
-		List<AttractionVO> attract_list = new ArrayList<>();
-		AttractionVO aa = new AttractionVO();
-		for(int i=0;i<attractlike_list.size();i++){
-			lrr = attractlike_list.get(i);
-			int refNo = lrr.getRefNo();
-			aa = attractionDAO.findById(refNo);
+		List<com.example.demo.attraction.vo.LikeVO> list=attractdao.findMostLike(5);
+		ArrayList<AttractionVO> attr_list = new ArrayList<>();
+		for(com.example.demo.attraction.vo.LikeVO lvo : list) {
+			int refNo=lvo.getRefNo();
 			
-			List<AttractionVO> photo_list = attractionDAO.findAllPhotoById(refNo);
+			AttractionVO avo = attractdao.findById(refNo);
+			
+			List<AttractionVO> photo_list = attractdao.findAllPhotoById(refNo);
 			String realPath = "";
-			String category = aa.getCategory();
+			String category = "";
 			String name = "";
 			String path = "";
 			if(photo_list.size() > 0) {
 				for(int j=0;j<photo_list.size();j++) {
+					// 대표 이미지
 					AttractionVO forPhoto = new AttractionVO();
 					forPhoto = photo_list.get(0);
+					category = avo.getCategory();
+					category = render_category(category);
 					name = forPhoto.getName();
 					path = forPhoto.getPath();
 					realPath = "photo/Attraction/"+category+"/"+name+"/"+path;
-					aa.setRealPath(realPath);
+					System.out.println("realphoto:"+realPath);
+					avo.setRealPath(realPath);
+					
 				}
 			}else {
-				Random rand = new Random();
-				String parklList[] = {"노리매","동백포레스트","휴애리 자연생활공원"};
-				String museumList[] = {"양금석 가옥","의귀리 김만일묘역"};
-				String forestList[] = {"마흐니 숲길","큰엉해안경승지"};
-				String riseList[] = {"물영아리오름","사라오름"};
-				String themeParkList[] = {"코코몽 에코파크"};
-				switch (category) {
-					case "공원":{
-						for(int j=0;j<5;j++) {
-							realPath = "photo/Attraction/"+category+"/"+parklList[rand.nextInt(3)]+"/att"+(j+1)+".jpg";
-							aa.setRealPath(realPath);
-						}
-					}break;
-					case "박물관":{
-						for(int j=0;j<5;j++) {
-							realPath = "photo/Attraction/"+category+"/"+museumList[rand.nextInt(2)]+"/att"+(j+1)+".jpg";
-							aa.setRealPath(realPath);
-						}
-					}break;
-					case "숲":{
-						for(int j=0;j<5;j++) {
-							realPath = "photo/Attraction/"+category+"/"+forestList[rand.nextInt(2)]+"/att"+(j+1)+".jpg";
-							aa.setRealPath(realPath);
-						}
-					}break;
-					case "오름":{
-						for(int j=0;j<5;j++) {
-							realPath = "photo/Attraction/"+category+"/"+riseList[rand.nextInt(2)]+"/att"+(j+1)+".jpg";
-							aa.setRealPath(realPath);
-						}
-					}break;
-					case "테마파크":{
-						for(int j=0;j<5;j++) {
-							realPath = "photo/Attraction/"+category+"/"+themeParkList[rand.nextInt(1)]+"/att"+(j+1)+".jpg";
-							aa.setRealPath(realPath);
-						}
-					}break;
+				AttractionVO vo=attractdao.findById(refNo);
+				category = vo.getCategory();
+				category = render_category(category);
+				Random r2 = new Random();
+				int num = r2.nextInt(5)+1;
+//				refno를 이용해서 tbl_attraction의 name, category, tbl_attractionphoto의 path를 가져와서
+//				랜덤으로 랜더링하자.
+				
+				switch(category) {
+				case "공원":
+					String parkList[] = {"노리매","동백포레스트","휴애리 자연생활공원"};
+					int n1 = r2.nextInt(parkList.length-1);
+					name = parkList[n1];
+					break;
+				case "박물관":
+					String museumList[] = {"양금석 가옥","의귀리 김만일묘역"};
+					int n2 = r2.nextInt(museumList.length-1);
+					name = museumList[n2];
+					break;
+				case "숲":
+					String forestList[] = {"마흐니 숲길","큰엉해안경승지"};
+					int n3 = r2.nextInt(forestList.length-1);
+					name = forestList[n3];
+					break;
+				case "오름":
+					String riseList[] = {"물영아리오름","사라오름"};
+					int n4 = r2.nextInt(riseList.length-1);
+					name = riseList[n4];
+					break;
+				case "테마파크":
+					String themeParkList[] = {"코코몽 에코파크"};
+					int n5 = r2.nextInt(themeParkList.length-1);
+					name = themeParkList[n5];
 				}
+				
+//				realPath = "photo/Attraction/공원/노리매/att1.jpg";
+				realPath = "photo/Attraction/"+category+"/"+name+"/att"+num+".jpg";
+				System.out.println("fakephoto:"+realPath);
+				avo.setRealPath(realPath);
 			}
-			attract_list.add(aa);
+			attr_list.add(avo);
 		}
-		model.addAttribute("attract_list", attract_list);
+		model.addAttribute("attract_list",attr_list);
+		
+//		인기 렌트카
+		
+		List<Integer> rent_list=rentcardao.findPopularCar();
+		int no5=rent_list.get(4);
+		rent_list.remove(4);
+		List<Integer>rent_list2= rentcardao.findSameStarCar(no5);
+		Random r3 = new Random();
+		int re=r3.nextInt(rent_list2.size());
+		rent_list.add(rent_list2.get(re));
+		
+		List<RentcarVO> top5InfoList = new ArrayList<>();
+		for(int no:rent_list) {
+			RentcarVO vo=setRealPath(no);
+			top5InfoList.add(vo);
+		}
+		System.out.println("ttt:"+top5InfoList);
+		model.addAttribute("car_list",top5InfoList);
+		
+		
 		
 		return "Main/mainpage";
 	}
