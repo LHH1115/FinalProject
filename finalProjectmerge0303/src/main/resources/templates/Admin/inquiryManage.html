@@ -18,6 +18,12 @@
 	})
 	
 </script>
+<style type="text/css">
+	.menubar{
+		position:relative;
+		left:-100px;
+	}
+</style>
 </head>
 <body>
 <!-- =============================================================================================================  -->
@@ -29,7 +35,6 @@
 <h2>관리자 페이지</h2>
 
 
-<h2>LIST</h2>
 
 <button type="button" onclick="location.href='/admin/memberManage'">회원관리</button> &nbsp;&nbsp;
 <button type="button" onclick="location.href='/admin/inquiryManage'">문의사항관리</button>&nbsp;&nbsp;
@@ -106,7 +111,7 @@
 		<a th:href="@{/admin/inquiryManage(pageNo=${this_page+1})}">다음</a>
 		</th:block>
 	</div>
-	
+
 </div>
 <!-- =============================================================================================================  -->
 <div th:insert="/main/Footer.html" id="headers"></div>

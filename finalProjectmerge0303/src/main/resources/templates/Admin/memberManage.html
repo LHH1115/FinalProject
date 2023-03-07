@@ -104,14 +104,21 @@
 	});
 		 
 </script>
+<style type="text/css">
+	.menubar{
+		position:relative;
+		left:-100px;
+	}
+</style>
 </head>
 <body>
+
 	
+	<!-- =============================================================================================================  -->
 	<div class="container">
 		<div th:insert="/main/header.html" id="headers"></div>
-		
 		<br>
-		<hr>
+		<br>
 		<h2>관리자 페이지</h2>
 
 		<button type="button" onclick="location.href='/admin/memberManage'">회원관리</button>
@@ -216,7 +223,7 @@
 
 		<hr>
 		<hr>
-		
+		<!-- =============================================================================================================  -->
 	</div>
 	<div th:insert="/main/Footer.html" id="headers"></div>
 </body>
