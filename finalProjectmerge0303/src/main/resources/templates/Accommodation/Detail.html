@@ -118,6 +118,10 @@
     width: 25%;
 }
 
+.colored-star {
+  color: orange; /* or any other color you prefer */
+}
+
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -159,23 +163,25 @@
 			});
 	
 		
-var data =  {"accommoNo" : $("#accommoNo").val()};
+		var data =  {"accommoNo" : $("#accommoNo").val()};
 		
 		// 찜 여부 검색
 		$.ajax({
 			url:"/accommo/findLike",
 			data:data,
 			success:function(re){
-				if(re == 0){
-					// 찜 안한상태
-					$("#div_dolike").removeClass("unshow");
-					$("#div_dolike").addClass("show");
-					$("#div_unlike").addClass("unshow");
-				}else{
-					// 찜한 상태
-					$("#div_unlike").removeClass("unshow");
-					$("#div_dolike").addClass("unshow");
-					$("#div_unlike").addClass("show");
+				if(re != -1){
+					if(re == 0){
+						// 찜 안한상태
+						$("#div_dolike").removeClass("unshow");
+						$("#div_dolike").addClass("show");
+						$("#div_unlike").addClass("unshow");
+					}else{
+						// 찜한 상태
+						$("#div_unlike").removeClass("unshow");
+						$("#div_dolike").addClass("unshow");
+						$("#div_unlike").addClass("show");
+					}
 				}
 			}
 		})
@@ -454,20 +460,37 @@ var data =  {"accommoNo" : $("#accommoNo").val()};
 		</div>
 		
 		<!-- 리뷰 -->
-		<div style="clear: left;">
-			<th:block th:if="${reviewList != null}">
-				<div th:each="r : ${reviewList}" style="">
-					리뷰 제목 : <span th:text="${r.title}"></span><br>
-					리뷰 내용 : <span th:text="${r.content}"></span><br>
-					<th:block th:each="num : ${#numbers.sequence(0,r.stars-1)}">
-						⭐
-					</th:block>
-				</div>
-			</th:block>
-		</div>
-	</div><br><br>
-			<!-- 푸터 -->
+		<th:block th:if="${reviewList != null}">
+			<div class="items-slider-container js-items-slider-container" style="clear: left; text-align: center; width: 300px; margin: auto;">
+			<br>
+			<br>
+			<span >사용자 리뷰</span><br><br><br>
+				<div class="slider slider-for">
+		            
+						<div th:each="r : ${reviewList}" style="text-align: left">
+							제목 : <span th:text="${r.title}"></span><br>
+							내용 : <span th:text="${r.content}"></span><br>
+							<th:block th:each="num : ${#numbers.sequence(1,5)}">
+		  						<span th:classappend="${num <= r.stars} ? 'colored-star' : ''">★</span>
+							</th:block>
+						</div>
+					
+		        </div>   
+		    <br>
+			<br>
+		    </div>
+	    </th:block>
+	    
+	    <div style="clear: left;">
+	    	<br>
+			<br>
+			<br>
+			<br>
+	    </div>
+		
+		<!-- 푸터 -->
 		<div th:insert="/main/Footer.html" class="header"></div>
+	</div>
 		
 </body>
 </html>
