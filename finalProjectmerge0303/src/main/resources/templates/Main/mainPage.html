@@ -383,11 +383,11 @@ $(function(){
 .slick-dots button {
   border: 0;
   overflow: hidden;
-  background: rgba(255, 255, 255, .4);
+  background: white;
   width: .8rem;
   height: .8rem;
   border-radius: 50%;
-  text-indent: 9999px;
+  text-indent: 750px;
   padding: 0
 }
 
@@ -568,7 +568,7 @@ $(function(){
 	<!-- best 숙소 시작 -->
 	<div style="text-align: center"><h2>Best 숙소</h2></div>
 	<div class="slider">
-		<th:block th:each="a : ${accommo_list}">
+		<th:block th:each="a : ${accommoList}">
 	        <div class="slide">
 	        	<a th:href="|/accommo/detail?accommoNo=${a.accommoNo}|">
 		        	<figure>
@@ -603,7 +603,7 @@ $(function(){
     
     <!-- 식당 시작-->
     <div class="grid-container_rest">
-    	<th:block th:each="r, i : ${restau_list}">
+    	<th:block th:each="r, i : ${restauList}">
 		  <a th:href="|/restau/detail?restauNo=${r.restauNo}|" th:class="|block block-${i.index}|">
 		    <div class="image">
 		      <img th:src="@{|/${r.realPath}|}">
@@ -667,17 +667,17 @@ $(function(){
       			<img src="photo/RentCar/중형/G70 2.0 터보.png">
     		</div>
     		<div class="title_rent">
-      			<h2 class="sub">제네시스 G70</h2>
+      			<h2 class="sub">제네시스 G70</h2> 
     		</div>
   		</a>
 	</div>
     <br><br><br>
     
-</div>
-
-</div>
+	</div>
 	<!-- 푸터  -->
 	<div th:insert="/main/Footer.html" class="header"></div>
+</div>
+	
 </body>
 
 </html>

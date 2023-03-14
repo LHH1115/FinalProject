@@ -42,7 +42,7 @@ public class MainController {
 		String category = vo.getCategory();
 		String photopath=vo.getPhotoPath();
 		vo.setRealPath("/photo/RentCar/"+category+"/"+photopath);
-		System.out.println(vo.getRealPath());
+		// System.out.println(vo.getRealPath());
 		return vo;
 	}
 	
@@ -70,13 +70,11 @@ public class MainController {
 	@GetMapping("/")
 	public String main(Model model) {
 		// 인기숙소
-		List<LikeVO> accommo_like_list = accommodao.findMostLike(5);	// Top 5 나열
-		LikeVO l = new LikeVO();
-		List<AccommodationVO> accommo_list = new ArrayList<>();
+		List<LikeVO> accommoLikeList = accommodao.findMostLike(5);	// Top 5 나열
+		List<AccommodationVO> accommoList = new ArrayList<>();
 		AccommodationVO a = new AccommodationVO();
-		for(int i=0;i<accommo_like_list.size();i++){
-			l = accommo_like_list.get(i);
-			int refNo = l.getRefNo();
+		for(int i=0;i<accommoLikeList.size();i++){
+			int refNo = accommoLikeList.get(i).getRefNo();
 			a = accommodao.findById(refNo);
 			
 			List<AccommodationVO> photo_list = accommodao.findAllPhotoById(refNo);
@@ -133,18 +131,16 @@ public class MainController {
 						}break;
 					}
 			}
-			accommo_list.add(a);
+			accommoList.add(a);
 		}
-		model.addAttribute("accommo_list", accommo_list);
+		model.addAttribute("accommoList", accommoList);
 		
 		// 인기식당
-		List<com.example.demo.restaurant.vo.LikeVO> restaulike_list = restaudao.findMostLike(5);
-		com.example.demo.restaurant.vo.LikeVO lr = new com.example.demo.restaurant.vo.LikeVO();
-		List<RestaurantVO> restau_list = new ArrayList<>();
+		List<com.example.demo.restaurant.vo.LikeVO> restauLikeList = restaudao.findMostLike(5);
+		List<RestaurantVO> restauList = new ArrayList<>();
 		RestaurantVO r = new RestaurantVO();
-		for(int i=0;i<restaulike_list.size();i++){
-			lr = restaulike_list.get(i);
-			int refNo = lr.getRefNo();
+		for(int i=0;i<restauLikeList.size();i++){
+			int refNo = restauLikeList.get(i).getRefNo();
 			r = restaudao.findById(refNo);
 			
 			List<RestaurantVO> photo_list = restaudao.findAllPhotoById(refNo);
@@ -194,9 +190,9 @@ public class MainController {
 					}break;
 				}
 			}
-			restau_list.add(r);
+			restauList.add(r);
 		}
-		model.addAttribute("restau_list", restau_list);
+		model.addAttribute("restauList", restauList);
 		
 		// 인기관광지
 		List<com.example.demo.attraction.vo.LikeVO> list=attractdao.findMostLike(5);
@@ -221,7 +217,7 @@ public class MainController {
 					name = forPhoto.getName();
 					path = forPhoto.getPath();
 					realPath = "photo/Attraction/"+category+"/"+name+"/"+path;
-					System.out.println("realphoto:"+realPath);
+					// System.out.println("realphoto:"+realPath);
 					avo.setRealPath(realPath);
 					
 				}
@@ -261,9 +257,8 @@ public class MainController {
 					name = themeParkList[n5];
 				}
 				
-//				realPath = "photo/Attraction/공원/노리매/att1.jpg";
 				realPath = "photo/Attraction/"+category+"/"+name+"/att"+num+".jpg";
-				System.out.println("fakephoto:"+realPath);
+				// System.out.println("fakephoto:"+realPath);
 				avo.setRealPath(realPath);
 			}
 			attr_list.add(avo);
@@ -285,10 +280,8 @@ public class MainController {
 			RentcarVO vo=setRealPath(no);
 			top5InfoList.add(vo);
 		}
-		System.out.println("ttt:"+top5InfoList);
+		// System.out.println("ttt:"+top5InfoList);
 		model.addAttribute("car_list",top5InfoList);
-		
-		
 		
 		return "Main/mainpage";
 	}

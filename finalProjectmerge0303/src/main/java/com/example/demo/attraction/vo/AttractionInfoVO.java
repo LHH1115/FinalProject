@@ -1,7 +1,5 @@
 package com.example.demo.attraction.vo;
 
-import java.util.List;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;

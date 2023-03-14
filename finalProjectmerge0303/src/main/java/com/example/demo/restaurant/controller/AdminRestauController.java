@@ -20,8 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.demo.admin.dao.MemberDAO;
-import com.example.demo.admin.vo.MemberVO;
 import com.example.demo.restaurant.dao.RestaurantDAO;
 import com.example.demo.restaurant.vo.PhotoListVO;
 import com.example.demo.restaurant.vo.RestaurantPhotoVO;
@@ -36,9 +34,6 @@ public class AdminRestauController {
 
 	@Autowired
 	private RestaurantDAO dao;
-	
-	@Autowired
-	private MemberDAO mdao;
 	
 	@GetMapping("/update/{restauNo}")
 	public ModelAndView updateForm(@PathVariable int restauNo, HttpSession session) {

@@ -34,12 +34,8 @@ public class InquiryController {
 	public ModelAndView inquiryForm2(InquiryVO vo, HttpSession session) {
 		vo.setInquiryNo(inquiryDao.getNextNo());
 		vo.setMemberNo(mdao.findById((String)session.getAttribute("id")).getMemberno());
-//		String content=vo.getContent();		
-		int re=inquiryDao.insertInquiry(vo);
-		
-			
+		inquiryDao.insertInquiry(vo);
 		ModelAndView mav = new ModelAndView("redirect:/");
-			
 		return mav;
 	}
 	

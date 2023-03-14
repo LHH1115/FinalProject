@@ -27,8 +27,6 @@ import com.example.demo.member.vo.MyLikeVO;
 import com.example.demo.member.vo.ReplyVO;
 import com.example.demo.member.vo.ReservationVO;
 import com.example.demo.member.vo.ReviewVO;
-import com.example.demo.rentcar.dao.RentcarDAO;
-import com.example.demo.rentcar.vo.RentcarVO;
 import com.example.demo.restaurant.dao.RestaurantDAO;
 import com.example.demo.restaurant.vo.RestaurantVO;
 
@@ -50,9 +48,6 @@ public class MyPageController {
 	
 	@Autowired
 	private RestaurantDAO res_dao;
-	
-	@Autowired
-	private RentcarDAO rent_dao;
 	
 	public void setmDao(UserMemberDAO m_dao) {
 		this.m_dao = m_dao;
@@ -334,9 +329,7 @@ public class MyPageController {
 	@PostMapping("/myPage/updateInquiry")
 	public ModelAndView updateInquirySubmit(InquiryVO i) {
 		ModelAndView mav = new ModelAndView("redirect:/myPage/inquiryDetail?inquiryno="+i.getInquiryNo());
-		int re = -1;
-		re = mp_dao.updateInquiry(i);
-		
+		mp_dao.updateInquiry(i);
 		return mav;
 	
 	}
@@ -344,9 +337,7 @@ public class MyPageController {
 	@GetMapping("/myPage/deleteInquiry")
 	public ModelAndView deleteInquiry(int inquiryno, HttpSession session) {
 		ModelAndView mav = new ModelAndView("redirect:/myPage/myInquiry?pageNUM=1");
-		int re = -1;
-		re = mp_dao.deleteInquiry(inquiryno);
-		
+		mp_dao.deleteInquiry(inquiryno);
 		return mav;
 	}
 	

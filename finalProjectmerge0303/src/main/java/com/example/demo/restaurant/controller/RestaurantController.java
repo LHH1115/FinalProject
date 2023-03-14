@@ -7,27 +7,21 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.swing.Spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.demo.accommodation.vo.AccommodationVO;
-import com.example.demo.admin.dao.MemberDAO;
 import com.example.demo.member.vo.MemberVO;
 import com.example.demo.restaurant.dao.RestaurantDAO;
 import com.example.demo.restaurant.vo.LikeVO;
 import com.example.demo.restaurant.vo.PhotoListVO;
 import com.example.demo.restaurant.vo.RestaurantPhotoVO;
 import com.example.demo.restaurant.vo.RestaurantVO;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.Setter;
 
@@ -43,9 +37,6 @@ public class RestaurantController {
 	
 	@Autowired
 	private RestaurantDAO dao;
-	
-	@Autowired
-	private MemberDAO mdao;
 
 	@GetMapping("/main")
 	public String restauMain(Model model, HttpSession session) {

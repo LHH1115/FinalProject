@@ -10,7 +10,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import com.example.demo.inquiry.vo.InquiryVO;
-import com.example.demo.test.vo.BoardVO;
 
 public class DBManager {
 	public static SqlSessionFactory sqlSessionFactory;

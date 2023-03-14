@@ -14,9 +14,6 @@ import com.example.demo.member.vo.ReplyVO;
 import com.example.demo.member.vo.ReservationVO;
 import com.example.demo.member.vo.ReviewVO;
 
-
-
-
 @Repository
 public class MyPageDAO {
 	public int updateInfo(MemberVO m) {

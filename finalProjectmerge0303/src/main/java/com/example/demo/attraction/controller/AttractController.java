@@ -434,7 +434,6 @@ public class AttractController {
 	public ModelAndView detail(int attractNo, HttpSession session) {
 		ModelAndView mav = new ModelAndView("Attraction/Detail");
 		
-		List<InfoListVO> infoList = new ArrayList<>();
 		AttractionVO a = dao.findById(attractNo);
 		System.out.println("avo:"+a);
 		List<AttractionInfoVO> atin = dao.findInfoById(attractNo);

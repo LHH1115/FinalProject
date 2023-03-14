@@ -24,8 +24,6 @@ import com.example.demo.accommodation.dao.AccommoDAO;
 import com.example.demo.accommodation.vo.AccommoPhotoVO;
 import com.example.demo.accommodation.vo.AccommodationVO;
 import com.example.demo.accommodation.vo.PhotoListVO;
-import com.example.demo.admin.dao.MemberDAO;
-import com.example.demo.admin.vo.MemberVO;
 
 import lombok.Setter;
 
@@ -36,9 +34,6 @@ public class AdminAccomoController {
 
 	@Autowired
 	private AccommoDAO dao;
-	
-	@Autowired
-	private MemberDAO mdao;
 	
 	@GetMapping("/update/{accommoNo}")
 	public ModelAndView updateForm(@PathVariable int accommoNo, HttpSession session) {

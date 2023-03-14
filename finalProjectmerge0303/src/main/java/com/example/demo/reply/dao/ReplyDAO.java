@@ -1,8 +1,5 @@
 package com.example.demo.reply.dao;
 
-import java.util.HashMap;
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.reply.db.DBManager;

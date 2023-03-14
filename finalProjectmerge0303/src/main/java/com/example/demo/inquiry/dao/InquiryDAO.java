@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.admin.vo.MemberVO;
 import com.example.demo.inquiry.db.DBManager;
 import com.example.demo.inquiry.vo.InquiryVO;
 
