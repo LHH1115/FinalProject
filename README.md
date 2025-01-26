@@ -21,3 +21,5 @@
 5.  ajax를 활용한 실시간 찜
 6.  이메일 인증을 활용한 암호 초기화
 7.  Spring Security를 활용한 역할에 따른 권한 설정
+
+## PDF Link(https://drive.google.com/file/d/196myUfZiUcQRa0wwgsFUMNj0NEuZ8qP1/view?usp=share_link)
